@@ -1,0 +1,52 @@
+<div class="main-content animated fadeIn">
+    <div class="container-fluid">
+        <mat-accordion>
+            <mat-expansion-panel [(expanded)]="panelOpenState">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Estructuras
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Llene los campos para crear una nueva estructura
+                        <i class="fa fa-dollar ml-1"></i>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form [formGroup]="form" novalidate>
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Nueva estructura</h4>
+                            <p class="card-category">Completa la información para crear un nueva estructura</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Nombre de propietario</mat-label>
+                                        <input matInput type="text" formControlName="structure_name">
+                                        <mat-error>{{getMessageError('structure_name')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Número de registros</mat-label>
+                                        <input matInput type="number" formControlName="quantity">
+                                        <mat-error>{{getMessageError('structure_name')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submit()"
+                            [disabled]="form.invalid">Guardar
+                        información
+                    </button>
+                </form>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <app-structure-data-table
+                [(stateButton)]="panelOpenState"
+                (stateButtonChange)="setStatusOpenState($event)"
+                (editItemEmitter)="editStructure($event)"
+        ></app-structure-data-table>
+    </div>
+</div>

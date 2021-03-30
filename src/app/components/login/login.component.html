@@ -1,0 +1,24 @@
+<div class="formContentParent">
+    <div class="wrapper fadeInDown">
+        <div class="formContent">
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img class="m-3 img-thumbnail" src="./assets/img/morena-logo.png" id="icon" alt="User Icon"/>
+            </div>
+
+            <!-- Login Form -->
+            <form [formGroup]="form" (submit)="submit()" class="login100-form validate-form">
+                <input type="text" class="fadeIn second inputLogin" formControlName="username" placeholder="Usuario">
+                <br>
+                <input type="password" class="fadeIn third inputLogin" formControlName="password" placeholder="Contraseña">
+                <br>
+<!--                <a style="width: 86%" class="btn btn-outline-primary m-3" [routerLink]="['/dashboard']"> Entrar </a>-->
+                <button class="btn btn-outline-primary m-3" type="submit" style="width: 86%" [disabled]="!form.valid">
+                    Entrar
+                </button>
+            </form>
+            <div id="formFooter">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title class="tittle">Ubicación del centro de trabajo</h1>
+<div mat-dialog-content>
+    <agm-map
+            (mapReady)="mapReady($event)"
+            [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"
+                    [markerDraggable]="false"></agm-marker>
+    </agm-map>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button class="btn btn-success float-left" (click)="onNoClick()">Ok</button>
+</div>
+
+
+
+

@@ -1,0 +1,96 @@
+<div class="card">
+    <div class="card-header card-header-danger">
+        <h4 class="card-title">Lista de usuarios</h4>
+        <p class="card-category">Información completa de usuarios registrados</p>
+    </div>
+    <div class="card-body">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Búsqueda">
+        </mat-form-field>
+
+        <!--<div class="mat-elevation-z8 w-100" *ngIf="areas.length > 0;else noContent">-->
+        <div class="mat-elevation-z8 w-100">
+            <div class="row justify-content-end mat-elevation-z0 mt-2">
+                <div class="col-2">
+                    <button (click)="openAccordion()" type="button" mat-raised-button
+                            class="bg-primary text-white mb-2 mt-2"
+                            [ngClass]="{'bg-danger':stateButton }">
+                        <mat-icon *ngIf="!stateButton;else canView">add_circle_outline</mat-icon>
+                        <ng-template #canView>
+                            <mat-icon>cancel</mat-icon>
+                        </ng-template>
+                        <span> {{getAction()}} </span>
+                    </button>
+                </div>
+            </div>
+
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No.</th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo</th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Rol</th>
+                    <td mat-cell *matCellDef="let element"> {{element.type | promoterPipe}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="municipality">
+                    <th mat-header-cell *matHeaderCellDef> Municipio</th>
+                    <td mat-cell *matCellDef="let element"> {{element.municipality}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="section">
+                    <th mat-header-cell *matHeaderCellDef> Sección</th>
+                    <td mat-cell *matCellDef="let element"> {{element.section}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="district">
+                    <th mat-header-cell *matHeaderCellDef> Distrito</th>
+                    <td mat-cell *matCellDef="let element"> {{element.district}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="curp">
+                    <th mat-header-cell *matHeaderCellDef> CURP</th>
+                    <td mat-cell *matCellDef="let element"> {{element.curp}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="promoter_id">
+                    <th mat-header-cell *matHeaderCellDef> Promotor</th>
+                    <td mat-cell *matCellDef="let element"> {{element?.promoter?.name}} </td>
+                </ng-container>
+
+                <!-- Action Columns Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button type="button" (click)="viewLocation(element)" mat-mini-fab class="bg-permission mr-1"
+                                matTooltip="Ver en el mapa">
+                            <mat-icon>location_on</mat-icon>
+                        </button>
+
+                        <button type="button" (click)="edit(element)" mat-mini-fab class="bg-success mr-1"
+                                matTooltip="Editar">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button type="button" (click)="delete(element.id)" mat-mini-fab class="bg-danger mr-1"
+                                matTooltip="Eliminar">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

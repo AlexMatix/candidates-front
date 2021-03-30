@@ -1,0 +1,290 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <form [formGroup]="form" #formDirective="ngForm" novalidate [autocomplete]="!DEBUG ? 'off' : 'on'"
+              *ngIf="this.districts.length > 0; else noZone">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="card-title">Nueva casilla</h4>
+                            <p class="card-category">Completa la información de la persona correctamente</p>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field class="input-header w-100" appearance="outline">
+                                <mat-label>Partido político</mat-label>
+                                <mat-select formControlName="political_parties_id">
+                                    <mat-option *ngFor="let parties of politicalParties" [value]="parties.id">
+                                        {{parties.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('political_parties_id')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary btn-draft" (click)="openDialog()">Restaurar
+                                borrador
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Clave de elector</mat-label>
+                                <input matInput type="text" formControlName="electorKey" maxlength="18"
+                                       oninput="this.value = this.value.toUpperCase()">
+                                <mat-error>{{getMessageError('electorKey')}}</mat-error>
+                                <mat-error *ngIf="form.get('electorKey').hasError('pattern')">
+                                    {{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}
+                                    A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}
+                                    -{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}
+                                    -{{'{'}}0-9{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}
+                                    0-9{{'}'}}
+                                </mat-error>
+                                <mat-hint align="end">{{form.get('electorKey').value?.length}} / 18</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Confirmar clave de elector</mat-label>
+                                <input matInput type="text" formControlName="electorKey_confirm"
+                                       oninput="this.value = this.value.toUpperCase()" maxlength="18" appBlockCopyPaste>
+                                <mat-error>{{getMessageError('electorKey_confirm')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput type="text" formControlName="name">
+                                <mat-error>{{getMessageError('name')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Apellido Paterno</mat-label>
+                                <input matInput type="text" formControlName="fatherLastName">
+                                <mat-error>{{getMessageError('fatherLastName')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Apellido Materna</mat-label>
+                                <input matInput type="text" formControlName="motherLastName">
+                                <mat-error>{{getMessageError('motherLastName')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Curp</mat-label>
+                                <input
+                                        matInput type="text"
+                                        formControlName="curp"
+                                        oninput="this.value = this.value.toUpperCase()"
+                                        maxlength="18"
+                                        (keypress)="onPressCUPR($event)"
+                                >
+                                <mat-error>{{getMessageError('curp')}}</mat-error>
+                                <mat-error *ngIf="form.get('curp').hasError('pattern')">
+                                    Formato: AAAA 000000 A AA AAA 00
+                                </mat-error>
+                                <mat-hint align="end">{{form.get('curp').value?.length}} / 18</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Confirmar Curp</mat-label>
+                                <input matInput type="text" formControlName="curp_confirm"
+                                       oninput="this.value = this.value.toUpperCase()" maxlength="18" appBlockCopyPaste>
+                                <mat-error>{{getMessageError('curp_confirm')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>OCR</mat-label>
+                                <input matInput type="text" formControlName="ocr" maxlength="13" digitOnly>
+                                <mat-error>{{getMessageError('ocr')}}</mat-error>
+                                <mat-hint align="end">{{form.get('ocr').value?.length}} / 13</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Confirmar OCR</mat-label>
+                                <input matInput type="text" formControlName="ocr_confirm" maxlength="13" digitOnly
+                                       appBlockCopyPaste>
+                                <mat-error>{{getMessageError('ocr_confirm')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Dirección (Calle)</mat-label>
+                                <input matInput type="text" formControlName="street">
+                                <mat-error>{{getMessageError('street')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Dirección (Colonia)</mat-label>
+                                <input matInput type="text" formControlName="colony">
+                                <mat-error>{{getMessageError('colony')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Número de celular</mat-label>
+                                <input matInput type="text" formControlName="cellphone" digitOnly maxlength="11">
+                                <mat-error>{{getMessageError('cellphone')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Teléfono de casa</mat-label>
+                                <input matInput type="text" formControlName="phone" digitOnly maxlength="11">
+                                <mat-error>{{getMessageError('phone')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col example-margin">
+                            <mat-label>Género:</mat-label>
+                            <mat-radio-group formControlName="gender">
+                                <mat-radio-button class="example-margin" value="Hombre">Hombre</mat-radio-button>
+                                <mat-radio-button class="example-margin" value="Mujer">Mujer</mat-radio-button>
+                                <mat-error>{{getMessageError('gender')}}</mat-error>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">Datos de asignación de distrito</h4>
+                    <p class="card-category">Asegurate de completar la información correctamente</p>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Seleccione el cargo</mat-label>
+                                <mat-select formControlName="type">
+                                    <mat-option *ngFor="let position  of types" [value]="position.id">
+                                        {{position.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('type')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Seleccione la Estructura</mat-label>
+                                <mat-select formControlName="structure_id">
+                                    <mat-option *ngFor="let structure  of structures" [value]="structure.id">
+                                        {{structure.structure_name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('structure_id')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Distrito</mat-label>
+                                <mat-select formControlName="district">
+                                    <mat-option *ngFor="let district of districts"
+                                                [value]="district">{{district}}</mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('district')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Municipio</mat-label>
+                                <mat-select formControlName="municipality">
+                                    <mat-option [value]="null" *ngIf="municipalities.length === 0">Seleccione un
+                                        distrito
+                                    </mat-option>
+                                    <mat-option *ngFor="let municipaliy of municipalities"
+                                                [value]="municipaliy">{{municipaliy}}</mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('municipality')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col" *ngIf="!isThirdType">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Sección</mat-label>
+                                <mat-select formControlName="section">
+                                    <mat-option [value]="null" *ngIf="sections.length === 0">Seleccione un municipio
+                                    </mat-option>
+                                    <mat-option *ngFor="let section of sections"
+                                                [value]="section">{{section}}</mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('section')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col" *ngIf="!isThirdType">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Casilla</mat-label>
+                                <mat-select formControlName="box" (valueChange)="setAddress($event)">
+                                    <mat-option [value]="null" *ngIf="boxes.length === 0">Seleccione una sección
+                                    </mat-option>
+                                    <mat-option *ngFor="let box of boxes" [value]="box">{{box}}</mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('box')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!isThirdType">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Dirección</mat-label>
+                                <textarea matInput [value]="address" readonly></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <button mat-raised-button type="submit" class="btn btn-danger pull-right"
+                            [disabled]="form.invalid" (click)="submit(formDirective)">
+                        Guardar información
+                    </button>
+                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="saveDraft()">
+                        Guardar borrador
+                    </button>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </form>
+        <ng-template #noZone>
+            <div align="center">
+                <h3>Usted no cuenta con una zona de responsabilidad asignada</h3>
+            </div>
+        </ng-template>
+    </div>
+</div>

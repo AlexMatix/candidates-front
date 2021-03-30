@@ -1,0 +1,75 @@
+<div class="container-fluid animated fadeIn">
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Reportes</h4>
+                <p class="card-category">Seleccione la fecha de comienzo y la fecha final, los campos de
+                    registros definirán que tan detallado será el reporte</p>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Fecha de inicio</mat-label>
+                            <input matInput type="date" formControlName="date">
+                            <mat-error>{{getMessageError('date')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Fecha de final</mat-label>
+                            <input matInput type="date" formControlName="dateEnd">
+                            <mat-error>{{getMessageError('dateEnd')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Distrito federal</mat-label>
+                            <mat-select formControlName="district" (valueChange)="changeDistrict($event)">
+                                <mat-option *ngFor="let district of districts" [value]="district">
+                                    {{district}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>{{getMessageError('district')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Municipio</mat-label>
+                            <mat-select formControlName="municipality" (valueChange)="changeMunicipality($event)">
+                                <mat-option *ngFor="let municipality of municipalities | keyvalue"
+                                            [value]="municipality.key">
+                                    {{municipality.key}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>{{getMessageError('municipality')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Sección</mat-label>
+                            <mat-select formControlName="section" (valueChange)="changeSection($event)">
+                                <mat-option *ngFor="let section of sections | keyvalue"
+                                            [value]="section.key">
+                                    {{section.key}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>{{getMessageError('section')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button mat-raised-button type="submit" class="btn btn-danger pull-right"
+                        [disabled]="form.invalid">
+                    Generar reporte
+                </button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </form>
+</div>

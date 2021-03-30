@@ -1,0 +1,67 @@
+<div class="main-content animated fadeIn">
+    <div class="container-fluid">
+        <mat-accordion>
+            <mat-expansion-panel [(expanded)]="panelOpenState">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="card">
+
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Mapa de promotores</h4>
+                        <p class="card-category">Selecciona un promotor para ver todos sus elementos sobre el mapa</p>
+                    </div>
+
+                    <form [formGroup]="form">
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Operador</mat-label>
+                                        <mat-select formControlName="promoter_id">
+                                            <mat-option *ngFor="let operator of operators" [value]="operator">
+                                                {{operator.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <mat-tab-group>
+                                <mat-tab label="MAPA">
+                                    <div class="row w-100">
+                                        <div class="col w-100">
+                                            <agm-map
+                                                    (mapReady)="mapReady($event)"
+                                                    [zoom]="zoom">
+                                            </agm-map>
+                                        </div>
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="ORGANIGRAMA">
+                                    <br>
+                                    <br>
+                                    <p-organizationChart [value]="dataChart" *ngIf="dataChart.length > 0">
+                                        <ng-template let-node pTemplate="default">
+                                            <span>Promotor: {{node.data.name}}</span>
+                                            <span>Municipio: {{node.data.municipality}}</span>
+                                            <span>Seccioón: {{node.data.section}}</span>
+                                            <span>Distrito: {{node.data.district}}</span>
+                                        </ng-template>
+                                    </p-organizationChart>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                    </form>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+</div>

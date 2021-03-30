@@ -1,0 +1,27 @@
+agm-map {
+  height: 650px;
+  width: 100%;
+}
+
+p-organizationChart {
+  height: 650px;
+  width: 100%;
+}
+
+.node-header, .node-content {
+  padding: .5em .7em;
+}
+
+.node-header {
+  background-color: #495ebb;
+  color: #ffffff;
+}
+
+.node-content {
+  text-align: center;
+  border: 1px solid #495ebb;
+}
+
+span {
+  display: block;
+}

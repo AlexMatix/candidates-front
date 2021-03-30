@@ -1,0 +1,140 @@
+/* You can add global styles to this file, and also import other style files */
+.card-header-danger {
+    background: linear-gradient(60deg, rgb(98, 17, 50), rgb(78, 35, 46)) !important;
+}
+
+.contentDataTable {
+    overflow-x: auto;
+}
+
+li.active > a {
+    background-color: #4E232E !important;
+@include shadow-big-color(#4E232E);
+}
+
+.btn-danger {
+    background-color: #56242A !important;
+}
+
+.btn-draft {
+    background-color: #4F4F4F !important;
+    border-color: #4F4F4F !important;
+    color: #ffffff;
+}
+
+.bg-success {
+    background-color: #448647 !important;
+}
+
+.bg-danger {
+    background-color: #77332e !important;
+}
+
+.bg-primary {
+    background-color: #18517f !important;
+}
+
+.bg-permission {
+    background-color: #686f29 !important;
+    color: #ffffff;
+}
+
+.bg-permission-list {
+    background-color: #295c6f !important;
+    color: #ffffff;
+}
+
+.bg-permission-zone {
+    background-color: #1b6d85 !important;
+    color: #ffffff;
+}
+
+.bg-power-off {
+    background-color: #3C4858 !important;
+    color: #ffffff;
+}
+
+.bg-power-on {
+    background-color: #a90c0c !important;
+    color: #ffffff;
+}
+
+/*region input header*/
+.input-header .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white;
+}
+
+.input-header .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: white;
+}
+
+
+.input-header .mat-form-field-label {
+    color: white;
+}
+
+.input-header .mat-form-field.mat-focused .mat-form-field-label {
+    color: white;
+}
+
+.input-header .mat-input-element {
+    caret-color: white;
+}
+
+.input-header .mat-form-field-invalid .mat-input-element, .mat-warn .mat-input-element {
+    caret-color: white;
+}
+
+.input-header .mat-select-value {
+    color: white;
+}
+
+.alert.alert-warning {
+    background-color: #946a2cba;
+}
+
+/*endregion*/
+
+
+/* region animations */
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.margin-data-table {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.jum-title {
+    text-align: center;
+    height: 200px;
+}
+
+.w-100 {
+    width: 100%;
+}

@@ -1,0 +1,18 @@
+<div class="main-content animated fadeIn">
+    <div class="container-fluid">
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab label="Ironman" *ngIf="isPermission()">
+                <app-ironman></app-ironman>
+            </mat-tab>
+            <mat-tab label="Registros">
+                <app-logs-data-table></app-logs-data-table>
+            </mat-tab>
+            <mat-tab label="Operaciones de registros" *ngIf="isPermission()">
+                <app-records-operations></app-records-operations>
+            </mat-tab>
+            <mat-tab label="Reportes" *ngIf="isPermission()">
+                <app-reports></app-reports>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

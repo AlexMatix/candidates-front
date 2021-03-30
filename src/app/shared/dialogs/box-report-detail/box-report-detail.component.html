@@ -1,0 +1,26 @@
+<h1 mat-dialog-title class="tittle">{{getTitle()}}</h1>
+<div mat-dialog-content class="top">
+    <!--<div class="mat-elevation-z8 w-100" *ngIf="areas.length > 0;else noContent">-->
+    <div class="mat-elevation-z8 w-100">
+        <mat-list *ngIf="!isEmpty()">
+            <h3 mat-subheader>Reportes de conteos casillas</h3>
+            <div class="row" *ngFor="let data of dataSource">
+                <div class="col" *ngFor="let party of data | keyvalue">
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>folder</mat-icon>
+                        <h4 mat-line>{{party.key}}</h4>
+                        <p mat-line> {{party.value}} </p>
+                    </mat-list-item>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+        </mat-list>
+
+        <div *ngIf="isEmpty()" align="center">
+            <h3>Aún no hay información que mostrar</h3>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button class="btn btn-success float-left" (click)="onNoClick()">Ok</button>
+    </div>
+</div>

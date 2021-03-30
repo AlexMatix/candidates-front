@@ -1,0 +1,88 @@
+<div class="main-content animated fadeIn">
+    <div class="container-fluid">
+        <mat-accordion>
+            <mat-expansion-panel [(expanded)]="panelOpenState">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Usuarios
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Llene los campos para crear un nuevo usuario
+                        <i class="fa fa-dollar ml-1"></i>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form [formGroup]="form" (submit)="submit()">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Nuevo usuario</h4>
+                            <p class="card-category">Completa la información para crear un nuevo usuario</p>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row" *ngIf="alertEdit">
+                                <div class="col">
+                                    <div class="alert alert-warning" role="alert">
+                                        Si no llena el campo de la contraseña está no se actualizará
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Nombre Completo</mat-label>
+                                        <input matInput type="text" formControlName="name">
+                                        <mat-error>{{getMessageError('name')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Correo electronico</mat-label>
+                                        <input matInput type="email" formControlName="email">
+                                        <mat-error>{{getMessageError('email')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Rol</mat-label>
+                                        <mat-select formControlName="type">
+                                            <mat-option *ngFor="let rol of roles" [value]="rol.id">
+                                                {{rol.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error>{{getMessageError('type')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Contraseña</mat-label>
+                                        <input matInput type="password" formControlName="password">
+                                        <mat-error>{{getMessageError('password')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Confirmar contraseña</mat-label>
+                                        <input matInput type="password" formControlName="password_confirm">
+                                        <mat-error>{{getMessageError('password_confirm')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right" [disabled]="!form.valid">Guardar
+                        información
+                    </button>
+                </form>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <app-user-data-table [(stateButton)]="panelOpenState" (stateButtonChange)="setStatusOpenState($event)"
+                             (editItemEmitter)="editUser($event)"></app-user-data-table>
+
+        <app-setting></app-setting>
+    </div>
+</div>

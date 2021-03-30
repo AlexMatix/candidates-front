@@ -1,0 +1,76 @@
+<form novalidate [formGroup]="form" (ngSubmit)="OnSubmit()">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <h1 mat-dialog-title class="w-100">Asignar Zona de Responsabilidad</h1>
+        </div>
+        <div mat-dialog-content class="row justify-content-center">
+            <div class="row" *ngFor="let districControl of districtsControl.controls; let i = index">
+                <div class="col" formArrayName="zone">
+                    <div class="row" formArrayName="{{i}}">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Distrito</mat-label>
+                            <mat-select formControlName="district">
+                                <mat-option *ngFor="let district of districts" [value]="district">
+                                    {{district}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="row" formArrayName="{{i}}">
+                        <mat-form-field #municipalityField class="w-100" appearance="outline">
+                            <mat-chip-list #chipList formArrayName="municipalities">
+                                <mat-chip
+                                        *ngFor="let municipality of municipalities[i]; let j = index"
+                                        [formGroupName]="j"
+                                        [selectable]="true"
+                                        [removable]="true"
+                                        (removed)="remove(municipality,i)">
+                                    {{municipality}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                                <input
+                                    #municipalityInput
+                                    [formControl]="control[i]"
+                                    [matAutocomplete]="auto"
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="true">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, i)">
+                                <mat-option *ngFor="let municipality of filteredMunicipalities[i] | async"
+                                            [value]="municipality">
+                                    {{municipality}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-label>Municipio</mat-label>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-2 align-self-center">
+                    <button mat-fab class="bg-danger" type="button" (click)="deleteDistrictControl(i)"
+                            *ngIf="districtsControl.controls.length !== 1">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-end mb-3">
+                <button mat-fab class="bg-primary" type="button" (click)="addDistrict()"
+                        *ngIf="districtsControl.controls.length < 26">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div mat-dialog-actions class="row justify-content-center">
+            <div class="col">
+                <button mat-button class="bg-secondary text-white btn-block" type="button" (click)="onNoClick()">
+                    Cancelar
+                </button>
+            </div>
+            <div class="col">
+                <button mat-button type="submit" [disabled]="!form.valid" class="bg-primary text-white btn-block">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

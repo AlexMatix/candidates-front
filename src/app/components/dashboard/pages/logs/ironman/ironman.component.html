@@ -1,0 +1,142 @@
+<div class="container-fluid animated fadeIn">
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Ironman</h4>
+                <p class="card-category">Cambie partidos con solo arrastrarlos de contenedor</p>
+            </div>
+            <div class="card-body">
+
+                <mat-accordion>
+                    <mat-expansion-panel [(expanded)]="panelOpenState">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Filtros
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                De click para ver/editar filtros de casillas
+                                <i class="fa fa-dollar ml-1"></i>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <div class="row mb-5">
+
+                            <form [formGroup]="filters" (submit)="submitFilter()" class="w-100">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <mat-form-field class="w-100" appearance="outline">
+                                                    <mat-chip-list #chipList>
+                                                        <mat-chip
+                                                                *ngFor="let fruit of municipalities"
+                                                                [selectable]="true"
+                                                                [removable]="true"
+                                                                (removed)="remove(fruit)">
+                                                            {{fruit}}
+                                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input
+                                                            #municipalityInput
+                                                            [formControl]="municipalityCtrl"
+                                                            [matAutocomplete]="auto"
+                                                            [matChipInputFor]="chipList"
+                                                            [matChipInputAddOnBlur]="true"
+                                                            (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                    <mat-autocomplete #auto="matAutocomplete"
+                                                                      autoActiveFirstOption
+                                                                      (optionSelected)="selected($event)">
+                                                        <mat-option
+                                                                *ngFor="let municipality of filteredMunicipality | async"
+                                                                [value]="municipality">
+                                                            {{municipality}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                    <mat-label>Municipios</mat-label>
+                                                </mat-form-field>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <button mat-raised-button type="submit"
+                                        class="btn btn-danger pull-right" [disabled]="!form.valid">Filtrar Municipio
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <div class="row text-center p-3 mt-3 container_father" *ngFor="let municipality of object(boxes)"
+                     cdkDropListGroup>
+                    <div class="col">
+                        <div class="row"><h3 class="pl-5 font-weight-bold">{{municipality}}</h3></div>
+                        <div class="row" *ngFor="let section of object(boxes[municipality])">
+                            <div class="col">
+                                <div class="row mb-3"
+                                     *ngFor="let box of boxes[municipality][section]">
+                                    <div class="col-md container__section">
+                                        <div class="row mt-5">
+                                            <div class="col-md-6 font-weight-bold">
+                                                <div class="row">
+                                                    <div class="col-md align-baseline">
+                                                        {{section}}
+                                                    </div>
+                                                    <div class="col-md align-baseline">
+                                                        {{box.box}}
+                                                    </div>
+                                                    <div class="col-md align-baseline">
+                                                        <div class="row mt-1 w-100">
+                                                            Puesto
+                                                        </div>
+                                                        <div class="row mt-3 w-100">
+                                                            Propietario
+                                                        </div>
+                                                        <div class="row mt-1 w-100">
+                                                            Suplente
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md"
+                                                         *ngFor="let party of politics; let i  = index">
+                                                        <div class="row justify-content-center">
+                                                            <h5>{{party.name}}</h5>
+                                                        </div>
+                                                        <div
+                                                                cdkDropList
+                                                                [cdkDropListData]="box.parties[i]"
+                                                                class="container-party__list"
+                                                                (cdkDropListDropped)="drop($event, section, box?.box, i)">
+                                                            <div
+                                                                    class="box-party"
+                                                                    *ngFor="let manager of box.parties[i]"
+                                                                    [cdkDragData]="manager"
+                                                                    cdkDrag>{{manager | ironmanPipe}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="makeChanges()"
+                        [disabled]="form.invalid">
+                    Guardar Cambios
+                </button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </form>
+</div>

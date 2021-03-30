@@ -1,0 +1,147 @@
+<div class="container-fluid animated fadeIn">
+    <div class="card">
+        <div class="card-header card-header-danger">
+            <h4 class="card-title">Trasladar estrcuturas</h4>
+            <p class="card-category"></p>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="form" #formDirective="ngForm" (submit)="submit()">
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Estructura origen</mat-label>
+                            <mat-select formControlName="structureOrigin">
+                                <mat-option *ngFor="let structure of structuresItems" [value]="structure.id">
+                                    {{structure.structure_name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>{{getMessageError('structureOrigin')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Estructura destino</mat-label>
+                            <mat-select formControlName="structureDestiny">
+                                <mat-option *ngFor="let structure of structuresItems" [value]="structure.id">
+                                    {{structure.structure_name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>{{getMessageError('structureDestiny')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Usuario</mat-label>
+                            <mat-select formControlName="user">
+                                <mat-option *ngFor="let user of usersItems" [value]="user.id">
+                                    {{user.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>{{getMessageError('user')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <button mat-raised-button type="submit" class="btn btn-danger pull-right"
+                        [disabled]="!form.valid">
+                    Consultar
+                </button>
+
+                <button mat-raised-button type="button" class="btn btn-danger pull-right"
+                        (click)="clear(formDirective)">
+                    Limpiar
+                </button>
+                <div class="clearfix"></div>
+            </form>
+
+            <form [formGroup]="formTable" (submit)="submitChangeStructure()">
+                <div class="row margin-data-table">
+                    <div class="col">
+                        <div class="jumbotron jumbotron-fluid jum-title">
+                            <div class="container">
+                                <h5 class="display-4">Estructura origen</h5>
+                                <p class="lead">Lista de todos los registros de la estructura de origen</p>
+                            </div>
+                        </div>
+                        <table mat-table [dataSource]="dataSourceOrigin" matSort class="mat-elevation-z8 w-100">
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> No.</th>
+                                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="electorKey">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Clave elector</th>
+                                <td mat-cell *matCellDef="let element"> {{element.electorKey}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="box">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Casilla</th>
+                                <td mat-cell *matCellDef="let element"> {{element.box}} </td>
+                            </ng-container>
+
+                            <!-- Action Columns Column -->
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox [formControl]="controlCheckAll"></mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-checkbox #checkbox (change)="onCheckChange($event, element)"></mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                    </div>
+
+                    <div class="col">
+                        <div class="jumbotron jumbotron-fluid jum-title">
+                            <div class="container">
+                                <h5 class="display-4">Estructura Destino</h5>
+                                <p class="lead">Lista de las casillas que tienen conflicto con la estructura de
+                                    origen</p>
+                            </div>
+                        </div>
+                        <table mat-table [dataSource]="dataSourceDestiny" matSort class="mat-elevation-z8 w-100">
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> No.</th>
+                                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="electorKey">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Clave elector</th>
+                                <td mat-cell *matCellDef="let element"> {{element.electorKey}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="box">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Casilla</th>
+                                <td mat-cell *matCellDef="let element"> {{element.box}} </td>
+                            </ng-container>
+
+                            <!-- Action Columns Column -->
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> Acciones</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button type="button" (click)="deleteBox(element.id)" mat-mini-fab
+                                            class="bg-danger">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button mat-raised-button (click)="changeStructure(formDirective)" type="button" [disabled]="isValidStructure()"
+                                class="btn btn-danger pull-right">
+                            Cambiar de estructura
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

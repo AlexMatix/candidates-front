@@ -1,0 +1,28 @@
+<mat-accordion>
+    <mat-expansion-panel [(expanded)]="panelOpenState">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Configuración
+            </mat-panel-title>
+            <mat-panel-description>
+                De click para ver las opciones de configuración
+                <i class="fa fa-dollar ml-1"></i>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h3> Coordenadas de casillas: </h3>
+                <small align="justify">
+                    Esta tarea puede tardar de varios minutos. Por favor mientras la tarea está en ejecución no recargué la
+                    página ni cambie de pestaña. Espere a ver en pantalla el mensaje de éxito.
+                </small>
+            </div>
+
+            <div class="col-md-4">
+                <button type="button" class="btn btn-danger mr-1" (click)="submit()">Generar coordenadas</button>
+            </div>
+        </div>
+        <hr>
+    </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,46 @@
+<h1 mat-dialog-title class="tittle">{{getTitle()}}</h1>
+<div mat-dialog-content class="top">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100" *ngIf="data.length > 0; else noDraft">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No.</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Fecha borrador</th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ine">
+            <th mat-header-cell *matHeaderCellDef> INE Borrador</th>
+            <td mat-cell *matCellDef="let element"> {{element.ine}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+            <td mat-cell *matCellDef="let element">
+                <button type="button" (click)="restoreLog(element)" mat-mini-fab
+                        class="bg-success mr-1">
+                    <mat-icon>restore</mat-icon>
+                </button>
+                <button type="button" (click)="deleteLog(element.id)" mat-mini-fab
+                        class="bg-danger">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <ng-template #noDraft>
+        <div align="center">
+            <h3>No hay borradores guardados aún</h3>
+        </div>
+    </ng-template>
+    <br>
+    <br>
+</div>
+<div mat-dialog-actions>
+    <button mat-button class="btn btn-success float-left" (click)="onNoClick()">Ok</button>
+</div>
