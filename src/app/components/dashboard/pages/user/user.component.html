@@ -55,6 +55,19 @@
                             </div>
 
                             <div class="row">
+
+                                <div class="col">
+                                    <mat-form-field class="w-100" appearance="outline">
+                                        <mat-label>Partido Politico</mat-label>
+                                        <mat-select formControlName="party">
+                                            <mat-option *ngFor="let item of parties" [value]="item.id">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error>{{getMessageError('party')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+
                                 <div class="col">
                                     <mat-form-field class="w-100" appearance="outline">
                                         <mat-label>Contraseña</mat-label>
@@ -73,7 +86,8 @@
                             </div>
                         </div>
                     </div>
-                    <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right" [disabled]="!form.valid">Guardar
+                    <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
+                            [disabled]="!form.valid">Guardar
                         información
                     </button>
                 </form>
@@ -82,7 +96,5 @@
 
         <app-user-data-table [(stateButton)]="panelOpenState" (stateButtonChange)="setStatusOpenState($event)"
                              (editItemEmitter)="editUser($event)"></app-user-data-table>
-
-        <app-setting></app-setting>
     </div>
 </div>

@@ -43,6 +43,11 @@
                     <td mat-cell *matCellDef="let element"> {{element.type | userPipe}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="party">
+                    <th mat-header-cell *matHeaderCellDef> Patido</th>
+                    <td mat-cell *matCellDef="let element"> {{element.party}} </td>
+                </ng-container>
+
                 <!-- Action Columns Column -->
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef> Acciones</th>
@@ -50,55 +55,6 @@
 
                         <button type="button" (click)="editUser(element)" mat-mini-fab class="bg-success mr-1" matTooltip="Editar">
                             <mat-icon>edit</mat-icon>
-                        </button>
-
-                        <button type="button" (click)="permissionEdit(element, element.configuration.permission.edit)"
-                                mat-mini-fab
-                                class="mr-1"
-                                [ngClass]="{'bg-secondary': !element.configuration.permission.edit, 'bg-primary': element.configuration.permission.edit}"
-                                *ngIf="element.type !== 1"
-                                matTooltip="Editar permisos"
-                        >
-                            <mat-icon>wrap_text</mat-icon>
-                        </button>
-
-                        <button type="button"
-                                (click)="permissionDelete(element, element.configuration.permission.delete)"
-                                mat-mini-fab class="mr-1"
-                                [ngClass]="{'bg-secondary': !element.configuration.permission.delete, 'bg-primary': element.configuration.permission.delete}"
-                                *ngIf="element.type !== 1"
-                                matTooltip="Eliminar permisos"
-                        >
-                            <mat-icon>delete_sweep</mat-icon>
-                        </button>
-
-                        <button type="button" (click)="assignStructure(element)" mat-mini-fab class="bg-permission mr-1"
-                                *ngIf="element.type !== 1"
-                                matTooltip="Asignar estructura"
-                        >
-                            <mat-icon>playlist_add</mat-icon>
-                        </button>
-
-                        <button type="button" (click)="listStructuresUser(element)" mat-mini-fab
-                                class="bg-permission-list mr-1" *ngIf="element.type !== 1"
-                                matTooltip="Listar estructura"
-                        >
-                            <mat-icon>list</mat-icon>
-                        </button>
-
-                        <button type="button" (click)="assignZone(element)" mat-mini-fab class="bg-permission-zone mr-1"
-                                *ngIf="element.type !== 1"
-                                matTooltip="Asignar zonas"
-                        >
-                            <mat-icon>view_module</mat-icon>
-                        </button>
-
-                        <button type="button" (click)="powerOffUser(element)"
-                                mat-mini-fab class="mr-1 bg-power-off"
-                                [ngClass]="{'bg-power-on': getPowerStatus(element.active), 'bg-power-off': ! getPowerStatus(element.active)}"
-                                matTooltip="Desactivar usuario"
-                        >
-                            <mat-icon>power_settings_new</mat-icon>
                         </button>
 
                         <button type="button" (click)="deleteUser(element.id)" mat-mini-fab class="bg-danger mr-1" matTooltip="Elimnar">

@@ -1,0 +1,154 @@
+<div class="main-content animated fadeIn">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Nuevo candidato</h4>
+                <p class="card-category">Completa la información para crear un nuevo candidato</p>
+            </div>
+            <form [formGroup]="form" (submit)="submit()">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput type="text" formControlName="name">
+                                <mat-error>{{getMessageError('name')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Apellido Paterno</mat-label>
+                                <input matInput type="text" formControlName="patter_lastname">
+                                <mat-error>{{getMessageError('patter_lastname')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Apellido Materno</mat-label>
+                                <input matInput type="text" formControlName="mother_lastname">
+                                <mat-error>{{getMessageError('mother_lastname')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Sobrenombre</mat-label>
+                                <input matInput type="text" formControlName="nickname">
+                                <mat-error>{{getMessageError('nickname')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Lugar de nacimiento</mat-label>
+                                <input matInput type="text" formControlName="birthplace">
+                                <mat-error>{{getMessageError('birthplace')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Fecha de nacimiento</mat-label>
+                                <input matInput type="date" formControlName="date_birth">
+                                <mat-error>{{getMessageError('date_birth')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput type="text" formControlName="address">
+                                <mat-error>{{getMessageError('address')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Tiempo de residencia</mat-label>
+                                <input matInput type="text" formControlName="residence_time">
+                                <mat-error>{{getMessageError('residence_time')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Ocupación</mat-label>
+                                <input matInput type="text" formControlName="occupation">
+                                <mat-error>{{getMessageError('occupation')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Clave de elector</mat-label>
+                                <input matInput type="text" formControlName="elector_key" maxlength="18"
+                                       oninput="this.value = this.value.toUpperCase()">
+                                <mat-error>{{getMessageError('elector_key')}}</mat-error>
+                                <mat-error *ngIf="form.get('elector_key').hasError('pattern')">
+                                    {{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}
+                                    A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}
+                                    -{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}
+                                    -{{'{'}}0-9{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}
+                                    0-9{{'}'}}
+                                </mat-error>
+                                <mat-hint align="end">{{form.get('elector_key').value?.length}} / 18</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Confirmar clave de elector</mat-label>
+                                <input matInput type="text" formControlName="electorKey_confirm"
+                                       oninput="this.value = this.value.toUpperCase()" maxlength="18" appBlockCopyPaste>
+                                <mat-error>{{getMessageError('electorKey_confirm')}}</mat-error>
+                                <mat-hint align="end">{{form.get('electorKey_confirm').value?.length}} / 18</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Postulación</mat-label>
+                                <mat-select formControlName="postulate">
+                                    <mat-option *ngFor="let item of postulate" [value]="item.id">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('postulate')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Tipo</mat-label>
+                                <mat-select formControlName="type_postulate">
+                                    <mat-option *ngFor="let item of type" [value]="item.id">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>{{getMessageError('type_postulate')}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
+                            [disabled]="!form.valid">Guardar
+                        información
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

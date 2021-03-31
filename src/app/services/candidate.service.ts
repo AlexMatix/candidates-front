@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {URL_BASE} from '../util/Config.utils';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {URL_BASE} from '../util/Config.utils';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PromoterService {
+export class CandidateService {
 
     private URL_PATH: string;
 
     constructor(private http: HttpClient) {
-        this.URL_PATH = URL_BASE + 'promoter';
+        this.URL_PATH = URL_BASE + 'candidate';
     }
 
     add(data: any): Observable<any> {
@@ -32,19 +32,6 @@ export class PromoterService {
     }
 
     edit(data: any, id: number): Observable<any> {
-        console.log(data);
         return this.http.put(`${this.URL_PATH}/${id}`, data);
-    }
-
-    validateCURP(curp: string, id: number): Observable<any> {
-        let idParam = '';
-        if (id) {
-            idParam = `&id=${id}`;
-        }
-        return this.http.get(`${URL_BASE}/promoter_validate_curp?curp=${curp}${idParam}`);
-    }
-
-    getOperators(): Observable<any> {
-        return this.http.get(`${URL_BASE}/promoter_operators`).pipe(map((data: any) => data.data));
     }
 }

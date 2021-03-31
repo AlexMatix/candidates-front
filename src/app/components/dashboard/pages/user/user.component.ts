@@ -28,11 +28,18 @@ export class UserComponent implements OnInit {
         {id: 2, name: 'Capturista'},
     ];
 
+    parties: any = [
+        {id: 1, name: 'MORENA'},
+        {id: 2, name: 'PRI'},
+        {id: 3, name: 'PAN'},
+    ];
+
     constructor(private _user: UserService) {
         this.form = new FormGroup({
                 name: new FormControl('', [Validators.required]),
                 email: new FormControl('', [Validators.required, Validators.email]),
                 type: new FormControl('', [Validators.required]),
+                party: new FormControl('', [Validators.required]),
                 password: new FormControl('', [Validators.required, Validators.minLength(6)]),
                 password_confirm: new FormControl('', [Validators.required, Validators.minLength(6)]),
             },

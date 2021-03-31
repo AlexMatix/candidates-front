@@ -1,10 +1,7 @@
 //CONFIG CONST
 
-export const URL_BASE = 'http://165.22.2.168/';
-export const CLIENT_SECRET = 'gCpPxhpw2suOjDaQfdtcz9jqlcCwEsaImzdED98E ';
-
-// export const URL_BASE = 'http://165.22.2.168/';
-// export const CLIENT_SECRET = 'gCpPxhpw2suOjDaQfdtcz9jqlcCwEsaImzdED98E ';
+export const URL_BASE = 'http://127.0.0.1:8000/api/';
+export const CLIENT_SECRET = 'rrlDXe4cgq7x95Kx10873AcJ0BWUMnyUNiOeNe69 ';
 
 export const CLIENT_ID = '2';
 export const GRANT_TYPE = 'password';

@@ -5,14 +5,6 @@ export interface UserModel {
     user: string;
     type: number;
     password?: string;
-    configuration: {
-        permission: {
-            edit: false,
-            delete: false,
-        },
-        zone: any,
-    };
-    sections: [];
-    active: number;
-    structures: [];
+    configuration: {};
+    party: number;
 }

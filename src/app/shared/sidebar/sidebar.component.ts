@@ -18,16 +18,9 @@ declare interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
     {path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', permission: 1},
-    {path: '/maps-statistics', title: 'Mapa de estadisticas', icon: 'location_on', class: '', permission: 1},
-    {path: '/add-box/', title: 'Nuevo casilla', icon: 'note_add', class: '', permission: 2},
-    {path: '/all-boxes', title: 'Registros de casillas', icon: 'list', class: '', permission: 2},
-    {path: '/users', title: 'Usuarios y configuración', icon: 'person_add', class: '', permission: 1},
-    {path: '/political-parties', title: 'Partidos políticos', icon: 'assignment_ind', class: '', permission: 1},
-    {path: '/structure', title: 'Estructuras', icon: 'layers', class: '', permission: 1},
-    {path: '/maps', title: 'Mapa de votaciones', icon: 'location_on', class: '', permission: 1},
-    {path: '/promoters', title: 'Promotores', icon: 'supervisor_account', class: '', permission: 1},
-    {path: '/map-promoters', title: 'Mapa de promotores', icon: 'location_on', class: '', permission: 1},
-    {path: '/logs-movements', title: 'Historial', icon: 'history', class: '', permission: 1},
+    {path: '/users', title: 'Usuarios', icon: 'person_add', class: '', permission: 1},
+    {path: '/candidate', title: 'Nuevo Candidato', icon: 'people', class: '', permission: 1},
+    {path: '/candidateList', title: 'Lista de Candidatos', icon: 'list_alt', class: '', permission: 1},
 ];
 
 @Component({
@@ -44,7 +37,7 @@ export class SidebarComponent implements OnInit {
         private _oauth: OauthService,
         private _router: Router
     ) {
-        setInterval(this.checkStatusSystem.bind(this), SECOND * 30);
+        // setInterval(this.checkStatusSystem.bind(this), SECOND * 30);
         this.user = JSON.parse(localStorage.getItem('user'));
     }
 

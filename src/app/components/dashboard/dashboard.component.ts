@@ -81,8 +81,6 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         Swal.showLoading();
-        this.setGraphics();
-        setInterval(this.setGraphics.bind(this), SECOND * 60);
     }
 
     setGraphics() {
