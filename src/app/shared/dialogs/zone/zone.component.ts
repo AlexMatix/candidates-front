@@ -45,19 +45,19 @@ export class ZoneComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.form = new FormGroup({
-            zone: this.districtsControl,
-        });
-        const user: UserModel = this.data.user;
-        console.log(typeof user.configuration.zone);
-        if (typeof user.configuration.zone === 'undefined') {
-            this.addDistrict();
-        } else {
-            const zone: any[] = user.configuration.zone;
-            for (const element of zone) {
-                this.addDistrict(element);
-            }
-        }
+        // this.form = new FormGroup({
+        //     zone: this.districtsControl,
+        // });
+        // const user: UserModel = this.data.user;
+        // console.log(typeof user.configuration.zone);
+        // if (typeof user.configuration.zone === 'undefined') {
+        //     this.addDistrict();
+        // } else {
+        //     const zone: any[] = user.configuration.zone;
+        //     for (const element of zone) {
+        //         this.addDistrict(element);
+        //     }
+        // }
         // console.log(this.form);
     }
 
@@ -66,18 +66,6 @@ export class ZoneComponent implements OnInit {
     }
 
     OnSubmit() {
-        const user: UserModel = this.data.user;
-        // console.log(this.form.value);
-        user.configuration.zone = this.form.value.zone;
-        user.password = null;
-        this.userService.edit(user, user.id).subscribe(
-            response => {
-                MessagesUtill.successMessage('Éxito', SAVE_MESSAGE);
-                this.onNoClick();
-            }, error => {
-                MessagesUtill.errorMessage(ERROR_MESSAGE);
-            }
-        );
 
     }
 

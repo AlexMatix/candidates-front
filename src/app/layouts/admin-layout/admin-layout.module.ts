@@ -1,6 +1,6 @@
 //Pipes
 import {UserPipe} from '../../pipes/user.pipe';
-import {TypeManagerBoxPipe} from '../../pipes/type-manager-box.pipe';
+import {PostulatePipe} from '../../pipes/postulate.pipe';
 
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
@@ -80,7 +80,7 @@ import {CandidateListComponent} from '../../components/dashboard/pages/candidate
         UserPipe,
         IronmanPipe,
         OperatorPipe,
-        TypeManagerBoxPipe,
+        PostulatePipe,
         DragImageDirective,
         BlockCopyPasteDirective,
         DigitOnlyDirective,

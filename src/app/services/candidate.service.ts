@@ -34,4 +34,12 @@ export class CandidateService {
     edit(data: any, id: number): Observable<any> {
         return this.http.put(`${this.URL_PATH}/${id}`, data);
     }
+
+    validateElectorKey(electorKey: string, id: number): Observable<any> {
+        let idParam = '';
+        if (id) {
+            idParam = `&id=${id}`;
+        }
+        return this.http.get(`${URL_BASE}validate_elector_key?electorKey=${electorKey}${idParam}`);
+    }
 }

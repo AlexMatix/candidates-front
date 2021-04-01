@@ -57,26 +57,26 @@ export class AssignStructureComponent implements OnInit {
     }
 
     setDataSource(close = true) {
-        if (close) {
-            Swal.showLoading();
-        }
-
-        if (this.data.notAssign) {
-            if (_.isEmpty(this.userData.structures)) {
-                this.textNotData = 'Aún no se le asignan estructurás a este usuario';
-                this.notDada = true;
-            } else {
-                this.dataSource.data = this.userData.structures;
-                this.notDada = false;
-            }
-        } else {
-            this._structure.getAll().subscribe(
-                response => {
-                    this.callbackSetDataSource(response, false, close);
-                },
-                error => MessagesUtil.errorMessage(ERROR_MESSAGE)
-            );
-        }
+        // if (close) {
+        //     Swal.showLoading();
+        // }
+        //
+        // if (this.data.notAssign) {
+        //     if (_.isEmpty(this.userData.structures)) {
+        //         this.textNotData = 'Aún no se le asignan estructurás a este usuario';
+        //         this.notDada = true;
+        //     } else {
+        //         this.dataSource.data = this.userData.structures;
+        //         this.notDada = false;
+        //     }
+        // } else {
+        //     this._structure.getAll().subscribe(
+        //         response => {
+        //             this.callbackSetDataSource(response, false, close);
+        //         },
+        //         error => MessagesUtil.errorMessage(ERROR_MESSAGE)
+        //     );
+        // }
 
 
     }
@@ -133,10 +133,10 @@ export class AssignStructureComponent implements OnInit {
 
     checkStructure(idStructure: number): boolean {
 
-        const structure = this.userData.structures.filter(x => x['id'] === idStructure);
-        if (_.isEmpty(structure)) {
-            return true;
-        }
+        // const structure = this.userData.structures.filter(x => x['id'] === idStructure);
+        // if (_.isEmpty(structure)) {
+        //     return true;
+        // }
         return false;
     }
 

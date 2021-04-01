@@ -50,17 +50,17 @@
 
                     <ng-container matColumnDef="postulate">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Postulado</th>
-                        <td mat-cell *matCellDef="let element"> {{element.postulate}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.postulate | postulatePipe}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="type_postulate">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
-                        <td mat-cell *matCellDef="let element"> {{element.type_postulate}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.type_postulate | postulatePipe}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="party">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Patido</th>
-                        <td mat-cell *matCellDef="let element"> {{element.party}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.party | promoterPipe}} </td>
                     </ng-container>
 
                     <!-- Action Columns Column -->
@@ -68,10 +68,19 @@
                         <th mat-header-cell *matHeaderCellDef> Acciones</th>
                         <td mat-cell *matCellDef="let element">
 
-<!--                            <button type="button" (click)="delete(element.id)" mat-mini-fab class="bg-danger mr-1"-->
-<!--                                    matTooltip="Elimnar">-->
-<!--                                <mat-icon>close</mat-icon>-->
-<!--                            </button>-->
+                            <button type="button" (click)="generateFormat(element.id)" mat-mini-fab class="bg-primary mr-1"
+                                    matTooltip="Generar formato">
+                                <mat-icon>task</mat-icon>
+                            </button>
+
+                            <button type="button" (click)="edit(element.id)" mat-mini-fab class="bg-success mr-1" matTooltip="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button type="button" (click)="delete(element.id)" mat-mini-fab class="bg-danger mr-1"
+                                    matTooltip="Elimnar">
+                                <mat-icon>close</mat-icon>
+                            </button>
 
                         </td>
                     </ng-container>

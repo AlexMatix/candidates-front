@@ -10,10 +10,10 @@ export class OperatorPipe implements PipeTransform {
         let type = '';
 
         switch (value) {
-            case OPERATOR : type = 'Operador'; break;
-            case OWNER : type = 'Propietario'; break;
-            case ALTERNATE : type = 'Suplente'; break;
-            case PROMOTER : type = 'Promotor'; break;
+            case 0 : type = 'Alta de administrador'; break;
+            case 1 : type = 'MORENA'; break;
+            case 2 : type = 'PRI'; break;
+            case 3 : type = 'PAN'; break;
             default : type = 'Not Defined';
         }
 

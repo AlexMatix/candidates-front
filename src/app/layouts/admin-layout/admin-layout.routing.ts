@@ -8,6 +8,6 @@ import {CandidateListComponent} from '../../components/dashboard/pages/candidate
 export const AdminLayoutRoutes: Routes = [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'users', component: UserComponent},
-    {path: 'candidate', component: CandidateComponent},
+    {path: 'candidate/:id', component: CandidateComponent},
     {path: 'candidateList', component: CandidateListComponent},
 ];

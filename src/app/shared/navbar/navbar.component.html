@@ -6,30 +6,17 @@
         <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
-                <li class="nav-item" *ngIf="isPermission()">
-                    <a class="nav-link"
-                       href="javascript:void(0)"
-                       (click)="powerOff()"
-                       data-toggle="tooltip"
-                       title="Apagar sistema"
-                    >
-                        <i class="material-icons">power_settings_new</i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link"
                        href="javascript:void(0)"
                        (click)="logout()"
                        data-toggle="tooltip"
                        title="Cerrar Sesión"
                     >
-                        <i class="material-icons">arrow_back</i>
+                        <i class="material-icons">power_settings_new</i>
                             <span class="d-lg-none d-md-block"></span>
                     </a>
                 </li>

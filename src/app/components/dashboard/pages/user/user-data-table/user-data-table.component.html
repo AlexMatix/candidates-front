@@ -45,7 +45,7 @@
 
                 <ng-container matColumnDef="party">
                     <th mat-header-cell *matHeaderCellDef> Patido</th>
-                    <td mat-cell *matCellDef="let element"> {{element.party}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.party | promoterPipe}} </td>
                 </ng-container>
 
                 <!-- Action Columns Column -->

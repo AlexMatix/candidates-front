@@ -5,6 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CandidateService} from '../../../../services/candidate.service';
 import Swal from 'sweetalert2';
 import _ from 'lodash'
+import MessagesUtill from '../../../../util/messages.utill';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-candidate-list',
@@ -41,7 +43,8 @@ export class CandidateListComponent implements OnInit {
 
 
     constructor(
-        private _candidate: CandidateService
+        private _candidate: CandidateService,
+        private router: Router
     ) {
 
     }
@@ -82,5 +85,24 @@ export class CandidateListComponent implements OnInit {
         if (close) {
             Swal.close();
         }
+    }
+
+    delete(id: number) {
+        MessagesUtill.deleteMessage(id, this.callbackDeleted.bind(this));
+    }
+
+    edit(id: number) {
+        this.router.navigate(['/candidate',id]);
+    }
+
+    generateFormat(id: number) {
+        Swal.showLoading();
+    }
+
+    private callbackDeleted(id: number) {
+        this._candidate.delete(id).subscribe(
+            response => this.setDataSource(true),
+            error => console.log(error)
+        );
     }
 }
