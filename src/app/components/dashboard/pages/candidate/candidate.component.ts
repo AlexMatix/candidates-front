@@ -7,6 +7,8 @@ import MessagesUtil from '../../../../util/messages.utill';
 import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {debounceTime, map} from 'rxjs/operators';
 import {ActivatedRoute, Route, Router} from '@angular/router';
+import {MunicipalitiesService} from '../../../../services/municipalities.service';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-candidate',
@@ -16,6 +18,30 @@ import {ActivatedRoute, Route, Router} from '@angular/router';
 export class CandidateComponent implements OnInit {
 
     form: FormGroup;
+
+    roads = [
+        {id: 1, name: 'Ampliación'},
+        {id: 2, name: 'Andador'},
+        {id: 3, name: 'Avenida'},
+        {id: 4 , name: 'Boulevard'},
+        {id: 5, name: 'Calle'},
+        {id: 6, name: 'Callejon'},
+        {id: 7, name: 'Calzada'},
+        {id: 8, name: 'Cerrada'},
+        {id: 9, name: 'Circuito'},
+        {id: 10, name: 'Circulación'},
+        {id: 11, name: 'Continuación'},
+        {id: 12, name: 'Corredor'},
+        {id: 13, name: 'Diagonal'},
+        {id: 14, name: 'Eje vial'},
+        {id: 15, name: 'Pasaje'},
+        {id: 16, name: 'Peatonal'},
+        {id: 17, name: 'Periférico'},
+        {id: 18, name: 'Privada'},
+        {id: 19, name: 'Prolongación'},
+        {id: 20, name: 'Retorno'},
+        {id: 21, name: 'Viaducto'},
+    ]
 
     postulate = [
         {id: 1, name: 'Diputación'},
@@ -29,8 +55,13 @@ export class CandidateComponent implements OnInit {
     ];
 
     reelection = [
-        {value: 0, label: 'No'},
-        {value: 1, label: 'Si'}
+        {value: 1, label: 'Si'},
+        {value: 0, label: 'No'}
+    ]
+
+    genders = [
+        {value: 0, label: 'Hombre'},
+        {value: 1, label: 'Mujer'}
     ]
 
     id: number;
@@ -38,12 +69,15 @@ export class CandidateComponent implements OnInit {
     editForm = false;
 
     party_color: string;
+    municipalities$: Observable<any>;
 
     constructor(
         private _candidate: CandidateService,
         private router: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private _municipalitiesService: MunicipalitiesService
     ) {
+        this.municipalities$ = this._municipalitiesService.getAll();
         this.form = new FormGroup({
                 name: new FormControl('', [Validators.required]),
                 father_lastname: new FormControl('', [Validators.required]),

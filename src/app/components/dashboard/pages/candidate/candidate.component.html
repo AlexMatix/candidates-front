@@ -67,14 +67,22 @@
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Género</mat-label>
-                                    <input matInput type="text" formControlName="gender">
+                                    <mat-select formControlName="gender">
+                                        <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                            {{gender.label}}
+                                        </mat-option>
+                                    </mat-select>
                                     <mat-error>{{getMessageError('gender')}}</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
-                                    <mat-label>Orientación sexual</mat-label>
-                                    <input matInput type="text" formControlName="group_sexual_diversity">
+                                    <mat-label>¿Pertenece a un grupo de diversidad sexual?</mat-label>
+                                    <mat-select formControlName="group_sexual_diversity">
+                                        <mat-option *ngFor="let item of reelection" [value]="item.value">
+                                            {{item.label}}
+                                        </mat-option>
+                                    </mat-select>
                                     <mat-error>{{getMessageError('group_sexual_diversity')}}</mat-error>
                                 </mat-form-field>
                             </div>
@@ -84,7 +92,11 @@
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>¿Pertenece a un pueblo indigena?</mat-label>
-                                    <input matInput type="text" formControlName="indigenous_group">
+                                    <mat-select formControlName="indigenous_group">
+                                        <mat-option *ngFor="let item of reelection" [value]="item.value">
+                                            {{item.label}}
+                                        </mat-option>
+                                    </mat-select>
                                     <mat-error>{{getMessageError('indigenous_group')}}</mat-error>
                                 </mat-form-field>
                             </div>
@@ -117,8 +129,8 @@
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Tipo de vialidad</mat-label>
                                     <mat-select formControlName="roads">
-                                        <mat-option *ngFor="let item of type" [value]="item.id">
-                                            {{item.name}}
+                                        <mat-option *ngFor="let road of roads" [value]="road.id">
+                                            {{road.name}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error>{{getMessageError('roads')}}</mat-error>
@@ -318,8 +330,8 @@
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Municipio</mat-label>
                                     <mat-select formControlName="postulate_id">
-                                        <mat-option *ngFor="let item of type" [value]="item.id">
-                                            {{item.name}}
+                                        <mat-option *ngFor="let municipality of (municipalities$ | async).municipalities">
+                                            Hola
                                         </mat-option>
                                     </mat-select>
                                     <mat-error>{{getMessageError('postulate_id')}}</mat-error>
