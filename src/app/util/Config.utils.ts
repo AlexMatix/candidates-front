@@ -1,10 +1,10 @@
-//CONFIG CONST
+// CONFIG CONST
 
 // export const URL_BASE = 'http://127.0.0.1:8000/api/';
 // export const CLIENT_SECRET = 't3E3Klj8YPV991ia2i7ajbU9l9lFAS9gr6q2kVtN ';
 
-export const URL_BASE = 'http://candidate.com/api/';
-export const CLIENT_SECRET = 'cgfqZ0OABut4DfmllizyDc4p9WxvQDzGVLY1eAGh';
+export const URL_BASE = 'http://165.22.2.168:8081/api/';
+export const CLIENT_SECRET = 'oxj7AyacJEah3TqXStfWO0IIPNrUAFbWD5Dc2GQ2';
 
 export const CLIENT_ID = '2';
 export const GRANT_TYPE = 'password';
@@ -20,7 +20,7 @@ export const OWNER = 2;
 export const ALTERNATE = 3;
 export const PROMOTER = 4;
 
-//MESSAGE CONST
+// MESSAGE CONST
 export const ERROR_MESSAGE = 'El servicio no se encuentra disponible en este momento, intente más tarde';
 export const SAVE_MESSAGE = 'Se guardo correctamente';
 export const DELETE_MESSAGE = 'Se elimino correctamente';

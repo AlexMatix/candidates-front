@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserDataTableComponent} from './user-data-table/user-data-table.component';
-import {PoliticalPartiesModel} from '../../../../models/politicalParties.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
 import {UserService} from '../../../../services/user.service';
@@ -55,21 +54,25 @@ export class UserComponent implements OnInit {
 
     ngOnInit() {
         const user = JSON.parse(localStorage.getItem('user'));
-        switch(user.party) {
-            case 1: {
+        switch (user.party) {
+            case MORENA: {
                 this.party_color = 'morena'
                 break;
             }
-            case 2: {
+            case PT: {
                 this.party_color = 'pt'
                 break;
             }
-            case 3: {
+            case VERDE: {
                 this.party_color = 'verde'
                 break;
             }
-            case 4: {
+            case PSI: {
                 this.party_color = 'psi'
+                break;
+            }
+            default: {
+                this.party_color = 'morena'
                 break;
             }
         }
@@ -78,7 +81,7 @@ export class UserComponent implements OnInit {
     submit() {
         Swal.showLoading();
         if (this.editForm) {
-            let data = this.form.value;
+            const data = this.form.value;
             delete data.password_confirm;
             this._user.edit(data, this.dataEditForm.id).subscribe(
                 response => {
@@ -102,7 +105,7 @@ export class UserComponent implements OnInit {
                 editP = true;
                 deleteP = true;
             }
-            let data = this.form.value;
+            const data = this.form.value;
 
             this._user.add(data).subscribe(
                 response => {

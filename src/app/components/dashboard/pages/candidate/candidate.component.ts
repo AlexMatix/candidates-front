@@ -28,6 +28,11 @@ export class CandidateComponent implements OnInit {
         {id: 5, name: 'Suplente'},
     ];
 
+    reelection = [
+        {value: 0, label: 'No'},
+        {value: 1, label: 'Si'}
+    ]
+
     id: number;
     editData: any;
     editForm = false;
@@ -47,10 +52,13 @@ export class CandidateComponent implements OnInit {
                 birthplace: new FormControl('', [Validators.required]),
                 date_birth: new FormControl('', [Validators.required]),
                 gender: new FormControl('', [Validators.required]),
+                group_sexual_diversity: new FormControl('', [Validators.required]),
+                indigenous_group: new FormControl('', [Validators.required]),
+                disabled_group: new FormControl('', [Validators.required]),
                 roads: new FormControl('', [Validators.required]),
                 roads_name: new FormControl('', [Validators.required]),
                 outdoor_number: new FormControl('', [Validators.required]),
-                interior_number: new FormControl('', [Validators.required]),
+                interior_number: new FormControl(''),
                 neighborhood: new FormControl('', [Validators.required]),
                 zipcode: new FormControl('', [Validators.required]),
                 municipality: new FormControl('', [Validators.required]),
@@ -60,16 +68,13 @@ export class CandidateComponent implements OnInit {
                 residence_time_month: new FormControl('', [Validators.required]),
                 occupation: new FormControl('', [Validators.required]),
                 elector_key: new FormControl('', [Validators.required], [this.keyElectorValidator.bind(this)]),
+                electorKey_confirm: new FormControl('', [Validators.required]),
                 ocr: new FormControl('', [Validators.required]),
                 cic: new FormControl('', [Validators.required]),
                 emission: new FormControl('', [Validators.required]),
-                electorKey_confirm: new FormControl('', [Validators.required]),
                 postulate: new FormControl('', [Validators.required]),
                 re_election: new FormControl('', [Validators.required]),
                 type_postulate: new FormControl('', [Validators.required]),
-                indigenous_group: new FormControl('', [Validators.required]),
-                group_sexual_diversity: new FormControl('', [Validators.required]),
-                disabled_group: new FormControl('', [Validators.required]),
                 number: new FormControl('', [Validators.required]),
                 postulate_id: new FormControl('', [Validators.required]),
             },
@@ -110,7 +115,7 @@ export class CandidateComponent implements OnInit {
 
     ngOnInit() {
         const user = JSON.parse(localStorage.getItem('user'));
-        switch(user.party) {
+        switch (user.party) {
             case MORENA: {
                 this.party_color = 'morena'
                 break;

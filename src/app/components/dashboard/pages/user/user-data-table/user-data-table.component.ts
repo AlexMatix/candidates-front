@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {UserService} from '../../../../../services/user.service';
 import Swal from 'sweetalert2';
 import * as _ from 'lodash'
+import {MORENA, PSI, PT, VERDE} from '../../../../../util/Config.utils';
 
 @Component({
     selector: 'app-user-data-table',
@@ -43,21 +44,25 @@ export class UserDataTableComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource();
         this.setDataSource();
         const user = JSON.parse(localStorage.getItem('user'));
-        switch(user.party) {
-            case 1: {
+        switch (user.party) {
+            case MORENA: {
                 this.party_color = 'morena'
                 break;
             }
-            case 2: {
+            case PT: {
                 this.party_color = 'pt'
                 break;
             }
-            case 3: {
+            case VERDE: {
                 this.party_color = 'verde'
                 break;
             }
-            case 4: {
+            case PSI: {
                 this.party_color = 'psi'
+                break;
+            }
+            default: {
+                this.party_color = 'morena'
                 break;
             }
         }
