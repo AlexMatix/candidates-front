@@ -6,7 +6,7 @@ import {messageErrorValidation, ValidatorEquals} from '../../../../util/Validato
 import {UserService} from '../../../../services/user.service';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, SAVE_MESSAGE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, MORENA_PT, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {UserModel} from '../../../../models/user.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
     panelOpenState = false;
     editForm = false;
     dataEditForm: any;
-    @ViewChild(UserDataTableComponent, {static: false})
+    @ViewChild(UserDataTableComponent)
     dataTable: UserDataTableComponent;
     form: FormGroup;
     alertEdit = false;
@@ -29,10 +29,14 @@ export class UserComponent implements OnInit {
     ];
 
     parties: any = [
-        {id: 1, name: 'MORENA'},
-        {id: 2, name: 'PRI'},
-        {id: 3, name: 'PAN'},
+        {id: MORENA, name: 'MORENA'},
+        {id: PT, name: 'PT'},
+        {id: VERDE, name: 'VERDE'},
+        {id: PSI, name: 'PSI'},
+        {id: MORENA_PT, name: 'MORENA/PT'},
     ];
+
+    party_color: string;
 
     constructor(private _user: UserService) {
         this.form = new FormGroup({
@@ -50,6 +54,25 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        switch(user.party) {
+            case 1: {
+                this.party_color = 'morena'
+                break;
+            }
+            case 2: {
+                this.party_color = 'pt'
+                break;
+            }
+            case 3: {
+                this.party_color = 'verde'
+                break;
+            }
+            case 4: {
+                this.party_color = 'psi'
+                break;
+            }
+        }
     }
 
     submit() {
@@ -80,12 +103,6 @@ export class UserComponent implements OnInit {
                 deleteP = true;
             }
             let data = this.form.value;
-            data.configuration = {
-                permission: {
-                    edit: editP,
-                    delete: deleteP,
-                }
-            };
 
             this._user.add(data).subscribe(
                 response => {
@@ -121,6 +138,7 @@ export class UserComponent implements OnInit {
         this.form.get('name').setValue(data.name);
         this.form.get('email').setValue(data.email);
         this.form.get('type').setValue(data.type);
+        this.form.get('party').setValue(data.party);
         this.alertEdit = true;
         this.panelOpenState = true;
         this.editForm = true;

@@ -7,9 +7,56 @@
     overflow-x: auto;
 }
 
-li.active > a {
+//li.active > a {
+//    background-color: #4E232E !important;
+//}
+
+.morena {
     background-color: #4E232E !important;
-@include shadow-big-color(#4E232E);
+    h4, p{
+        color: white !important;
+    }
+}
+
+.pt, .psi {
+    background-color: red !important;
+    h4, p{
+        color: white !important;
+    }
+}
+
+.verde {
+    background-color: #4EB146 !important;
+
+    h4, p{
+        color: white !important;
+    }
+}
+
+li.morena > a {
+    background-color: #4E232E !important;
+    i, p {
+        color: white !important;
+    }
+}
+
+li.pt > a {
+    background-color: red !important;
+    i {
+        color: white !important;
+    }
+}
+
+li.verde > a {
+    background-color: #4EB146 !important;
+    color: white !important;
+    i {
+        color: white !important;
+    }
+}
+
+li.psi > a {
+    background-color: red !important;
 }
 
 .btn-danger {

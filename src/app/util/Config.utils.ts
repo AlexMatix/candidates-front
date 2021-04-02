@@ -1,7 +1,10 @@
 //CONFIG CONST
 
-export const URL_BASE = 'http://127.0.0.1:8000/api/';
-export const CLIENT_SECRET = 't3E3Klj8YPV991ia2i7ajbU9l9lFAS9gr6q2kVtN ';
+// export const URL_BASE = 'http://127.0.0.1:8000/api/';
+// export const CLIENT_SECRET = 't3E3Klj8YPV991ia2i7ajbU9l9lFAS9gr6q2kVtN ';
+
+export const URL_BASE = 'http://candidate.com/api/';
+export const CLIENT_SECRET = 'cgfqZ0OABut4DfmllizyDc4p9WxvQDzGVLY1eAGh';
 
 export const CLIENT_ID = '2';
 export const GRANT_TYPE = 'password';
@@ -24,3 +27,14 @@ export const DELETE_MESSAGE = 'Se elimino correctamente';
 export const FILE_DOWNLOAD_MESSAGE = 'Se descargo el archivo correctamente';
 export const FAIL_LOGIN = 'Revisa que tu contraseña o correo estén correctos';
 export const DISABLE_USER = 'Actualmente tu usuario se encuentra deshabilitado, habla con tu administrador para que lo active';
+
+export const MORENA = 1;
+export const PT = 2;
+export const VERDE = 3;
+export const PSI = 4;
+export const MORENA_PT = 5;
+
+export const MORENA_COLOR = '#b3282d';
+export const PT_COLOR = '#ff173d';
+export const VERDE_COLOR = '#7bfa05';
+export const PSI_COLOR = '#ff173d';

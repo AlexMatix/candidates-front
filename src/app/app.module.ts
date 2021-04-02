@@ -12,14 +12,12 @@ import {AgmCoreModule} from '@agm/core';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
 import {DraftComponent} from './shared/dialogs/draft/draft.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AssignStructureComponent} from './shared/dialogs/assign-structure/assign-structure.component';
 import {LoginComponent} from './components/login/login.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './services/AuthInterceptor.service';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from './Internalization/CustomMatPaginatorIntl';
 import {ZoneComponent} from './shared/dialogs/zone/zone.component';
-import {BoxReportDetailComponent} from './shared/dialogs/box-report-detail/box-report-detail.component';
 import {LocationComponent} from './shared/dialogs/location/location.component';
 
 @NgModule({
@@ -51,9 +49,7 @@ import {LocationComponent} from './shared/dialogs/location/location.component';
         }],
     entryComponents: [
         DraftComponent,
-        AssignStructureComponent,
         ZoneComponent,
-        BoxReportDetailComponent,
         LocationComponent
     ],
     bootstrap: [AppComponent]

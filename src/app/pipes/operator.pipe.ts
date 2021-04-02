@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ALTERNATE, OPERATOR, OWNER, PROMOTER} from '../util/Config.utils';
+import {ALTERNATE, MORENA, MORENA_PT, OPERATOR, OWNER, PROMOTER, PSI, PT, VERDE} from '../util/Config.utils';
 
 @Pipe({
     name: 'promoterPipe'
@@ -11,9 +11,11 @@ export class OperatorPipe implements PipeTransform {
 
         switch (value) {
             case 0 : type = 'Alta de administrador'; break;
-            case 1 : type = 'MORENA'; break;
-            case 2 : type = 'PRI'; break;
-            case 3 : type = 'PAN'; break;
+            case MORENA : type = 'MORENA'; break;
+            case PT : type = 'PT'; break;
+            case VERDE : type = 'VERDE'; break;
+            case PSI : type = 'PSI'; break;
+            case MORENA_PT : type = 'MORENA/PT'; break;
             default : type = 'Not Defined';
         }
 

@@ -10,7 +10,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {AssignStructureComponent} from './dialogs/assign-structure/assign-structure.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
@@ -20,7 +19,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { BoxReportDetailComponent } from './dialogs/box-report-detail/box-report-detail.component';
 import {MatListModule} from '@angular/material/list';
 import {LocationComponent} from './dialogs/location/location.component';
 import {AgmCoreModule} from '@agm/core';
@@ -49,9 +47,7 @@ import {AgmCoreModule} from '@agm/core';
         NavbarComponent,
         SidebarComponent,
         DraftComponent,
-        AssignStructureComponent,
         ZoneComponent,
-        BoxReportDetailComponent,
         LocationComponent
     ],
     exports: [
@@ -59,9 +55,7 @@ import {AgmCoreModule} from '@agm/core';
         NavbarComponent,
         SidebarComponent,
         DraftComponent,
-        AssignStructureComponent,
-        LocationComponent,
-        BoxReportDetailComponent
+        LocationComponent
     ],
 })
 export class ComponentsModule {

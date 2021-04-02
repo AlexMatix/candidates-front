@@ -7,6 +7,8 @@ import {DISABLE_USER, ERROR_MESSAGE, FAIL_LOGIN} from '../../util/Config.utils';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
+import {ThemeService} from '../../services/theme.service';
+import {MORENA_THEME, VERDE_TEAM} from '../../util/theme';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private _oautn: OauthService,
         private _user: UserService,
-        private _router: Router
+        private _router: Router,
+        private _themeService: ThemeService
     ) {
         this.form = new FormGroup({
             username: new FormControl('', [Validators.email, Validators.required]),
@@ -40,6 +43,22 @@ export class LoginComponent implements OnInit {
                 this._oautn.setToken(token);
                 this._user.getUserByToken().subscribe(
                     data => {
+                        console.log(data);
+                        // if (data.party === 0) {
+                        //     console.log('Aqui toi')
+                        //     this._themeService.setActiveTheme(MORENA_THEME);
+                        // }
+                        // if (data.party === 1) {
+                        //     this._themeService.setActiveTheme(MORENA_THEME)
+                        // }
+                        // if (data.party === 2) {
+                        //     document.documentElement.setAttribute('data-theme', 'pt');
+                        // }
+                        //
+                        // if (data.party === 3) {
+                        //     this._themeService.setActiveTheme(VERDE_TEAM)
+                        // }
+
                         console.log('USER LOGGED --> ', data);
                         this._oautn.setUserLogin(data);
                         Swal.close();

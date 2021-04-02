@@ -4,7 +4,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {CandidateService} from '../../../../services/candidate.service';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, SAVE_MESSAGE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {debounceTime, map} from 'rxjs/operators';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 
@@ -32,6 +32,8 @@ export class CandidateComponent implements OnInit {
     editData: any;
     editForm = false;
 
+    party_color: string;
+
     constructor(
         private _candidate: CandidateService,
         private router: ActivatedRoute,
@@ -39,18 +41,37 @@ export class CandidateComponent implements OnInit {
     ) {
         this.form = new FormGroup({
                 name: new FormControl('', [Validators.required]),
-                patter_lastname: new FormControl('', [Validators.required]),
+                father_lastname: new FormControl('', [Validators.required]),
                 mother_lastname: new FormControl('', [Validators.required]),
                 nickname: new FormControl('', [ ]),
                 birthplace: new FormControl('', [Validators.required]),
                 date_birth: new FormControl('', [Validators.required]),
-                address: new FormControl('', [Validators.required]),
-                residence_time: new FormControl('', [Validators.required]),
+                gender: new FormControl('', [Validators.required]),
+                roads: new FormControl('', [Validators.required]),
+                roads_name: new FormControl('', [Validators.required]),
+                outdoor_number: new FormControl('', [Validators.required]),
+                interior_number: new FormControl('', [Validators.required]),
+                neighborhood: new FormControl('', [Validators.required]),
+                zipcode: new FormControl('', [Validators.required]),
+                municipality: new FormControl('', [Validators.required]),
+                entity: new FormControl('', [Validators.required]),
+                section: new FormControl('', [Validators.required]),
+                residence_time_year: new FormControl('', [Validators.required]),
+                residence_time_month: new FormControl('', [Validators.required]),
                 occupation: new FormControl('', [Validators.required]),
                 elector_key: new FormControl('', [Validators.required], [this.keyElectorValidator.bind(this)]),
+                ocr: new FormControl('', [Validators.required]),
+                cic: new FormControl('', [Validators.required]),
+                emission: new FormControl('', [Validators.required]),
                 electorKey_confirm: new FormControl('', [Validators.required]),
                 postulate: new FormControl('', [Validators.required]),
+                re_election: new FormControl('', [Validators.required]),
                 type_postulate: new FormControl('', [Validators.required]),
+                indigenous_group: new FormControl('', [Validators.required]),
+                group_sexual_diversity: new FormControl('', [Validators.required]),
+                disabled_group: new FormControl('', [Validators.required]),
+                number: new FormControl('', [Validators.required]),
+                postulate_id: new FormControl('', [Validators.required]),
             },
             [
                 ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
@@ -64,7 +85,7 @@ export class CandidateComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.form.get('name').setValue(response.name);
-                    this.form.get('patter_lastname').setValue(response.patter_lastname);
+                    this.form.get('father_lastname').setValue(response.patter_lastname);
                     this.form.get('mother_lastname').setValue(response.mother_lastname);
                     this.form.get('nickname').setValue(response.nickname);
                     this.form.get('birthplace').setValue(response.birthplace);
@@ -88,6 +109,29 @@ export class CandidateComponent implements OnInit {
     }
 
     ngOnInit() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        switch(user.party) {
+            case MORENA: {
+                this.party_color = 'morena'
+                break;
+            }
+            case PT: {
+                this.party_color = 'pt'
+                break;
+            }
+            case VERDE: {
+                this.party_color = 'verde'
+                break;
+            }
+            case PSI: {
+                this.party_color = 'psi'
+                break;
+            }
+            default: {
+                this.party_color = 'morena'
+                break;
+            }
+        }
     }
 
     keyElectorValidator(control: AbstractControl) {

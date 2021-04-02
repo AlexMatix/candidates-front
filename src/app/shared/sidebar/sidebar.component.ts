@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PowerService} from '../../services/power.service';
-import {ADMIN, DISABLE_SYSTEM, SECOND} from '../../util/Config.utils';
+import {ADMIN, DISABLE_SYSTEM, MORENA, MORENA_PT, PSI, PT, SECOND, VERDE} from '../../util/Config.utils';
 import {UserModel} from '../../models/user.model';
 import {OauthService} from '../../services/oauth.service';
 import {Router} from '@angular/router';
@@ -19,8 +19,8 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     {path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', permission: 1},
     {path: '/users', title: 'Usuarios', icon: 'person_add', class: '', permission: 1},
-    {path: '/candidate/0', title: 'Nuevo Candidato', icon: 'people', class: '', permission: 1},
-    {path: '/candidateList', title: 'Lista de Candidatos', icon: 'list_alt', class: '', permission: 1},
+    {path: '/candidate/0', title: 'Nuevo Candidato', icon: 'people', class: '', permission: 2},
+    {path: '/candidateList', title: 'Lista de Candidatos', icon: 'list_alt', class: '', permission: 2},
 ];
 
 @Component({
@@ -31,6 +31,8 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
     menuItems: any[];
     user: UserModel;
+    party_color: string;
+    party_logo: string;
 
     constructor(
         private _power: PowerService,
@@ -43,6 +45,38 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit() {
         const user = JSON.parse(localStorage.getItem('user'));
+        switch (user.party) {
+            case MORENA: {
+                this.party_color = 'morena'
+                this.party_logo = '/assets/img/morena-logo.png'
+                break;
+            }
+            case PT: {
+                this.party_color = 'pt'
+                this.party_logo = '/assets/img/pt-logo.png'
+                break;
+            }
+            case VERDE: {
+                this.party_color = 'verde'
+                this.party_logo = '/assets/img/verde-logo.png'
+                break;
+            }
+            case PSI: {
+                this.party_color = 'psi'
+                this.party_logo = '/assets/img/psi-logo.png'
+                break;
+            }
+            case MORENA_PT: {
+                this.party_color = 'morena'
+                this.party_logo = '/assets/img/morena-pt-logo.jpeg'
+                break;
+            }
+            default: {
+                this.party_color = 'morena'
+                this.party_logo = '/assets/img/morena-logo.png'
+            }
+
+        }
         console.log('USER NAV --> ', user);
         this.menuItems = ROUTES.filter(menuItem => {
             if (menuItem.permission >= user.type) {

@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {MapsAPILoader} from '@agm/core';
 import Swal from 'sweetalert2';
 
@@ -30,7 +30,7 @@ export class LocationComponent implements OnInit {
         });
     }
 
-    protected mapReady(map) {
+    mapReady(map) {
         map.setCenter({ lat: parseFloat(this.data.latitude), lng: parseFloat(this.data.longitude) });
         Swal.close();
     }

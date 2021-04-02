@@ -4,9 +4,10 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {CandidateService} from '../../../../services/candidate.service';
 import Swal from 'sweetalert2';
-import _ from 'lodash'
+import * as _ from 'lodash'
 import MessagesUtill from '../../../../util/messages.utill';
 import {Router} from '@angular/router';
+import {MORENA, PSI, PT, VERDE} from '../../../../util/Config.utils';
 
 @Component({
     selector: 'app-candidate-list',
@@ -15,8 +16,8 @@ import {Router} from '@angular/router';
 })
 export class CandidateListComponent implements OnInit {
 
-    @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: false}) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     @Output() stateButtonChange = new EventEmitter();
     @Input() stateButton: boolean;
@@ -41,6 +42,8 @@ export class CandidateListComponent implements OnInit {
     dataSource: MatTableDataSource<any>;
     notData = true;
 
+    party_color: string;
+
 
     constructor(
         private _candidate: CandidateService,
@@ -52,6 +55,29 @@ export class CandidateListComponent implements OnInit {
     ngOnInit() {
         this.dataSource = new MatTableDataSource();
         this.setDataSource();
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        switch(user.party) {
+            case MORENA: {
+                this.party_color = 'morena'
+                break;
+            }
+            case PT: {
+                this.party_color = 'pt'
+                break;
+            }
+            case VERDE: {
+                this.party_color = 'verde'
+                break;
+            }
+            case PSI: {
+                this.party_color = 'psi'
+                break;
+            }
+            default: {
+                this.party_color = 'morena'
+            }
+        }
     }
 
     setDataSource(close = true) {
@@ -97,6 +123,10 @@ export class CandidateListComponent implements OnInit {
 
     generateFormat(id: number) {
         Swal.showLoading();
+    }
+
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
     private callbackDeleted(id: number) {

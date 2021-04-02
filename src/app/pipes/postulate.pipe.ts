@@ -10,7 +10,7 @@ export class PostulatePipe implements PipeTransform {
         let type = '';
 
         // tslint:disable-next-line:radix
-        value = parseInt(value);
+        // value = parseInt(value);
 
         switch (value) {
             case 1 :

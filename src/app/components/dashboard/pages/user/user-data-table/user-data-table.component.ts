@@ -7,7 +7,7 @@ import {UserModel} from '../../../../../models/user.model';
 import {MatDialog} from '@angular/material/dialog';
 import {UserService} from '../../../../../services/user.service';
 import Swal from 'sweetalert2';
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 @Component({
     selector: 'app-user-data-table',
@@ -16,8 +16,8 @@ import _ from 'lodash'
 })
 export class UserDataTableComponent implements OnInit, AfterViewInit {
 
-    @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: false}) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     @Output() stateButtonChange = new EventEmitter();
     @Input() stateButton: boolean;
@@ -30,6 +30,8 @@ export class UserDataTableComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<UserModel>;
     notData = true;
 
+    party_color: string;
+
     constructor(
         public dialog: MatDialog,
         private _user: UserService
@@ -40,6 +42,25 @@ export class UserDataTableComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.dataSource = new MatTableDataSource();
         this.setDataSource();
+        const user = JSON.parse(localStorage.getItem('user'));
+        switch(user.party) {
+            case 1: {
+                this.party_color = 'morena'
+                break;
+            }
+            case 2: {
+                this.party_color = 'pt'
+                break;
+            }
+            case 3: {
+                this.party_color = 'verde'
+                break;
+            }
+            case 4: {
+                this.party_color = 'psi'
+                break;
+            }
+        }
     }
 
     ngAfterViewInit(): void {

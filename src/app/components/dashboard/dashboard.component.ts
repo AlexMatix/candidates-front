@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
     };
 
     ngOnInit() {
-        Swal.showLoading();
+        // Swal.showLoading();
     }
 
     setGraphics() {

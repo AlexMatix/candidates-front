@@ -13,7 +13,7 @@
                 </mat-expansion-panel-header>
                 <form [formGroup]="form" (submit)="submit()">
                     <div class="card">
-                        <div class="card-header card-header-danger">
+                        <div class="card-header" [ngClass]="party_color">
                             <h4 class="card-title">Nuevo usuario</h4>
                             <p class="card-category">Completa la información para crear un nuevo usuario</p>
                         </div>

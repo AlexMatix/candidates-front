@@ -1,7 +1,7 @@
 <div class="main-content animated fadeIn">
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header card-header-danger">
+            <div class="card-header" [ngClass]="party_color">
                 <h4 class="card-title">Nuevo candidato</h4>
                 <p class="card-category">Completa la información para crear un nuevo candidato</p>
             </div>
@@ -19,8 +19,8 @@
                         <div class="col">
                             <mat-form-field class="w-100" appearance="outline">
                                 <mat-label>Apellido Paterno</mat-label>
-                                <input matInput type="text" formControlName="patter_lastname">
-                                <mat-error>{{getMessageError('patter_lastname')}}</mat-error>
+                                <input matInput type="text" formControlName="father_lastname">
+                                <mat-error>{{getMessageError('father_lastname')}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -62,23 +62,23 @@
                     </div>
 
                     <div class="row">
-                        <div class="col">
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Dirección</mat-label>
-                                <input matInput type="text" formControlName="address">
-                                <mat-error>{{getMessageError('address')}}</mat-error>
-                            </mat-form-field>
-                        </div>
+<!--                        <div class="col">-->
+<!--                            <mat-form-field class="w-100" appearance="outline">-->
+<!--                                <mat-label>Dirección</mat-label>-->
+<!--                                <input matInput type="text" formControlName="address">-->
+<!--                                <mat-error>{{getMessageError('address')}}</mat-error>-->
+<!--                            </mat-form-field>-->
+<!--                        </div>-->
                     </div>
 
                     <div class="row">
-                        <div class="col">
-                            <mat-form-field class="w-100" appearance="outline">
-                                <mat-label>Tiempo de residencia</mat-label>
-                                <input matInput type="text" formControlName="residence_time">
-                                <mat-error>{{getMessageError('residence_time')}}</mat-error>
-                            </mat-form-field>
-                        </div>
+<!--                        <div class="col">-->
+<!--                            <mat-form-field class="w-100" appearance="outline">-->
+<!--                                <mat-label>Tiempo de residencia</mat-label>-->
+<!--                                <input matInput type="text" formControlName="residence_time">-->
+<!--                                <mat-error>{{getMessageError('residence_time')}}</mat-error>-->
+<!--                            </mat-form-field>-->
+<!--                        </div>-->
 
                         <div class="col">
                             <mat-form-field class="w-100" appearance="outline">
