@@ -1,10 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, SAVE_MESSAGE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {CandidateService} from '../../../../services/candidate.service';
 import {Router} from '@angular/router';
+import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
 
 @Component({
   selector: 'app-candidate-ine',
@@ -17,6 +18,7 @@ export class CandidateIneComponent implements OnInit {
   onFormCandidateChange = new EventEmitter<any>();
 
   form: FormGroup;
+  formAlternate: FormGroup;
   editForm = false;
 
   roads = [
@@ -73,6 +75,69 @@ export class CandidateIneComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+          number_line: new FormControl('', [Validators.required]),
+          circumscription: new FormControl('', [Validators.required]),
+          locality: new FormControl('', [Validators.required]),
+          demarcation: new FormControl('', [ ]),
+          municipalities_council: new FormControl('', [Validators.required]),
+          campaign_slogan: new FormControl('', [Validators.required]),
+          list_number: new FormControl('', [Validators.required]),
+          campaign: new FormControl('', [Validators.required]),
+          curp: new FormControl('', [Validators.required]),
+          curp_confirmation: new FormControl('', [Validators.required]),
+          rfc: new FormControl('', [Validators.required]),
+          phone_type: new FormControl('', [Validators.required]),
+          lada: new FormControl('', [Validators.required]),
+          phone: new FormControl(''),
+          extension: new FormControl('', [Validators.required]),
+          email: new FormControl('', [Validators.required]),
+          email_confirmation: new FormControl('', [Validators.required]),
+          total_annual_income: new FormControl('', [Validators.required]),
+          salary_annual_income: new FormControl('', [Validators.required]),
+          financial_performances: new FormControl('', [Validators.required]),
+          annual_profit_professional_activity: new FormControl('', [Validators.required]),
+          annual_real_estate_lease_earnings: new FormControl('', [Validators.required]),
+          professional_services_fees: new FormControl('', [Validators.required]),
+          other_income: new FormControl('', [Validators.required]),
+          total_annual_expenses: new FormControl('', [Validators.required]),
+          personal_expenses: new FormControl('', [Validators.required]),
+          real_estate_payments: new FormControl('', [Validators.required]),
+          debt_payments: new FormControl('', [Validators.required]),
+          loss_personal_activity: new FormControl('', [Validators.required]),
+          other_expenses: new FormControl(1, [Validators.required]),
+          property: new FormControl('', [Validators.required]),
+          vehicles: new FormControl('', [Validators.required]),
+          other_movable_property: new FormControl('', [Validators.required]),
+          bank_accounts: new FormControl('', [Validators.required]),
+          other_assets: new FormControl('', [Validators.required]),
+          payment_debt_amount: new FormControl('', [Validators.required]),
+          other_passives: new FormControl('', [Validators.required]),
+        }
+    );
+
+      const user = JSON.parse(localStorage.getItem('user'));
+      switch (user.politic_party_id) {
+          case MORENA: {
+              this.party_color = 'morena'
+              break;
+          }
+          case PT: {
+              this.party_color = 'pt'
+              break;
+          }
+          case VERDE: {
+              this.party_color = 'verde'
+              break;
+          }
+          case PSI: {
+              this.party_color = 'psi'
+              break;
+          }
+          default: {
+              this.party_color = 'morena'
+          }
+      }
   }
 
   onFormCandidateChangeEvent(_event) {
@@ -106,6 +171,10 @@ export class CandidateIneComponent implements OnInit {
       this._router.navigate(['/candidateList']);
     }
   }
+
+  getMessageError(attrName: string) {
+    return messageErrorValidation(this.form, attrName);
+  };
 
 
 }

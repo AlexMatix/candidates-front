@@ -2,10 +2,85 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header" [ngClass]="party_color">
-                <h4 class="card-title">Nuevo candidato</h4>
-                <p class="card-category">Completa la información para crear un nuevo candidato</p>
+                <h4 class="card-title">Completar datos de candidato INE</h4>
+                <p class="card-category">Información necesaria para INE</p>
             </div>
-            <app-candidate-form (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
+
+
+            <form [formGroup]="form">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Número de línea</mat-label>
+                                    <input matInput type="text" formControlName="number_line">
+                                    <mat-error>{{getMessageError('number_line')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Circunscripción</mat-label>
+                                    <input matInput type="text" formControlName="circumscription">
+                                    <mat-error>{{getMessageError('circumscription')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Localidad</mat-label>
+                                    <input matInput type="text" formControlName="locality">
+                                    <mat-error>{{getMessageError('locality')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Demarcación</mat-label>
+                                    <input matInput type="text" formControlName="demarcation">
+                                    <mat-error>{{getMessageError('demarcation')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Juntas Municipales</mat-label>
+                                    <input matInput type="text" formControlName="municipalities_council">
+                                    <mat-error>{{getMessageError('municipalities_council')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Lema de campaña</mat-label>
+                                    <input matInput type="text" formControlName="campaign_slogan">
+                                    <mat-error>{{getMessageError('campaign_slogan')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Número de lista</mat-label>
+                                    <input matInput type="text" formControlName="list_number">
+                                    <mat-error>{{getMessageError('list_number')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>¿Realizará Campaña?</mat-label>
+                                    <input matInput type="text" formControlName="campaign">
+                                    <mat-error>{{getMessageError('campaign')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
 
             <div class="d-flex flex-row-reverse">
                 <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
