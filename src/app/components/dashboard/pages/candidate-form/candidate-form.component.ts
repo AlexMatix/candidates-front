@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
 import {debounceTime, map} from 'rxjs/operators';
@@ -13,6 +13,7 @@ import {MunicipalitiesService} from '../../../../services/municipalities.service
 })
 export class CandidateFormComponent implements OnInit {
 
+    @Input()
     form: FormGroup;
 
     municipalities$: Observable<any>;
