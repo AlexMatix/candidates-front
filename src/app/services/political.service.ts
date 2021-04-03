@@ -11,7 +11,7 @@ export class PoliticalService {
     private URL_PATH: string;
 
     constructor(private http: HttpClient) {
-        this.URL_PATH = URL_BASE + 'political_party';
+        this.URL_PATH = URL_BASE + 'politicParty';
     }
 
     add(data: any): Observable<any> {
