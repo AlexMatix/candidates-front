@@ -37,7 +37,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {AgmCoreModule} from '@agm/core';
 import {OperatorPipe} from '../../pipes/operator.pipe';
-import {IronmanPipe} from '../../pipes/ironman.pipe';
+import {TypePostulatePipe} from '../../pipes/TypePostulate.pipe';
 import {OrganizationChartModule} from 'primeng/organizationchart';
 import {CandidateComponent} from '../../components/dashboard/pages/candidate/candidate.component';
 import {CandidateListComponent} from '../../components/dashboard/pages/candidate-list/candidate-list.component';
@@ -88,7 +88,7 @@ import {MatHorizontalStepper, MatStepper, MatStepperModule} from '@angular/mater
         UserComponent,
         UserDataTableComponent,
         UserPipe,
-        IronmanPipe,
+        TypePostulatePipe,
         OperatorPipe,
         PostulatePipe,
         DragImageDirective,

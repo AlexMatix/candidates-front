@@ -14,23 +14,24 @@ export class PostulatePipe implements PipeTransform {
 
         switch (value) {
             case 1 :
-                type = 'Diputación';
+                type = 'Diputación DRP';
                 break;
             case 2 :
-                type = 'Regidor';
+                type = 'Diputación DMR';
                 break;
             case 3 :
-                type = 'Sindicatura';
+                type = 'Regiduria';
                 break;
             case 4 :
-                type = 'Propietario';
+                type = 'Sindicatura';
                 break;
             case 5 :
-                type = 'Suplente';
+                type = 'Presidencia';
                 break;
             default :
                 type = 'Not Defined';
         }
+
         return type;
     }
 }
