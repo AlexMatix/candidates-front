@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
+import {CURP_REGEX, ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {CandidateService} from '../../../../services/candidate.service';
 import {Router} from '@angular/router';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
@@ -70,6 +70,8 @@ export class CandidateIneComponent implements OnInit {
 
     party_color: string;
 
+    private CURP_REGEX: '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
+
     constructor(
         private _candidate: CandidateService,
         private _router: Router,
@@ -78,24 +80,56 @@ export class CandidateIneComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = new FormGroup({
-                number_line: new FormControl('', [Validators.required]),
+                number_line: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]),
                 circumscription: new FormControl(''),
                 locality: new FormControl(''),
-                demarcation: new FormControl('', [Validators.required]),
+                demarcation: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(1),
+                            Validators.maxLength(3)
+                        ])),
                 municipalities_council: new FormControl(''),
                 campaign_slogan: new FormControl(''),
                 list_number: new FormControl(''),
                 campaign: new FormControl('', [Validators.required]),
-                curp: new FormControl('', [Validators.required]),
-                curp_confirmation: new FormControl('', [Validators.required]),
-                rfc: new FormControl('', [Validators.required]),
+                curp: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(18),
+                            Validators.pattern(this.CURP_REGEX)
+                        ]
+                    )),
+                curp_confirmation: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(18),
+                            Validators.pattern(this.CURP_REGEX)
+                        ]
+                    ),
+                ),
+                rfc: new FormControl('', Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(13)
+                    ]
+                )),
                 phone_type: new FormControl('', [Validators.required]),
                 lada: new FormControl(''),
-                phone: new FormControl('', [Validators.required]),
+                phone: new FormControl('', Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(7),
+                        Validators.maxLength(10),
+                    ]
+                )),
                 extension: new FormControl(''),
-                email: new FormControl('', [Validators.required]),
+                email: new FormControl('', [Validators.required, Validators.email]),
                 email_confirmation: new FormControl('', [Validators.required, Validators.email]),
-                total_annual_income: new FormControl('', [Validators.required, Validators.email]),
+                total_annual_income: new FormControl('', [Validators.required, Validators.maxLength(50)]),
                 salary_annual_income: new FormControl(''),
                 financial_performances: new FormControl(''),
                 annual_profit_professional_activity: new FormControl(''),
@@ -103,7 +137,7 @@ export class CandidateIneComponent implements OnInit {
                 professional_services_fees: new FormControl(''),
                 other_income: new FormControl(''),
                 total_annual_expenses: new FormControl('', [Validators.required]),
-                personal_expenses: new FormControl('', [Validators.required]),
+                personal_expenses: new FormControl(''),
                 real_estate_payments: new FormControl(''),
                 debt_payments: new FormControl(''),
                 loss_personal_activity: new FormControl(''),
@@ -115,7 +149,11 @@ export class CandidateIneComponent implements OnInit {
                 other_assets: new FormControl(''),
                 payment_debt_amount: new FormControl(''),
                 other_passives: new FormControl(''),
-            }
+            },
+            [
+                ValidatorEquals('curp', 'curp_confirmation', 'notEqualsCurp'),
+                ValidatorEquals('email', 'email_confirmation', 'notEqualsEmail')
+            ]
         );
 
         const user = JSON.parse(localStorage.getItem('user'));
@@ -177,6 +215,25 @@ export class CandidateIneComponent implements OnInit {
     getMessageError(attrName: string) {
         return messageErrorValidation(this.form, attrName);
     };
+
+    onPressCURP(value) {
+        const length = this.form.get('curp').value.length + 1;
+        if (length > 18) {
+            return false;
+        }
+
+        if ((length > 4 && length < 11) || length > 16) {
+            if (value.charCode >= 48 && value.charCode <= 57) {
+                return true;
+            }
+        }
+        if ((length >= 1 && length <= 4) || (length >= 11 && length <= 16)) {
+            if ((value.charCode >= 65 && value.charCode <= 90) || (value.charCode >= 97 && value.charCode <= 122)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }
