@@ -1,0 +1,78 @@
+<div class="main-content animated fadeIn">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header" [ngClass]="party_color">
+                <h4 class="card-title">Ayuntamiento</h4>
+                <p class="card-category">Completa la información para crear un nuevo candidato de ayuntamiento</p>
+            </div>
+            <!--forms-->
+            <form [formGroup]="form">
+                <div class="card-body">
+                    <div class="container">
+                        <h5 class="ml-3 font-weight-bold">Datos de elector</h5>
+                        <div class="row">
+
+
+                            <div class="col-4">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Distrito</mat-label>
+                                    <mat-select formControlName="district" (valueChange)="changeMunicipalities($event)">
+                                        <mat-option [value]="district" *ngFor="let district of data?.districts">
+                                            {{district}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('district')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-4">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Municipio</mat-label>
+                                    <mat-select formControlName="municipality">
+                                        <mat-option *ngFor="let municipality of data?.municipalities[district]"
+                                                    [value]="municipality.id">
+                                            {{municipality.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('municipality')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-4">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Cargo</mat-label>
+                                    <mat-select formControlName="charge" (valueChange)="setSizeStepper($event)">
+                                        <mat-option [value]="charge.id" *ngFor="let charge of charges">
+                                            {{charge.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('charge')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!--                        <hr>-->
+
+                    </div>
+
+                    <mat-horizontal-stepper linear="true" #stepper>
+                        <mat-step *ngFor="let control of candidatesArray.controls; let i = index">
+                            <div class="container">
+                                <app-candidate-form></app-candidate-form>
+                            </div>
+                            <div>
+                                <button mat-raised-button matStepperPrevious *ngIf="i">Anterior</button>
+                                <button mat-raised-button color="primary" matStepperNext
+                                        *ngIf="i === (sizeStepper - 1)">Siguiente
+                                </button>
+                            </div>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

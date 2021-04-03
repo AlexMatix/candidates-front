@@ -42,6 +42,8 @@ import {OrganizationChartModule} from 'primeng/organizationchart';
 import {CandidateComponent} from '../../components/dashboard/pages/candidate/candidate.component';
 import {CandidateListComponent} from '../../components/dashboard/pages/candidate-list/candidate-list.component';
 import {CandidateFormComponent} from '../../components/dashboard/pages/candidate-form/candidate-form.component';
+import {CityHallComponent} from '../../components/dashboard/pages/city-hall/city-hall.component';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
     imports: [
@@ -70,6 +72,7 @@ import {CandidateFormComponent} from '../../components/dashboard/pages/candidate
         DragDropModule,
         MatChipsModule,
         MatAutocompleteModule,
+        MatStepperModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyAHukNiEIS2AzxptYrarhGCdFJw2zmZGLY',
             libraries: ['places']
@@ -92,7 +95,8 @@ import {CandidateFormComponent} from '../../components/dashboard/pages/candidate
         DigitOnlyDirective,
         CandidateComponent,
         CandidateListComponent,
-        CandidateFormComponent
+        CandidateFormComponent,
+        CityHallComponent
     ]
 })
 

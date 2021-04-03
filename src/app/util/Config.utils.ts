@@ -3,8 +3,8 @@
 // export const URL_BASE = 'http://127.0.0.1:8000/api/';
 // export const CLIENT_SECRET = 't3E3Klj8YPV991ia2i7ajbU9l9lFAS9gr6q2kVtN ';
 
-export const URL_BASE = 'http://165.22.2.168:8081/api/';
-export const CLIENT_SECRET = 'oxj7AyacJEah3TqXStfWO0IIPNrUAFbWD5Dc2GQ2';
+export const URL_BASE = 'http://candidate.com/api/';
+export const CLIENT_SECRET = 'ypcwtz29IDl7VVCOgjTeNZt3VXQIzkwCwi9NX4rV';
 
 export const CLIENT_ID = '2';
 export const GRANT_TYPE = 'password';
