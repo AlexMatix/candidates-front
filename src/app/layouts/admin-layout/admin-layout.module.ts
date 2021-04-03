@@ -1,4 +1,4 @@
-//Pipes
+// Pipes
 import {UserPipe} from '../../pipes/user.pipe';
 import {PostulatePipe} from '../../pipes/postulate.pipe';
 
@@ -41,6 +41,7 @@ import {IronmanPipe} from '../../pipes/ironman.pipe';
 import {OrganizationChartModule} from 'primeng/organizationchart';
 import {CandidateComponent} from '../../components/dashboard/pages/candidate/candidate.component';
 import {CandidateListComponent} from '../../components/dashboard/pages/candidate-list/candidate-list.component';
+import {CandidateFormComponent} from '../../components/dashboard/pages/candidate-form/candidate-form.component';
 
 @NgModule({
     imports: [
@@ -90,7 +91,8 @@ import {CandidateListComponent} from '../../components/dashboard/pages/candidate
         BlockCopyPasteDirective,
         DigitOnlyDirective,
         CandidateComponent,
-        CandidateListComponent
+        CandidateListComponent,
+        CandidateFormComponent
     ]
 })
 

@@ -1,0 +1,351 @@
+<form [formGroup]="form">
+    <div class="card-body">
+        <div class="container">
+            <h5 class="ml-3 font-weight-bold">Datos personales</h5>
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" formControlName="name">
+                        <mat-error>{{getMessageError('name')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Apellido Paterno</mat-label>
+                        <input matInput type="text" formControlName="father_lastname">
+                        <mat-error>{{getMessageError('father_lastname')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput type="text" formControlName="mother_lastname">
+                        <mat-error>{{getMessageError('mother_lastname')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Sobrenombre</mat-label>
+                        <input matInput type="text" formControlName="nickname">
+                        <mat-error>{{getMessageError('nickname')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput type="date" formControlName="date_birth">
+                        <mat-error>{{getMessageError('date_birth')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Lugar de nacimiento</mat-label>
+                        <input matInput type="text" formControlName="birthplace">
+                        <mat-error>{{getMessageError('birthplace')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Género</mat-label>
+                        <mat-select formControlName="gender">
+                            <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                {{gender.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('gender')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>¿Pertenece a un grupo de diversidad sexual?</mat-label>
+                        <mat-select formControlName="group_sexual_diversity">
+                            <mat-option *ngFor="let item of reelection" [value]="item.value">
+                                {{item.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('group_sexual_diversity')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>¿Pertenece a un pueblo indigena?</mat-label>
+                        <mat-select formControlName="indigenous_group">
+                            <mat-option *ngFor="let item of reelection" [value]="item.value">
+                                {{item.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('indigenous_group')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>¿Padece alguna discapacidad?</mat-label>
+                        <input matInput type="text" formControlName="disabled_group">
+                        <mat-error>{{getMessageError('disabled_group')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Ocupación</mat-label>
+                        <input matInput type="text" formControlName="occupation">
+                        <mat-error>{{getMessageError('occupation')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="container">
+            <h5 class="ml-3 font-weight-bold">Dirección</h5>
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Tipo de vialidad</mat-label>
+                        <mat-select formControlName="roads">
+                            <mat-option *ngFor="let road of roads" [value]="road.id">
+                                {{road.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('roads')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Nombre de la vialidad</mat-label>
+                        <input matInput type="text" formControlName="roads_name">
+                        <mat-error>{{getMessageError('roads_name')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Número exterior</mat-label>
+                        <input matInput type="text" formControlName="outdoor_number">
+                        <mat-error>{{getMessageError('outdoor_number')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Número interior</mat-label>
+                        <input matInput type="text" formControlName="interior_number">
+                        <mat-error>{{getMessageError('interior_number')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-9">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Colonia</mat-label>
+                        <input matInput type="text" formControlName="neighborhood">
+                        <mat-error>{{getMessageError('neighborhood')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Codigo postal</mat-label>
+                        <input matInput type="text" formControlName="zipcode">
+                        <mat-error>{{getMessageError('zipcode')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Entidad</mat-label>
+                        <input matInput type="text" formControlName="entity">
+                        <mat-error>{{getMessageError('entity')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-9">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Municipio</mat-label>
+                        <input matInput type="text" formControlName="municipality">
+                        <mat-error>{{getMessageError('municipality')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Sección</mat-label>
+                        <input matInput type="text" formControlName="section">
+                        <mat-error>{{getMessageError('section')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>¿Cuantos años lleva viviendo en este domicilio?</mat-label>
+                        <input matInput type="text" formControlName="residence_time_year">
+                        <mat-error>{{getMessageError('residence_time_year')}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>¿Cuantos meses lleva viviendo en este domicilio?</mat-label>
+                        <input matInput type="text" formControlName="residence_time_month">
+                        <mat-error>{{getMessageError('residence_time_month')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="container">
+            <h5 class="ml-3 font-weight-bold">Datos de elector</h5>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Clave de elector</mat-label>
+                        <input matInput type="text" formControlName="elector_key" maxlength="18"
+                               oninput="this.value = this.value.toUpperCase()">
+                        <mat-error>{{getMessageError('elector_key')}}</mat-error>
+                        <mat-error *ngIf="form.get('elector_key').hasError('pattern')">
+                            {{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}
+                            A-Z{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}
+                            0-9{{'}'}}
+                            -{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}
+                            -{{'{'}}0-9{{'}'}}-{{'{'}}A-Z{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}0-9{{'}'}}-{{'{'}}
+                            0-9{{'}'}}
+                        </mat-error>
+                        <mat-hint align="end">{{form.get('elector_key').value?.length}} / 18</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Confirmar clave de elector</mat-label>
+                        <input matInput type="text" formControlName="electorKey_confirm"
+                               oninput="this.value = this.value.toUpperCase()" maxlength="18"
+                               appBlockCopyPaste>
+                        <mat-error>{{getMessageError('electorKey_confirm')}}</mat-error>
+                        <mat-hint align="end">{{form.get('electorKey_confirm').value?.length}} / 18
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>OCR</mat-label>
+                        <input matInput type="text" formControlName="ocr">
+                        <mat-error>{{getMessageError('ocr')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>CIC</mat-label>
+                        <input matInput type="text" formControlName="cic">
+                        <mat-error>{{getMessageError('cic')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Fecha de emisión</mat-label>
+                        <input matInput type="text" formControlName="emission">
+                        <mat-error>{{getMessageError('emission')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-9">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select formControlName="type_postulate">
+                            <mat-option *ngFor="let item of type" [value]="item.id">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('type_postulate')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Número</mat-label>
+                        <input matInput type="text" formControlName="number">
+                        <mat-error>{{getMessageError('number')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-9">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Cargo</mat-label>
+                        <mat-select formControlName="postulate">
+                            <mat-option *ngFor="let item of postulate" [value]="item.id">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('postulate')}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Municipio</mat-label>
+                        <mat-select formControlName="postulate_id">
+                            <mat-option *ngFor="let municipality of (municipalities$ | async).municipalities">
+                                Hola
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('postulate_id')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Reeleción</mat-label>
+                        <mat-select formControlName="re_election">
+                            <mat-option *ngFor="let item of reelection" [value]="item.value">
+                                {{item.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('re_election')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
