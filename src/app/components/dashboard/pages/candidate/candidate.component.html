@@ -5,7 +5,17 @@
                 <h4 class="card-title">Nuevo candidato</h4>
                 <p class="card-category">Completa la información para crear un nuevo candidato</p>
             </div>
-            <app-candidate-form></app-candidate-form>
+            <app-candidate-form (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
+            <div class="d-flex flex-row-reverse">
+                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
+                        [disabled]="!form.valid">Guardar
+                    información
+                </button>
+                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
+                        [disabled]="!form.valid">Cancelar
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CandidateService} from '../../../../services/candidate.service';
@@ -16,7 +16,6 @@ import {Observable} from 'rxjs';
     styleUrls: ['./candidate.component.scss']
 })
 export class CandidateComponent implements OnInit {
-
     form: FormGroup;
 
     roads = [
@@ -78,44 +77,44 @@ export class CandidateComponent implements OnInit {
         private _municipalitiesService: MunicipalitiesService
     ) {
         this.municipalities$ = this._municipalitiesService.getAll();
-        this.form = new FormGroup({
-                name: new FormControl('', [Validators.required]),
-                father_lastname: new FormControl('', [Validators.required]),
-                mother_lastname: new FormControl('', [Validators.required]),
-                nickname: new FormControl('', [ ]),
-                birthplace: new FormControl('', [Validators.required]),
-                date_birth: new FormControl('', [Validators.required]),
-                gender: new FormControl('', [Validators.required]),
-                group_sexual_diversity: new FormControl('', [Validators.required]),
-                indigenous_group: new FormControl('', [Validators.required]),
-                disabled_group: new FormControl('', [Validators.required]),
-                roads: new FormControl('', [Validators.required]),
-                roads_name: new FormControl('', [Validators.required]),
-                outdoor_number: new FormControl('', [Validators.required]),
-                interior_number: new FormControl(''),
-                neighborhood: new FormControl('', [Validators.required]),
-                zipcode: new FormControl('', [Validators.required]),
-                municipality: new FormControl('', [Validators.required]),
-                entity: new FormControl('', [Validators.required]),
-                section: new FormControl('', [Validators.required]),
-                residence_time_year: new FormControl('', [Validators.required]),
-                residence_time_month: new FormControl('', [Validators.required]),
-                occupation: new FormControl('', [Validators.required]),
-                elector_key: new FormControl('', [Validators.required], [this.keyElectorValidator.bind(this)]),
-                electorKey_confirm: new FormControl('', [Validators.required]),
-                ocr: new FormControl('', [Validators.required]),
-                cic: new FormControl('', [Validators.required]),
-                emission: new FormControl('', [Validators.required]),
-                postulate: new FormControl('', [Validators.required]),
-                re_election: new FormControl('', [Validators.required]),
-                type_postulate: new FormControl('', [Validators.required]),
-                number: new FormControl('', [Validators.required]),
-                postulate_id: new FormControl('', [Validators.required]),
-            },
-            [
-                ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
-            ]
-        );
+        // this.form = new FormGroup({
+        //         name: new FormControl('', [Validators.required]),
+        //         father_lastname: new FormControl('', [Validators.required]),
+        //         mother_lastname: new FormControl('', [Validators.required]),
+        //         nickname: new FormControl('', [ ]),
+        //         birthplace: new FormControl('', [Validators.required]),
+        //         date_birth: new FormControl('', [Validators.required]),
+        //         gender: new FormControl('', [Validators.required]),
+        //         group_sexual_diversity: new FormControl('', [Validators.required]),
+        //         indigenous_group: new FormControl('', [Validators.required]),
+        //         disabled_group: new FormControl('', [Validators.required]),
+        //         roads: new FormControl('', [Validators.required]),
+        //         roads_name: new FormControl('', [Validators.required]),
+        //         outdoor_number: new FormControl('', [Validators.required]),
+        //         interior_number: new FormControl(''),
+        //         neighborhood: new FormControl('', [Validators.required]),
+        //         zipcode: new FormControl('', [Validators.required]),
+        //         municipality: new FormControl('', [Validators.required]),
+        //         entity: new FormControl('', [Validators.required]),
+        //         section: new FormControl('', [Validators.required]),
+        //         residence_time_year: new FormControl('', [Validators.required]),
+        //         residence_time_month: new FormControl('', [Validators.required]),
+        //         occupation: new FormControl('', [Validators.required]),
+        //         elector_key: new FormControl('', [Validators.required], [this.keyElectorValidator.bind(this)]),
+        //         electorKey_confirm: new FormControl('', [Validators.required]),
+        //         ocr: new FormControl('', [Validators.required]),
+        //         cic: new FormControl('', [Validators.required]),
+        //         emission: new FormControl('', [Validators.required]),
+        //         postulate: new FormControl('', [Validators.required]),
+        //         re_election: new FormControl('', [Validators.required]),
+        //         type_postulate: new FormControl('', [Validators.required]),
+        //         number: new FormControl('', [Validators.required]),
+        //         postulate_id: new FormControl('', [Validators.required]),
+        //     },
+        //     [
+        //         ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
+        //     ]
+        // );
 
         this.id = Number(this.router.snapshot.params.id);
         if (!isNaN(this.id) && this.id !== 0) {
@@ -173,6 +172,12 @@ export class CandidateComponent implements OnInit {
         }
     }
 
+    onFormCandidateChangeEvent(_event) {
+        console.log(_event);
+        this.form = _event;
+        // console.error(_event, this.form['controls']);
+    }
+
     keyElectorValidator(control: AbstractControl) {
         return this._candidate.validateElectorKey(control.value, null).pipe(
             debounceTime(200),
@@ -180,10 +185,6 @@ export class CandidateComponent implements OnInit {
                 return res.result === 'true' ? null : {keyElectorExist: true};
             })
         );
-    }
-
-    getMessageError(attrName: string) {
-        return messageErrorValidation(this.form, attrName);
     }
 
     submit() {

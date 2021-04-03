@@ -1,4 +1,4 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
 import {debounceTime, map} from 'rxjs/operators';
@@ -12,16 +12,19 @@ import {MunicipalitiesService} from '../../../../services/municipalities.service
     styleUrls: ['./candidate-form.component.scss']
 })
 export class CandidateFormComponent implements OnInit {
+
     form: FormGroup;
+
     municipalities$: Observable<any>;
 
     @Output()
+    onFormCandidateChange = new EventEmitter<any>();
 
     roads = [
         {id: 1, name: 'Ampliación'},
         {id: 2, name: 'Andador'},
         {id: 3, name: 'Avenida'},
-        {id: 4 , name: 'Boulevard'},
+        {id: 4, name: 'Boulevard'},
         {id: 5, name: 'Calle'},
         {id: 6, name: 'Callejon'},
         {id: 7, name: 'Calzada'},
@@ -68,11 +71,15 @@ export class CandidateFormComponent implements OnInit {
         private _municipalitiesService: MunicipalitiesService
     ) {
         this.municipalities$ = this._municipalitiesService.getAll();
+
+    }
+
+    ngOnInit(): void {
         this.form = new FormGroup({
                 name: new FormControl('', [Validators.required]),
                 father_lastname: new FormControl('', [Validators.required]),
                 mother_lastname: new FormControl('', [Validators.required]),
-                nickname: new FormControl('', []),
+                nickname: new FormControl('', [ ]),
                 birthplace: new FormControl('', [Validators.required]),
                 date_birth: new FormControl('', [Validators.required]),
                 gender: new FormControl('', [Validators.required]),
@@ -106,14 +113,12 @@ export class CandidateFormComponent implements OnInit {
                 ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
             ]
         );
-    }
-
-    ngOnInit(): void {
+        this.onFormCandidateChange.emit(this.form);
     }
 
     getMessageError(attrName: string) {
         return messageErrorValidation(this.form, attrName);
-    }
+    };
 
     keyElectorValidator(control: AbstractControl) {
         return this._candidate.validateElectorKey(control.value, null).pipe(
