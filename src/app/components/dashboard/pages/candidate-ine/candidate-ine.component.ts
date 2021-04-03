@@ -1,11 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {CURP_REGEX, ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {CandidateService} from '../../../../services/candidate.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-candidate-ine',
@@ -18,32 +19,7 @@ export class CandidateIneComponent implements OnInit {
     onFormCandidateChange = new EventEmitter<any>();
 
     form: FormGroup;
-    formAlternate: FormGroup;
     editForm = false;
-
-    roads = [
-        {id: 1, name: 'Ampliación'},
-        {id: 2, name: 'Andador'},
-        {id: 3, name: 'Avenida'},
-        {id: 4, name: 'Boulevard'},
-        {id: 5, name: 'Calle'},
-        {id: 6, name: 'Callejon'},
-        {id: 7, name: 'Calzada'},
-        {id: 8, name: 'Cerrada'},
-        {id: 9, name: 'Circuito'},
-        {id: 10, name: 'Circulación'},
-        {id: 11, name: 'Continuación'},
-        {id: 12, name: 'Corredor'},
-        {id: 13, name: 'Diagonal'},
-        {id: 14, name: 'Eje vial'},
-        {id: 15, name: 'Pasaje'},
-        {id: 16, name: 'Peatonal'},
-        {id: 17, name: 'Periférico'},
-        {id: 18, name: 'Privada'},
-        {id: 19, name: 'Prolongación'},
-        {id: 20, name: 'Retorno'},
-        {id: 21, name: 'Viaducto'},
-    ]
 
     phone_type = [
         {value: 1, name: 'Casa'},
@@ -69,18 +45,68 @@ export class CandidateIneComponent implements OnInit {
 
 
     party_color: string;
+    type_postulate;
+    subscription;
 
     private CURP_REGEX: '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
 
     constructor(
-        private _candidate: CandidateService,
-        private _router: Router,
+        private location: Location,
+        private route: ActivatedRoute,
+        private router: Router,
+        private _candidate: CandidateService
     ) {
     }
 
     ngOnInit(): void {
+        this.subscription = this.route
+            .queryParams
+            .subscribe(params => {
+                this.type_postulate = +params['type'];
+                if (this.type_postulate === 1) {
+                    this.createOwnerForm();
+                }
+                if (this.type_postulate === 2) {
+                    this.createAlternateForm();
+                }
+            });
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        switch (user.politic_party_id) {
+            case MORENA: {
+                this.party_color = 'morena'
+                break;
+            }
+            case PT: {
+                this.party_color = 'pt'
+                break;
+            }
+            case VERDE: {
+                this.party_color = 'verde'
+                break;
+            }
+            case PSI: {
+                this.party_color = 'psi'
+                break;
+            }
+            default: {
+                this.party_color = 'morena'
+            }
+        }
+    }
+
+    createOwnerForm() {
         this.form = new FormGroup({
-                number_line: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]),
+                number_line: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(1),
+                            Validators.maxLength(3)
+                        ]
+                    )
+                ),
+                number_list: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]),
                 circumscription: new FormControl(''),
                 locality: new FormControl(''),
                 demarcation: new FormControl('',
@@ -155,29 +181,48 @@ export class CandidateIneComponent implements OnInit {
                 ValidatorEquals('email', 'email_confirmation', 'notEqualsEmail')
             ]
         );
+    }
 
-        const user = JSON.parse(localStorage.getItem('user'));
-        switch (user.politic_party_id) {
-            case MORENA: {
-                this.party_color = 'morena'
-                break;
-            }
-            case PT: {
-                this.party_color = 'pt'
-                break;
-            }
-            case VERDE: {
-                this.party_color = 'verde'
-                break;
-            }
-            case PSI: {
-                this.party_color = 'psi'
-                break;
-            }
-            default: {
-                this.party_color = 'morena'
-            }
-        }
+    createAlternateForm() {
+        this.form = new FormGroup({
+            curp: new FormControl('',
+                Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(18),
+                        Validators.pattern(this.CURP_REGEX)
+                    ]
+                )),
+            curp_confirmation: new FormControl('',
+                Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(18),
+                        Validators.pattern(this.CURP_REGEX)
+                    ]
+                ),
+            ),
+            rfc: new FormControl('', Validators.compose(
+                [
+                    Validators.required,
+                    Validators.minLength(13)
+                ]
+            )),
+            phone_type: new FormControl('', [Validators.required]),
+            lada: new FormControl(''),
+            phone: new FormControl('', Validators.compose(
+                [
+                    Validators.required,
+                    Validators.minLength(7),
+                    Validators.maxLength(10),
+                ]
+            )),
+            extension: new FormControl(''),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            email_confirmation: new FormControl('', [Validators.required, Validators.email]),
+            others: new FormControl(''),
+            considerations: new FormControl(''),
+        });
     }
 
     onFormCandidateChangeEvent(_event) {
@@ -206,10 +251,7 @@ export class CandidateIneComponent implements OnInit {
     }
 
     cancel() {
-        this.form.reset();
-        if (this.editForm) {
-            this._router.navigate(['/candidateList']);
-        }
+        this.location.back();
     }
 
     getMessageError(attrName: string) {

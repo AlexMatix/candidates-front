@@ -7,10 +7,18 @@
             </div>
 
 
-            <form [formGroup]="form">
+            <form [formGroup]="form" *ngIf="type_postulate === 1">
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Número de lista / Planilla</mat-label>
+                                    <input matInput type="text" formControlName="number_list" digitOnly maxlength="5">
+                                    <mat-error>{{getMessageError('number_list')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Número de línea</mat-label>
@@ -250,13 +258,13 @@
                                 </mat-form-field>
                             </div>
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Gastos personales</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="personal_expenses">-->
-<!--                                    <mat-error>{{getMessageError('personal_expenses')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Gastos personales</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="personal_expenses">-->
+                            <!--                                    <mat-error>{{getMessageError('personal_expenses')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
                             <!--                            <div class="col-12">-->
                             <!--                                <mat-form-field class="w-100" appearance="outline">-->
@@ -359,14 +367,130 @@
                 </div>
             </form>
 
+            <form [formGroup]="form" *ngIf="type_postulate === 2">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>CURP</mat-label>
+                                    <input matInput type="text" formControlName="curp" maxlength="18"
+                                           (keypress)="onPressCURP($event)"
+                                           oninput="this.value = this.value.toUpperCase()"
+                                           appBlockCopyPaste>
+                                    <mat-error>{{getMessageError('curp')}}</mat-error>
+                                    <mat-error *ngIf="form.get('curp').hasError('pattern')">
+                                        Formato: AAAA 000000 A AA AAA 00
+                                    </mat-error>
+                                    <mat-hint align="end">{{form.get('curp').value?.length}} / 18</mat-hint>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Confirmación de CURP</mat-label>
+                                    <input matInput type="text" formControlName="curp_confirmation" maxlength="18"
+                                           (keypress)="onPressCURP($event)"
+                                           oninput="this.value = this.value.toUpperCase()"
+                                           appBlockCopyPaste>
+                                    <mat-error>{{getMessageError('curp_confirmation')}}</mat-error>
+                                    <mat-error *ngIf="form.get('curp').hasError('curp_confirmation')">
+                                        Formato: AAAA 000000 A AA AAA 00
+                                    </mat-error>
+                                    <mat-hint align="end">{{form.get('curp_confirmation').value?.length}} / 18
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>RFC</mat-label>
+                                    <input matInput type="text" formControlName="rfc" maxlength="13">
+                                    <mat-error>{{getMessageError('rfc')}}</mat-error>
+                                    <mat-hint align="end">{{form.get('rfc').value?.length}} / 13</mat-hint>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-3">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Tipo de teléfono</mat-label>
+                                    <mat-select formControlName="phone_type">
+                                        <mat-option *ngFor="let phone of phone_type" [value]="phone.value">
+                                            {{phone.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('phone_type')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                            <div class="col-2">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>LADA</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="lada">-->
+                            <!--                                    <mat-error>{{getMessageError('lada')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+
+                            <div class="col-9">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Teléfono</mat-label>
+                                    <input matInput type="tel" formControlName="phone" maxlength="10">
+                                    <mat-error>{{getMessageError('phone')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                            <div class="col-2">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Extensión</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="extension">-->
+                            <!--                                    <mat-error>{{getMessageError('extension')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Correo electrónico</mat-label>
+                                    <input matInput type="email" formControlName="email">
+                                    <mat-error>{{getMessageError('email')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Confirmación correo electronico</mat-label>
+                                    <input matInput type="email" formControlName="email_confirmation">
+                                    <mat-error>{{getMessageError('email_confirmation')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros</mat-label>-->
+                            <!--                                    <input matInput type="email" formControlName="others">-->
+                            <!--                                    <mat-error>{{getMessageError('others')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Consideraciones</mat-label>-->
+                            <!--                                    <input matInput type="email" formControlName="considerations">-->
+                            <!--                                    <mat-error>{{getMessageError('considerations')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </form>
+
 
             <div class="d-flex flex-row-reverse">
                 <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
                         [disabled]="!form.valid">Guardar
                     información
                 </button>
-                <button mat-raised-button type="button" (cancel)="cancel()" class="btn btn-danger pull-right"
-                        [disabled]="!form.valid">Cancelar
+                <button mat-raised-button type="button" (click)="cancel()" class="btn btn-danger pull-right">
+                    Cancelar
                 </button>
             </div>
 

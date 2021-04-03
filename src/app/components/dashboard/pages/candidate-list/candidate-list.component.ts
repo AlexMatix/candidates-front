@@ -159,8 +159,9 @@ export class CandidateListComponent implements OnInit {
         );
     }
 
-    complete_ine(id) {
-        this.router.navigate(['/candidate-ine', id]);
+    complete_ine(candidate) {
+        console.log(candidate);
+        this.router.navigate(['/candidate-ine', candidate.id], {queryParams: {type: candidate.type_postulate}});
     }
 
 }
