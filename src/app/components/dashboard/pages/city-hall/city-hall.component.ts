@@ -4,6 +4,7 @@ import {messageErrorValidation} from '../../../../util/ValidatorsHelper';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
 import {first} from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-city-hall',
@@ -19,10 +20,12 @@ export class CityHallComponent implements OnInit {
         {id: 'sindicaturas', value: 'Sindical'},
     ];
 
-    candidatesArray = new FormArray([]);
+    candidatesFormArray = new FormArray([]);
     data: any;
     district = '0';
     sizeStepper = 0;
+    private ownerFormArray = [];
+    private alternateFormArray = [];
 
     constructor(
         public municipalityService: MunicipalitiesService
@@ -31,7 +34,7 @@ export class CityHallComponent implements OnInit {
                 district: new FormControl(null, Validators.required),
                 municipality: new FormControl(null, Validators.required),
                 charge: new FormControl(null, Validators.required),
-                candidates: this.candidatesArray,
+                candidates: this.candidatesFormArray,
             }
         );
         this.municipalityService.getAll().pipe(
@@ -79,17 +82,56 @@ export class CityHallComponent implements OnInit {
     }
 
     setSizeStepper(value: number) {
-        if (this.form.get('candidates').valid) {
-            return;
-        }
-        const positionMunicipality = this.form.get('municipality').value;
+        // if (this.form.get('candidates').valid) {
+        //     return;
+        // }
+        // tslint:disable-next-line:max-line-length
+        const positionMunicipality = (this.data.municipalities[this.district] as Array<any>).findIndex(element => element.id === this.form.get('municipality').value);
         this.sizeStepper = this.data.municipalities[this.district][positionMunicipality][value];
         this.createArrayCandidates();
     }
 
     private createArrayCandidates() {
-        for (let i = 0; i < this.sizeStepper; i++) {
+        this.ownerFormArray = [];
+        this.alternateFormArray = [];
+        this.candidatesFormArray = new FormArray([]);
+        (this.form.get('candidates') as FormArray).setControl(0, this.candidatesFormArray);
 
-        }
+        Swal.showLoading();
+        for (let i = 0; i < this.sizeStepper; i++) {
+            this.candidatesFormArray.push(new FormGroup({}));
+        }  // init to fix and create components
+
+        setTimeout(
+            () => {
+                for (let i = 0; i < this.sizeStepper; i++) {
+                    this.candidatesFormArray.setControl(i, this.getControlCandidate(i));
+                }
+                Swal.close();
+            }, 100
+        );
+    }
+
+    private getControlCandidate(position: number): FormGroup {
+        return new FormGroup(
+            {
+                owner: this.ownerFormArray[position],
+                alternate: this.alternateFormArray[position],
+            }
+        );
+    }
+
+    pushOwnerArray(form: FormGroup) {
+        console.log('1');
+        this.ownerFormArray.push(form);
+    }
+
+    pushAlternateArray(form: FormGroup) {
+        console.log('2');
+        this.alternateFormArray.push(form);
+    }
+
+    submit() {
+        console.log(this.form.value);
     }
 }
