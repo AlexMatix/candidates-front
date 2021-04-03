@@ -47,10 +47,10 @@ export class LoginComponent implements OnInit {
                         console.log('USER LOGGED --> ', data);
                         this._oautn.setUserLogin(data);
                         Swal.close();
-                        if(data.type === ADMIN){
+                        if (data.type === ADMIN) {
                             this._router.navigate(['/dashboard']);
-                        }else{
-                            this._router.navigate(['/candidate']);
+                        } else {
+                            this._router.navigate(['/candidate/0']);
                         }
                     },
                     fail => {
