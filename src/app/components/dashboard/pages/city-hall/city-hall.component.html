@@ -56,20 +56,29 @@
                     </div>
 
                     <mat-horizontal-stepper linear="true" #stepper>
-                        <mat-step *ngFor="let control of candidatesArray.controls; let i = index">
+                        <mat-step *ngFor="let control of candidatesFormArray.controls; let i = index"
+                                  [stepControl]="control">
                             <div class="container">
-                                <app-candidate-form></app-candidate-form>
+                                <h5 class="ml-3 font-weight-bold">Propietario</h5>
+                                <hr>
+                                <app-candidate-form
+                                        (onFormCandidateChange)="pushOwnerArray($event)"></app-candidate-form>
+                                <h5 class="ml-3 font-weight-bold">Suplente</h5>
+                                <hr>
+                                <app-candidate-form
+                                        (onFormCandidateChange)="pushAlternateArray($event)"></app-candidate-form>
                             </div>
                             <div>
                                 <button mat-raised-button matStepperPrevious *ngIf="i">Anterior</button>
                                 <button mat-raised-button color="primary" matStepperNext
-                                        *ngIf="i === (sizeStepper - 1)">Siguiente
+                                        *ngIf="i < (sizeStepper - 1)">Siguiente
+                                </button>
+                                <button mat-raised-button color="primary" (click)="submit()"
+                                        [disabled]="this.form.invalid">Enviar
                                 </button>
                             </div>
                         </mat-step>
                     </mat-horizontal-stepper>
-
-
                 </div>
             </form>
 
