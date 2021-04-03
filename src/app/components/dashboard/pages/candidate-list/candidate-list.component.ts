@@ -28,20 +28,43 @@ export class CandidateListComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     displayedColumns: string[] = [
         'id',
-        'name',
-        'patter_lastname',
+        'father_lastname',
         'mother_lastname',
+        'name',
         'nickname',
-        'date_birth',
+        // 'roads',
+        // 'roads_name',
+        // 'outdoor_number',
+        // 'interior_number',
+        // 'neighborhood',
+        // 'zipcode',
+        // 'municipality',
         'elector_key',
+        // 'ocr',
+        // 'cic',
+        // 'emission',
+        // 'entity',
+        // 'section',
+        // 'date_birth',
+        // 'gender',
+        // 'birthplace',
+        // 'residence_time_year',
+        // 'residence_time_month',
+        // 'occupation',
+        // 're_election',
         'postulate',
         'type_postulate',
-        'party',
+        // 'indigenous_group',
+        // 'group_sexual_diversity',
+        // 'disabled_group',
+        'politic_party_id',
+        // 'postulate_id',
+        // 'candidate_id',
+        // 'ine_check',
         'actions'
     ];
     dataSource: MatTableDataSource<any>;
     notData = true;
-
     party_color: string;
 
 
@@ -59,23 +82,23 @@ export class CandidateListComponent implements OnInit {
         const user = JSON.parse(localStorage.getItem('user'));
         switch (user.politic_party_id) {
             case MORENA: {
-                this.party_color = 'morena'
+                this.party_color = 'morena';
                 break;
             }
             case PT: {
-                this.party_color = 'pt'
+                this.party_color = 'pt';
                 break;
             }
             case VERDE: {
-                this.party_color = 'verde'
+                this.party_color = 'verde';
                 break;
             }
             case PSI: {
-                this.party_color = 'psi'
+                this.party_color = 'psi';
                 break;
             }
             default: {
-                this.party_color = 'morena'
+                this.party_color = 'morena';
             }
         }
     }

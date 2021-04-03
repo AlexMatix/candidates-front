@@ -9,12 +9,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminLayoutRoutes} from './admin-layout.routing';
 import {DashboardComponent} from '../../components/dashboard/dashboard.component';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MatRippleModule} from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -37,14 +37,14 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {AgmCoreModule} from '@agm/core';
 import {OperatorPipe} from '../../pipes/operator.pipe';
-import {IronmanPipe} from '../../pipes/ironman.pipe';
+import {TypePostulatePipe} from '../../pipes/TypePostulate.pipe';
 import {OrganizationChartModule} from 'primeng/organizationchart';
 import {CandidateComponent} from '../../components/dashboard/pages/candidate/candidate.component';
 import {CandidateListComponent} from '../../components/dashboard/pages/candidate-list/candidate-list.component';
 import {CandidateFormComponent} from '../../components/dashboard/pages/candidate-form/candidate-form.component';
 import {CandidateIneComponent} from '../../components/dashboard/pages/candidate-ine/candidate-ine.component';
 import {CityHallComponent} from '../../components/dashboard/pages/city-hall/city-hall.component';
-import {MatHorizontalStepper, MatStepper, MatStepperModule} from '@angular/material/stepper';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
     imports: [
@@ -88,7 +88,7 @@ import {MatHorizontalStepper, MatStepper, MatStepperModule} from '@angular/mater
         UserComponent,
         UserDataTableComponent,
         UserPipe,
-        IronmanPipe,
+        TypePostulatePipe,
         OperatorPipe,
         PostulatePipe,
         DragImageDirective,
