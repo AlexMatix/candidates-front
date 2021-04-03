@@ -30,6 +30,8 @@ export function messageErrorValidation(form: FormGroup, attrName: string) {
                     control.hasError('notEqualsPassword') ? 'La contraseña no coincide' :
                         control.hasError('notEqualsCurp') ? 'No coincide con el CURP' :
                             control.hasError('notEqualsElectorKey') ? 'No coincide con la clave de elector' :
+                            control.hasError('notEqualsCurp') ? 'No coincide con el curp' :
+                            control.hasError('notEqualsEmail') ? 'No coincide con el email' :
                                 control.hasError('notEqualsOCR') ? 'No coincide con el OCR' :
                                     control.hasError('equals') ? 'Este campo no debe ser igual' :
                                         control.hasError('curpExist') ? 'Este CURP ya esta en el sistema' :
