@@ -1,5 +1,54 @@
 <div class="main-content">
     <div class="container-fluid animated fadeIn">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Dashboard</h4>
+                <p class="card-category">Generar formatos de Excel</p>
+            </div>
+            <!--forms-->
+            <form [formGroup]="form">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
 
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Partidos Politicos</mat-label>
+                                    <mat-select formControlName="party">
+                                        <mat-option [value]="party.id" *ngFor="let party of (parties$ | async)">
+                                            {{party.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('party')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Tipo de Excel</mat-label>
+                                    <mat-select formControlName="type">
+                                        <mat-option *ngFor="let type of excelTypes"
+                                                    [value]="type.id">
+                                            {{type.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('type')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                        <hr>-->
+
+                        </div>
+
+                        <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right">
+                            Generar Excel
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
