@@ -49,7 +49,7 @@ export class CityHallComponent implements OnInit {
 
     ngOnInit(): void {
         const user = JSON.parse(localStorage.getItem('user'));
-        switch (user.party) {
+        switch (user.politic_party_id) {
             case MORENA: {
                 this.party_color = 'morena'
                 break;

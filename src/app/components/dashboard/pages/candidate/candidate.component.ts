@@ -182,7 +182,7 @@ export class CandidateComponent implements OnInit {
 
     ngOnInit() {
         const user = JSON.parse(localStorage.getItem('user'));
-        switch (user.party) {
+        switch (user.politic_party_id) {
             case MORENA: {
                 this.party_color = 'morena'
                 break;

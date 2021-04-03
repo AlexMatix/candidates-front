@@ -57,7 +57,7 @@ export class CandidateListComponent implements OnInit {
         this.setDataSource();
 
         const user = JSON.parse(localStorage.getItem('user'));
-        switch (user.party) {
+        switch (user.politic_party_id) {
             case MORENA: {
                 this.party_color = 'morena'
                 break;
@@ -118,7 +118,7 @@ export class CandidateListComponent implements OnInit {
     }
 
     edit(id: number) {
-        this.router.navigate(['/candidate',id]);
+        this.router.navigate(['/candidate', id]);
     }
 
     generateFormat(id: number) {
@@ -136,7 +136,7 @@ export class CandidateListComponent implements OnInit {
         );
     }
 
-    complete_ine(element){
+    complete_ine(element) {
 
     }
 
