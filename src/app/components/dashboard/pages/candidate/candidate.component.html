@@ -34,7 +34,7 @@
                                             {{district}}
                                         </mat-option>
                                     </mat-select>
-<!--                                    <mat-error>{{getMessageError('district')}}</mat-error>-->
+                                    <!--                                    <mat-error>{{getMessageError('district')}}</mat-error>-->
                                 </mat-form-field>
 
                             </div>
@@ -49,7 +49,7 @@
                                             {{municipality.name}}
                                         </mat-option>
                                     </mat-select>
-<!--                                    <mat-error>{{getMessageError('municipality')}}</mat-error>-->
+                                    <!--                                    <mat-error>{{getMessageError('municipality')}}</mat-error>-->
                                 </mat-form-field>
                             </div>
                         </div>
@@ -57,7 +57,16 @@
                 </div>
             </form>
 
-            <app-candidate-form *ngIf="type_candidate_form.get('postulate').value" (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
+            <app-candidate-form *ngIf="type_candidate_form.get('postulate').value"
+                                (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
+
+            <div class="container" *ngIf="type_candidate_form.get('postulate').value">
+                <h5 class="ml-3 font-weight-bold">Suplente</h5>
+                <hr>
+
+                <app-candidate-form *ngIf="type_candidate_form.get('postulate').value"
+                                    (onFormCandidateChange)="onFormCandidateAlternateChangeEvent($event)"></app-candidate-form>
+            </div>
             <div class="d-flex flex-row-reverse" *ngIf="type_candidate_form.get('postulate').value">
                 <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right">
                     Guardar información

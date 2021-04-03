@@ -18,6 +18,7 @@ import {Observable} from 'rxjs';
 export class CandidateComponent implements OnInit {
     type_candidate_form: FormGroup;
     form: FormGroup;
+    alternateForm: FormGroup;
     district;
     data: any;
 
@@ -211,6 +212,12 @@ export class CandidateComponent implements OnInit {
         // console.error(_event, this.form['controls']);
     }
 
+    onFormCandidateAlternateChangeEvent(_event) {
+        console.log(_event);
+        this.form = _event;
+        // console.error(_event, this.form['controls']);
+    }
+
     keyElectorValidator(control: AbstractControl) {
         return this._candidate.validateElectorKey(control.value, null).pipe(
             debounceTime(200),
@@ -225,6 +232,7 @@ export class CandidateComponent implements OnInit {
         Swal.showLoading();
         console.log(this.type_candidate_form.value);
         const data = {
+            alternate: this.alternateForm.value,
             // ...this.data,
             ...this.form.value,
             ...this.type_candidate_form.value,
