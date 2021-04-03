@@ -5,11 +5,62 @@
                 <h4 class="card-title">Nuevo candidato</h4>
                 <p class="card-category">Completa la información para crear un nuevo candidato</p>
             </div>
-            <app-candidate-form (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
-            <div class="d-flex flex-row-reverse">
-                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right"
-                        [disabled]="!form.valid">Guardar
-                    información
+
+            <form [formGroup]="type_candidate_form">
+                <div class="card-body">
+                    <div class="container">
+                        <h5 class="ml-3 font-weight-bold">Tipo de candidato</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Tipo de candidato</mat-label>
+                                    <mat-select formControlName="postulate">
+                                        <mat-option *ngFor="let type of type_postulate" [value]="type.id">
+                                            {{type.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <!--                    <mat-error>{{getMessageError('type_postulate')}}</mat-error>-->
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="type_candidate_form.get('postulate').value === 2">
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Distrito</mat-label>
+                                    <mat-select formControlName="district" (valueChange)="changeDistritct($event)">
+                                        <mat-option [value]="district" *ngFor="let district of data?.districts">
+                                            {{district}}
+                                        </mat-option>
+                                    </mat-select>
+<!--                                    <mat-error>{{getMessageError('district')}}</mat-error>-->
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Municipio</mat-label>
+                                    <mat-select formControlName="municipality"
+                                                (valueChange)="changeMunicipalitie($event)">
+                                        <mat-option *ngFor="let municipality of data?.municipalities[district]"
+                                                    [value]="municipality.id">
+                                            {{municipality.name}}
+                                        </mat-option>
+                                    </mat-select>
+<!--                                    <mat-error>{{getMessageError('municipality')}}</mat-error>-->
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <app-candidate-form *ngIf="type_candidate_form.get('postulate').value" (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
+            <div class="d-flex flex-row-reverse" *ngIf="type_candidate_form.get('postulate').value">
+                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right">
+                    Guardar información
                 </button>
                 <button mat-raised-button type="button" (cancel)="cancel()" class="btn btn-danger pull-right"
                         [disabled]="!form.valid">Cancelar

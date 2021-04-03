@@ -57,7 +57,7 @@ export class CandidateListComponent implements OnInit {
         this.setDataSource();
 
         const user = JSON.parse(localStorage.getItem('user'));
-        switch(user.party) {
+        switch (user.party) {
             case MORENA: {
                 this.party_color = 'morena'
                 break;
@@ -135,4 +135,9 @@ export class CandidateListComponent implements OnInit {
             error => console.log(error)
         );
     }
+
+    complete_ine(element){
+
+    }
+
 }

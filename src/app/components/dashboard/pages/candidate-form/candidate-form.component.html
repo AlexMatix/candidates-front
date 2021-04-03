@@ -96,7 +96,11 @@
                 <div class="col-6">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>¿Padece alguna discapacidad?</mat-label>
-                        <input matInput type="text" formControlName="disabled_group">
+                        <mat-select formControlName="disabled_group">
+                            <mat-option *ngFor="let item of reelection" [value]="item.value">
+                                {{item.label}}
+                            </mat-option>
+                        </mat-select>
                         <mat-error>{{getMessageError('disabled_group')}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -280,6 +284,19 @@
                         <mat-label>Fecha de emisión</mat-label>
                         <input matInput type="text" formControlName="emission">
                         <mat-error>{{getMessageError('emission')}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Re-elección</mat-label>
+                        <mat-select formControlName="re_election">
+                            <mat-option *ngFor="let reelection of reelection" [value]="reelection.value">
+                                {{reelection.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>{{getMessageError('re_election')}}</mat-error>
                     </mat-form-field>
                 </div>
             </div>

@@ -42,7 +42,7 @@ export class UserComponent implements OnInit {
                 name: new FormControl('', [Validators.required]),
                 email: new FormControl('', [Validators.required, Validators.email]),
                 type: new FormControl('', [Validators.required]),
-                party: new FormControl('', [Validators.required]),
+                politic_party_id: new FormControl('', [Validators.required]),
                 password: new FormControl('', [Validators.required, Validators.minLength(6)]),
                 password_confirm: new FormControl('', [Validators.required, Validators.minLength(6)]),
             },
@@ -141,7 +141,7 @@ export class UserComponent implements OnInit {
         this.form.get('name').setValue(data.name);
         this.form.get('email').setValue(data.email);
         this.form.get('type').setValue(data.type);
-        this.form.get('party').setValue(data.party);
+        this.form.get('politic_party_id').setValue(data.party);
         this.alertEdit = true;
         this.panelOpenState = true;
         this.editForm = true;

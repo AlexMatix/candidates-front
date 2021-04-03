@@ -82,6 +82,11 @@
                                 <mat-icon>close</mat-icon>
                             </button>
 
+                            <button type="button" (click)="complete_ine(element.id)" mat-mini-fab class="bg-danger mr-1"
+                                    matTooltip="Completar datos INE">
+                                <mat-icon>description</mat-icon>
+                            </button>
+
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

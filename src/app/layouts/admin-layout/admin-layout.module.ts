@@ -42,8 +42,9 @@ import {OrganizationChartModule} from 'primeng/organizationchart';
 import {CandidateComponent} from '../../components/dashboard/pages/candidate/candidate.component';
 import {CandidateListComponent} from '../../components/dashboard/pages/candidate-list/candidate-list.component';
 import {CandidateFormComponent} from '../../components/dashboard/pages/candidate-form/candidate-form.component';
+import {CandidateIneComponent} from '../../components/dashboard/pages/candidate-ine/candidate-ine.component';
 import {CityHallComponent} from '../../components/dashboard/pages/city-hall/city-hall.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import {MatHorizontalStepper, MatStepper, MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
     imports: [
@@ -96,7 +97,9 @@ import {MatStepperModule} from '@angular/material/stepper';
         CandidateComponent,
         CandidateListComponent,
         CandidateFormComponent,
-        CityHallComponent
+        CityHallComponent,
+        CandidateFormComponent,
+        CandidateIneComponent
     ]
 })
 

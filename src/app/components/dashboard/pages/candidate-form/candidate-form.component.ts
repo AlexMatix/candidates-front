@@ -18,9 +18,6 @@ export class CandidateFormComponent implements OnInit {
 
     municipalities$: Observable<any>;
 
-    @Output()
-    onFormCandidateChange = new EventEmitter<any>();
-
     roads = [
         {id: 1, name: 'Ampliación'},
         {id: 2, name: 'Andador'},
@@ -45,6 +42,9 @@ export class CandidateFormComponent implements OnInit {
         {id: 21, name: 'Viaducto'},
     ]
 
+    @Output()
+    onFormCandidateChange = new EventEmitter<any>();
+
     postulate = [
         {id: 1, name: 'Diputación'},
         {id: 2, name: 'Regidor'},
@@ -57,13 +57,13 @@ export class CandidateFormComponent implements OnInit {
     ];
 
     reelection = [
-        {value: 1, label: 'Si'},
-        {value: 0, label: 'No'}
+        {value: 'SI', label: 'Si'},
+        {value: 'NO', label: 'No'}
     ]
 
     genders = [
-        {value: 0, label: 'Hombre'},
-        {value: 1, label: 'Mujer'}
+        {value: 'HOMBRE', label: 'Hombre'},
+        {value: 'MUJER', label: 'Mujer'}
     ]
 
 
@@ -106,7 +106,7 @@ export class CandidateFormComponent implements OnInit {
                 emission: new FormControl('', [Validators.required]),
                 postulate: new FormControl('', [Validators.required]),
                 re_election: new FormControl('', [Validators.required]),
-                type_postulate: new FormControl('', [Validators.required]),
+                type_postulate: new FormControl(1, [Validators.required]),
                 number: new FormControl('', [Validators.required]),
                 postulate_id: new FormControl('', [Validators.required]),
             },

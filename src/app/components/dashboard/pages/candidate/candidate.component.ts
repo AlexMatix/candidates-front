@@ -5,7 +5,7 @@ import {CandidateService} from '../../../../services/candidate.service';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
 import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
-import {debounceTime, map} from 'rxjs/operators';
+import {debounceTime, first, map} from 'rxjs/operators';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
 import {Observable} from 'rxjs';
@@ -16,13 +16,21 @@ import {Observable} from 'rxjs';
     styleUrls: ['./candidate.component.scss']
 })
 export class CandidateComponent implements OnInit {
+    type_candidate_form: FormGroup;
     form: FormGroup;
+    district;
+    data: any;
+
+    type_postulate = [
+        {id: 1, label: 'Diputación RP'},
+        {id: 2, label: 'Diputación MR'},
+    ]
 
     roads = [
         {id: 1, name: 'Ampliación'},
         {id: 2, name: 'Andador'},
         {id: 3, name: 'Avenida'},
-        {id: 4 , name: 'Boulevard'},
+        {id: 4, name: 'Boulevard'},
         {id: 5, name: 'Calle'},
         {id: 6, name: 'Callejon'},
         {id: 7, name: 'Calzada'},
@@ -69,8 +77,10 @@ export class CandidateComponent implements OnInit {
 
     party_color: string;
     municipalities$: Observable<any>;
+    postulate_id;
 
     constructor(
+        public municipalityService: MunicipalitiesService,
         private _candidate: CandidateService,
         private router: ActivatedRoute,
         private _router: Router,
@@ -115,6 +125,29 @@ export class CandidateComponent implements OnInit {
         //         ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
         //     ]
         // );
+
+        this.type_candidate_form = new FormGroup({
+                postulate: new FormControl('', [Validators.required]),
+                district: new FormControl(''),
+                municipality: new FormControl(''),
+            }
+        )
+
+        this.type_candidate_form.get('municipality').valueChanges.subscribe( value => {
+            console.log(value);
+            this.postulate_id = value;
+            console.log(this.postulate_id);
+            }
+        );
+
+        this.municipalityService.getAll().pipe(
+            first(),
+        ).subscribe(
+            value => {
+                this.data = value;
+                console.log(value);
+            }
+        );
 
         this.id = Number(this.router.snapshot.params.id);
         if (!isNaN(this.id) && this.id !== 0) {
@@ -188,8 +221,18 @@ export class CandidateComponent implements OnInit {
     }
 
     submit() {
+        console.log(this.form.value);
         Swal.showLoading();
-        this._candidate.add(this.form.value).subscribe(
+        console.log(this.type_candidate_form.value);
+        const data = {
+            // ...this.data,
+            ...this.form.value,
+            ...this.type_candidate_form.value,
+            postulate_id: this.postulate_id,
+        };
+
+        console.log(data);
+        this._candidate.add(data).subscribe(
             response => {
                 console.log(response);
                 this.successSave();
@@ -212,4 +255,20 @@ export class CandidateComponent implements OnInit {
         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
         this.form.reset();
     }
+
+    getMessageError(attrName: string) {
+        return messageErrorValidation(this.form, attrName);
+    };
+
+    changeDistritct(value) {
+        console.log(value);
+        this.district = value;
+    }
+
+    changeMunicipalitie(value) {
+        this.postulate_id = value;
+        console.log(value);
+    }
+
+
 }

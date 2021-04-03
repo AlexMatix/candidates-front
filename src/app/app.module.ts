@@ -19,6 +19,8 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from './Internalization/CustomMatPaginatorIntl';
 import {ZoneComponent} from './shared/dialogs/zone/zone.component';
 import {LocationComponent} from './shared/dialogs/location/location.component';
+import { CandidateFormComponent } from './components/dashboard/pages/candidate-form/candidate-form.component';
+import { CandidateIneComponent } from './components/dashboard/pages/candidate-ine/candidate-ine.component';
 
 @NgModule({
     imports: [

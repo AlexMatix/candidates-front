@@ -59,12 +59,12 @@
                                 <div class="col">
                                     <mat-form-field class="w-100" appearance="outline">
                                         <mat-label>Partido Politico</mat-label>
-                                        <mat-select formControlName="party">
+                                        <mat-select formControlName="politic_party_id">
                                             <mat-option *ngFor="let item of parties" [value]="item.id">
                                                 {{item.name}}
                                             </mat-option>
                                         </mat-select>
-                                        <mat-error>{{getMessageError('party')}}</mat-error>
+                                        <mat-error>{{getMessageError('politic_party_id')}}</mat-error>
                                     </mat-form-field>
                                 </div>
 
