@@ -214,7 +214,7 @@ export class CandidateComponent implements OnInit {
 
     onFormCandidateAlternateChangeEvent(_event) {
         console.log(_event);
-        this.form = _event;
+        this.alternateForm = _event;
         // console.error(_event, this.form['controls']);
     }
 
