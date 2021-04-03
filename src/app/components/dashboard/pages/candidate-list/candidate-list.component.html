@@ -23,7 +23,7 @@
                         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="patter_lastname">
+                    <ng-container matColumnDef="father_lastname">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Paterno</th>
                         <td mat-cell *matCellDef="let element"> {{element.patter_lastname}} </td>
                     </ng-container>
@@ -58,7 +58,7 @@
                         <td mat-cell *matCellDef="let element"> {{element.type_postulate | postulatePipe}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="party">
+                    <ng-container matColumnDef="politic_party_id">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Patido</th>
                         <td mat-cell *matCellDef="let element"> {{element.party | promoterPipe}} </td>
                     </ng-container>
