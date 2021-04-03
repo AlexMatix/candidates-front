@@ -136,8 +136,8 @@ export class CandidateListComponent implements OnInit {
         );
     }
 
-    complete_ine(element) {
-
+    complete_ine(id) {
+        this.router.navigate(['/candidate-ine', id]);
     }
 
 }
