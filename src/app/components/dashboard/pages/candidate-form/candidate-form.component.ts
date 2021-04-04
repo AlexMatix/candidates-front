@@ -134,7 +134,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
     private setRequiredFields() {
         if (this.isRequired) {
             for (const key in this.form.controls) {
-                if (key === 'nickname') {
+                if (key === 'nickname' || 'interior_number') {
                     continue; // omit this
                 }
                 this.form.get(key).setValidators(Validators.required);

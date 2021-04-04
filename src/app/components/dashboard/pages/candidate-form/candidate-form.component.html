@@ -172,8 +172,8 @@
 
                 <div class="col-3">
                     <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Codigo postal</mat-label>
-                        <input matInput type="text" formControlName="zipcode">
+                        <mat-label>Código postal</mat-label>
+                        <input matInput type="text" formControlName="zipcode" digitOnly maxlength="5">
                         <mat-error>{{getMessageError('zipcode')}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -266,7 +266,7 @@
                 <div class="col-4">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>OCR</mat-label>
-                        <input matInput type="text" formControlName="ocr">
+                        <input matInput type="text" formControlName="ocr" digitOnly>
                         <mat-error>{{getMessageError('ocr')}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -274,7 +274,7 @@
                 <div class="col-4">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>CIC</mat-label>
-                        <input matInput type="text" formControlName="cic">
+                        <input matInput type="text" formControlName="cic" digitOnly>
                         <mat-error>{{getMessageError('cic')}}</mat-error>
                     </mat-form-field>
                 </div>
