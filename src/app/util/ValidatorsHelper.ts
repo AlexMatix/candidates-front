@@ -30,15 +30,16 @@ export function messageErrorValidation(form: FormGroup, attrName: string) {
                     control.hasError('notEqualsPassword') ? 'La contraseña no coincide' :
                         control.hasError('notEqualsCurp') ? 'No coincide con el CURP' :
                             control.hasError('notEqualsElectorKey') ? 'No coincide con la clave de elector' :
-                            control.hasError('notEqualsCurp') ? 'No coincide con el curp' :
-                            control.hasError('notEqualsEmail') ? 'No coincide con el email' :
-                                control.hasError('notEqualsOCR') ? 'No coincide con el OCR' :
-                                    control.hasError('equals') ? 'Este campo no debe ser igual' :
-                                        control.hasError('curpExist') ? 'Este CURP ya esta en el sistema' :
-                                            control.hasError('keyElectorExist') ? 'Esta clave de elector ya esta en el sistema' :
-                                                control.hasError('ocrExist') ? 'Este ocr ya esta en el sistema' :
-                                                    control.hasError('rgExist') ? 'Ya existe un RG ocupando este municipio' :
-                                                        control.hasError('boxOExist') ? 'Esta casilla ya tiene un propietario' :
-                                                            control.hasError('boxHExist') ? 'Esta casilla ya tiene un suplente' :
-                                                                '';
+                                control.hasError('notEqualsCurp') ? 'No coincide con el curp' :
+                                    control.hasError('notEqualsEmail') ? 'No coincide con el email' :
+                                        control.hasError('equalGender') ? 'Propietario y suplente no pueden ser del mismo género' :
+                                            control.hasError('notEqualsOCR') ? 'No coincide con el OCR' :
+                                                control.hasError('equals') ? 'Este campo no debe ser igual' :
+                                                    control.hasError('curpExist') ? 'Este CURP ya esta en el sistema' :
+                                                        control.hasError('keyElectorExist') ? 'Esta clave de elector ya esta en el sistema' :
+                                                            control.hasError('ocrExist') ? 'Este ocr ya esta en el sistema' :
+                                                                control.hasError('rgExist') ? 'Ya existe un RG ocupando este municipio' :
+                                                                    control.hasError('boxOExist') ? 'Esta casilla ya tiene un propietario' :
+                                                                        control.hasError('boxHExist') ? 'Esta casilla ya tiene un suplente' :
+                                                                            '';
 }

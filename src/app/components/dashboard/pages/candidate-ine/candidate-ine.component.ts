@@ -20,6 +20,7 @@ export class CandidateIneComponent implements OnInit {
 
     form: FormGroup;
     editForm = false;
+    candidateData;
 
     phone_type = [
         {value: 1, name: 'Casa'},
@@ -61,6 +62,12 @@ export class CandidateIneComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        this._candidate.getById(this.origin_candidate_id).subscribe( data => {
+            this.candidateData = data;
+                console.log(this.candidateData);
+            }
+        )
         this.subscription = this.route
             .queryParams
             .subscribe(params => {
@@ -236,6 +243,7 @@ export class CandidateIneComponent implements OnInit {
     submit() {
         Swal.showLoading();
         const body = {
+            ...this.candidateData,
             ...this.form.value,
             origin_candidate_id: this.origin_candidate_id
         }
@@ -253,6 +261,7 @@ export class CandidateIneComponent implements OnInit {
 
     successSave() {
         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
+        this.location.back();
         this.form.reset();
     }
 

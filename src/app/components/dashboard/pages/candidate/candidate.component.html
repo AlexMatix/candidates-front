@@ -42,9 +42,9 @@
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Municipio</mat-label>
-                                    <mat-select formControlName="municipality">
+                                    <mat-select formControlName="postulate_id">
                                         <mat-option *ngFor="let municipality of data?.municipalities[district]"
-                                                    [value]="municipality">
+                                                    [value]="municipality.id">
                                             {{municipality.name}}
                                         </mat-option>
                                     </mat-select>
@@ -69,7 +69,7 @@
                 ></app-candidate-form>
             </div>
             <div class="d-flex flex-row-reverse" *ngIf="type_candidate_form.get('postulate').value">
-                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right" [disabled]="!form.valid">
+                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right">
                     Guardar información
                 </button>
                 <button mat-raised-button type="button" (click)="cancel()" class="btn btn-danger pull-right">Cancelar

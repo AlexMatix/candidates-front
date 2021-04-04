@@ -131,13 +131,25 @@ export class CandidateComponent implements OnInit {
 
         this.type_candidate_form = new FormGroup({
                 postulate: new FormControl('', [Validators.required]),
-                district: new FormControl('', [Validators.required]),
-                municipality: new FormControl('', [Validators.required]),
+                // district: new FormControl('', [Validators.required]),
+                // postulate_id: new FormControl('', [Validators.required]),
             }
         )
 
-        this.type_candidate_form.get('municipality').valueChanges.subscribe(value => {
-                this.postulate_id = value.id;
+        this.type_candidate_form.get('postulate').valueChanges.subscribe(value => {
+                if (value === 2) {
+                    this.type_candidate_form.addControl('district', new FormControl('', [Validators.required]));
+                    this.type_candidate_form.addControl('postulate_id', new FormControl('', [Validators.required]));
+                }
+                if (value === 1) {
+                    if (this.type_candidate_form.controls['district']) {
+                        this.type_candidate_form.removeControl('district');
+                    }
+
+                    if (this.type_candidate_form.controls['postulate_id']) {
+                        this.type_candidate_form.removeControl('postulate_id');
+                    }
+                }
             }
         );
 
@@ -155,21 +167,23 @@ export class CandidateComponent implements OnInit {
             Swal.showLoading();
             this._candidate.getById(this.id).subscribe(
                 response => {
-                    this.form.get('name').setValue(response.name);
-                    this.form.get('father_lastname').setValue(response.patter_lastname);
-                    this.form.get('mother_lastname').setValue(response.mother_lastname);
-                    this.form.get('nickname').setValue(response.nickname);
-                    this.form.get('birthplace').setValue(response.birthplace);
-                    this.form.get('date_birth').setValue(response.date_birth);
-                    this.form.get('address').setValue(response.address);
-                    this.form.get('residence_time').setValue(response.residence_time);
-                    this.form.get('occupation').setValue(response.occupation);
-                    this.form.get('elector_key').setValue(response.elector_key);
-                    this.form.get('electorKey_confirm').setValue(response.elector_key);
-                    this.form.get('postulate').setValue(response.postulate);
-                    this.form.get('type_postulate').setValue(response.type_postulate);
-                    this.editData = response;
-                    this.editForm = true;
+                    console.log(response);
+                    this.type_candidate_form.get('postulate').setValue(response.postulate);
+                    // this.form.get('name').setValue(response.name);
+                    // this.form.get('father_lastname').setValue(response.patter_lastname);
+                    // this.form.get('mother_lastname').setValue(response.mother_lastname);
+                    // this.form.get('nickname').setValue(response.nickname);
+                    // this.form.get('birthplace').setValue(response.birthplace);
+                    // this.form.get('date_birth').setValue(response.date_birth);
+                    // this.form.get('address').setValue(response.address);
+                    // this.form.get('residence_time').setValue(response.residence_time);
+                    // this.form.get('occupation').setValue(response.occupation);
+                    // this.form.get('elector_key').setValue(response.elector_key);
+                    // this.form.get('electorKey_confirm').setValue(response.elector_key);
+                    // this.form.get('postulate').setValue(response.postulate);
+                    // this.form.get('type_postulate').setValue(response.type_postulate);
+                    // this.editData = response;
+                    // this.editForm = true;
                     Swal.close();
                 },
                 error => {
@@ -223,34 +237,52 @@ export class CandidateComponent implements OnInit {
     }
 
     submit() {
-        Swal.showLoading();
-        const municipality = this.type_candidate_form.get('municipality').value.name;
-        this.form.removeControl('id');
-        this.alternateForm.removeControl('id');
-        const type_candidate = {
-            ...this.type_candidate_form.value,
-            municipality
+        const genderOwner = this.form.get('gender').value;
+        const genderAlternate = this.alternateForm.get('gender').value;
+        this.markFormGroupTouched(this.type_candidate_form);
+        this.markFormGroupTouched(this.form);
+        this.markFormGroupTouched(this.alternateForm);
+
+        console.log(genderOwner);
+        console.log(genderAlternate);
+
+        if (this.type_candidate_form.invalid || this.form.invalid || this.alternateForm.invalid) {
+            return;
         }
 
-        console.log(type_candidate);
+        if (genderOwner !== '' && genderAlternate !== '') {
+            console.log('Generos vacios');
+            if (genderOwner !== genderAlternate) {
+                this.alternateForm.controls['gender'].setErrors({'equalGender': true})
+            }
+        }
+
+        Swal.showLoading();
+        if (this.type_candidate_form.get('postulate').value === 1) {
+            this.type_candidate_form.removeControl('postulate_id');
+            this.type_candidate_form.removeControl('district');
+        }
+        // const municipality = this.type_candidate_form.get('municipality').value.name;
+        this.form.removeControl('id');
+        this.alternateForm.removeControl('id');
+
         const data = {
             alternate: this.alternateForm.value,
             ...this.form.value,
-            ...type_candidate,
-            postulate_id: this.postulate_id,
+            ...this.type_candidate_form.value
         };
 
         console.log(data);
 
-        this._candidate.add(data).subscribe(
-            response => {
-                this.successSave();
-            },
-            error => {
-                console.log(error);
-                MessagesUtil.errorMessage(ERROR_MESSAGE);
-            }
-        );
+        // this._candidate.add(data).subscribe(
+        //     response => {
+        //         this.successSave();
+        //     },
+        //     error => {
+        //         console.log(error);
+        //         MessagesUtil.errorMessage(ERROR_MESSAGE);
+        //     }
+        // );
     }
 
     cancel() {
@@ -281,6 +313,16 @@ export class CandidateComponent implements OnInit {
     //     console.log(value);
     //     this.postulate_id = value.id;
     // }
+
+    private markFormGroupTouched(formGroup: FormGroup) {
+        (<any>Object).values(formGroup.controls).forEach(control => {
+            control.markAsTouched();
+
+            if (control.controls) {
+                this.markFormGroupTouched(control);
+            }
+        });
+    }
 
 
 }
