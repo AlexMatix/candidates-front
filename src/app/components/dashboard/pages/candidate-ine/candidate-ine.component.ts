@@ -84,7 +84,7 @@ export class CandidateIneComponent implements OnInit {
                             console.log('Hay data =>', data);
                             this.isEdit = true;
                             this.form.patchValue(data);
-                            Swal.hideLoading();
+                            Swal.close();
                         }
                     });
                 }
@@ -96,7 +96,7 @@ export class CandidateIneComponent implements OnInit {
                             console.log('Hay data =>', data);
                             this.isEdit = true;
                             this.form.patchValue(data);
-                            Swal.hideLoading();
+                            Swal.close();
                         }
                     });
                 }
@@ -271,7 +271,7 @@ export class CandidateIneComponent implements OnInit {
         }
 
         if (this.isEdit) {
-            this._candidate.updateIne(body).subscribe(
+            this._candidate.updateIne(body, this.origin_candidate_id).subscribe(
                 response => {
                     console.log(response);
                     this.successSave();

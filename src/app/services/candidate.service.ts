@@ -51,8 +51,8 @@ export class CandidateService {
         return this.http.post(`${URL_BASE}candidateIne`, data);
     }
 
-    updateIne(data) {
-        return this.http.put(`${URL_BASE}candidateIne`, data);
+    updateIne(data, id) {
+        return this.http.put(`${URL_BASE}candidateIne/${id}`, data);
     }
 
     getIne(id) {
