@@ -130,6 +130,19 @@ export class CandidateFormComponent implements OnInit, OnChanges {
         this.onFormCandidateChange.emit(this.form);
     }
 
+    getMessageError(attrName: string) {
+        return messageErrorValidation(this.form, attrName);
+    };
+
+    keyElectorValidator(control: AbstractControl) {
+        return this._candidate.validateElectorKey(control.value, this.form?.get('id')?.value ?? 0).pipe(
+            debounceTime(200),
+            map(res => {
+                return res.result === 'true' ? null : {keyElectorExist: true};
+            })
+        );
+    }
+
     private setRequiredFields() {
         if (this.isRequired) {
             for (const key in this.form.controls) {
@@ -142,19 +155,6 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 this.form.get(key).setValidators(Validators.required);
             }
         }
-    }
-
-    getMessageError(attrName: string) {
-        return messageErrorValidation(this.form, attrName);
-    };
-
-    keyElectorValidator(control: AbstractControl) {
-        return this._candidate.validateElectorKey(control.value, null).pipe(
-            debounceTime(200),
-            map(res => {
-                return res.result === 'true' ? null : {keyElectorExist: true};
-            })
-        );
     }
 
     private setEnabledGender() {

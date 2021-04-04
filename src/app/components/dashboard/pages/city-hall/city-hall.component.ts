@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MORENA, PSI, PT, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {messageErrorValidation} from '../../../../util/ValidatorsHelper';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
-import {first} from 'rxjs/operators';
+import {first, take} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
 import {CandidateService} from '../../../../services/candidate.service';
@@ -27,29 +27,15 @@ export class CityHallComponent implements OnInit {
     district = '0';
     sizeStepper = 0;
     ownerFormArray: FormGroup[] = [];
-    private alternateFormArray: FormGroup[] = [];
     controlsArray = [];
-
-    static printErrors(form: FormGroup) {
-        // tslint:disable-next-line:forin
-        for (const key in form.controls) {
-            const abstractControl = form.get(key);
-            console.log(key, abstractControl.errors);
-        }
-    }
+    allCandidates: any[] = [];
+    private alternateFormArray: FormGroup[] = [];
 
     constructor(
         public municipalityService: MunicipalitiesService,
         public candidateService: CandidateService,
     ) {
-        this.form = new FormGroup({
-                district: new FormControl(null, Validators.required),
-                postulate_id: new FormControl(null, Validators.required),
-                postulate: new FormControl(null, Validators.required),
-                candidates: this.candidatesFormArray,
-            },
-            [this.validatePostulate.bind(this)]
-        );
+        this.initializeForm();
         this.municipalityService.getAll().pipe(
             first(),
         ).subscribe(
@@ -59,6 +45,14 @@ export class CityHallComponent implements OnInit {
             }
         );
     }
+
+    // static printErrors(form: FormGroup) {
+    //     // tslint:disable-next-line:forin
+    //     for (const key in form.controls) {
+    //         const abstractControl = form.get(key);
+    //         console.log(key, abstractControl.errors);
+    //     }
+    // }
 
     validatePostulate: (fg: FormGroup) => void = (fg: FormGroup) => {
         if (fg.get('district') && fg.get('district').valid && fg.get('postulate_id') && fg.get('postulate_id').valid) {
@@ -116,6 +110,92 @@ export class CityHallComponent implements OnInit {
         this.createArrayCandidates();
     }
 
+    pushOwnerArray(form: FormGroup, i: number) {
+        this.ownerFormArray[i] = form;
+    }
+
+    pushAlternateArray(form: FormGroup, i: number) {
+        this.alternateFormArray[i] = form;
+    }
+
+    submit() {
+        Swal.showLoading();
+        const dataToServer = this.parseDataToServer();
+        console.log(dataToServer);
+        if (dataToServer.candidates.length === 0) {
+            MessagesUtil.errorMessage('Debe llenar al menos un propietario');
+            return;
+        }
+
+        this.candidateService.add(dataToServer).subscribe(
+            () => {
+                MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
+            },
+            error => {
+                MessagesUtil.errorMessage(ERROR_MESSAGE);
+            }
+        );
+
+    }
+
+    changeMunicipality($event: any) {
+        this.candidateService.getCityHall($event).pipe(take(1)).subscribe(
+            value => {
+                console.log(value);
+                this.allCandidates = value;
+            }
+        );
+    }
+
+    protected setCandidateData(formGroup: FormGroup, candidate: any) {
+        const keys = ['id',
+            'name',
+            'father_lastname',
+            'mother_lastname',
+            'nickname',
+            'birthplace',
+            'date_birth',
+            'gender',
+            'group_sexual_diversity',
+            'indigenous_group',
+            'disabled_group',
+            'roads_name',
+            'outdoor_number',
+            'interior_number',
+            'neighborhood',
+            'zipcode',
+            'municipality',
+            'entity',
+            'section',
+            'residence_time_year',
+            'residence_time_month',
+            'occupation',
+            'elector_key',
+            'ocr',
+            'cic',
+            'emission',
+            're_election',
+            'type_postulate'];
+
+        for (const key of keys) {
+            formGroup.get(key).setValue(candidate[key]);
+        }
+        formGroup.get('electorKey_confirm').setValue(candidate['elector_key']);
+        // tslint:disable-next-line:radix
+        formGroup.get('roads').setValue(parseInt(candidate['roads'] ?? 0));
+    }
+
+    private initializeForm() {
+        this.form = new FormGroup({
+                district: new FormControl(null, Validators.required),
+                postulate_id: new FormControl(null, Validators.required),
+                postulate: new FormControl(null, Validators.required),
+                candidates: this.candidatesFormArray,
+            },
+            [this.validatePostulate.bind(this)]
+        );
+    }
+
     private createArrayCandidates() {
         this.candidatesFormArray = new FormArray([]);
         Swal.showLoading();
@@ -125,6 +205,7 @@ export class CityHallComponent implements OnInit {
                 for (let i = 0; i < this.sizeStepper; i++) {
                     this.candidatesFormArray.push(this.getControlCandidate(i));
                 }
+                this.setCandidates();
                 console.log('seteados controles');
                 Swal.close();
             },
@@ -141,42 +222,33 @@ export class CityHallComponent implements OnInit {
         );
     }
 
-    pushOwnerArray(form: FormGroup, i: number) {
-        this.ownerFormArray[i] = form;
-    }
-
-    pushAlternateArray(form: FormGroup, i: number) {
-        this.alternateFormArray[i] = form;
-    }
-
-    submit() {
-        console.log(this.form.value.postulate);
-        this.form.value.postulate = this.charges.find(element => element.id === this.form.value.postulate).chargeId;
-        const dataToServer = this.cleanEmptyPairs();
-        console.log(dataToServer);
-        if (dataToServer.candidates.length === 0) {
-            MessagesUtil.errorMessage('Debe llenar al menos un propietario');
-            return;
-        }
-
-    }
-
-    private cleanEmptyPairs() {
+    private parseDataToServer() {
         const copy = {...this.form.value};
+        copy.postulate = this.getPostulateChargeId();
         for (let i = 0; i < this.candidatesFormArray.controls.length; i++) {
             const formGroup = this.candidatesFormArray.controls[i];
-            if (formGroup.invalid) {
+            if (formGroup.get('owner').invalid) {
                 (copy.candidates as Array<any>).splice(i, 1);
             }
         }
         return copy;
     }
 
-    changeMunicipality($event: any) {
-        this.candidateService.getCityHall($event).subscribe(
-            value => {
-                console.log(value);
-            }
-        );
+    private getPostulateChargeId() {
+        return this.charges.find(element => element.id === this.form.value.postulate).chargeId;
+    }
+
+    private setCandidates() {
+        const candidates = this.allCandidates.filter(pair => pair.owner.postulate === this.getPostulateChargeId());
+        console.log(candidates);
+        if (!candidates.length) {
+            return;
+        }
+
+        for (let i = 0; i < candidates.length; i++) {
+            this.setCandidateData(this.candidatesFormArray.controls[i].get('owner') as FormGroup, candidates[i].owner);
+            this.setCandidateData(this.candidatesFormArray.controls[i].get('alternate') as FormGroup, candidates[i].alternate);
+        }
+
     }
 }
