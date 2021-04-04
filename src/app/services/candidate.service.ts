@@ -42,4 +42,8 @@ export class CandidateService {
         }
         return this.http.get(`${URL_BASE}validate_elector_key?electorKey=${electorKey}${idParam}`);
     }
+
+    addIne(data) {
+        return this.http.post(`${URL_BASE}candidateIne`, data);
+    }
 }

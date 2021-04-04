@@ -145,6 +145,7 @@ export class CandidateComponent implements OnInit {
             first(),
         ).subscribe(
             value => {
+                console.log(value);
                 this.data = value;
             }
         );

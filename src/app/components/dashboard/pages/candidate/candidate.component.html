@@ -45,7 +45,7 @@
                                     <mat-select formControlName="municipality"
                                                 (valueChange)="changeMunicipalitie($event)">
                                         <mat-option *ngFor="let municipality of data?.municipalities[district]"
-                                                    [value]="municipality.id">
+                                                    [value]="municipality.name">
                                             {{municipality.name}}
                                         </mat-option>
                                     </mat-select>

@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header" [ngClass]="party_color">
                 <h4 class="card-title">Ayuntamiento</h4>
-                <p class="card-category">Completa la información para crear un nuevo candidato de ayuntamiento</p>
+                <p class="card-category">Completa la información para crear un nuevo ayuntamiento</p>
             </div>
             <!--forms-->
             <form [formGroup]="form">
@@ -56,17 +56,17 @@
                     </div>
 
                     <mat-horizontal-stepper linear="true" #stepper>
-                        <mat-step *ngFor="let control of candidatesFormArray.controls; let i = index"
-                                  [stepControl]="control">
-                            <div class="container">
+                        <mat-step *ngFor="let dummy of controlsArray; let i = index"
+                                  [stepControl]="candidatesFormArray[i]">
+                            <div class="container" formGroupName="candidates">
                                 <h5 class="ml-3 font-weight-bold">Propietario</h5>
                                 <hr>
                                 <app-candidate-form
-                                        (onFormCandidateChange)="pushOwnerArray($event)"></app-candidate-form>
+                                        (onFormCandidateChange)="pushOwnerArray($event, i)"></app-candidate-form>
                                 <h5 class="ml-3 font-weight-bold">Suplente</h5>
                                 <hr>
                                 <app-candidate-form
-                                        (onFormCandidateChange)="pushAlternateArray($event)"></app-candidate-form>
+                                        (onFormCandidateChange)="pushAlternateArray($event, i)"></app-candidate-form>
                             </div>
                             <div>
                                 <button mat-raised-button matStepperPrevious *ngIf="i">Anterior</button>
@@ -77,6 +77,9 @@
                                         [disabled]="this.form.invalid">Enviar
                                 </button>
                             </div>
+                            {{this.form.value | json}}
+                            <br>
+                            {{this.controlsArray | json}}
                         </mat-step>
                     </mat-horizontal-stepper>
                 </div>

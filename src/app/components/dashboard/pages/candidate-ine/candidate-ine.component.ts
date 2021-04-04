@@ -47,6 +47,7 @@ export class CandidateIneComponent implements OnInit {
     party_color: string;
     type_postulate;
     subscription;
+    origin_candidate_id;
 
     private CURP_REGEX: '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
 
@@ -56,6 +57,7 @@ export class CandidateIneComponent implements OnInit {
         private router: Router,
         private _candidate: CandidateService
     ) {
+        this.origin_candidate_id = Number(this.route.snapshot.params.id);
     }
 
     ngOnInit(): void {
@@ -233,7 +235,11 @@ export class CandidateIneComponent implements OnInit {
 
     submit() {
         Swal.showLoading();
-        this._candidate.add(this.form.value).subscribe(
+        const body = {
+            ...this.form.value,
+            origin_candidate_id: this.origin_candidate_id
+        }
+        this._candidate.addIne(body).subscribe(
             response => {
                 console.log(response);
                 this.successSave();
