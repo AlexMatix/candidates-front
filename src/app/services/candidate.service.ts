@@ -23,6 +23,10 @@ export class CandidateService {
         return this.http.get(this.URL_PATH).pipe(map((data: any) => data.data));
     }
 
+    getCityHall(id: number): Observable<any> {
+        return this.http.get(`${URL_BASE}getAyuntamiento/${id}`).pipe(map((data: any) => data.data));
+    }
+
     getById(id: number): Observable<any> {
         return this.http.get(`${this.URL_PATH}/${id}`).pipe(map((data: any) => data.data));
     }
