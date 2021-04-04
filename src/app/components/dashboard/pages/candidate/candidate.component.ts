@@ -131,13 +131,13 @@ export class CandidateComponent implements OnInit {
 
         this.type_candidate_form = new FormGroup({
                 postulate: new FormControl('', [Validators.required]),
-                district: new FormControl(''),
-                municipality: new FormControl(''),
+                district: new FormControl('', [Validators.required]),
+                municipality: new FormControl('', [Validators.required]),
             }
         )
 
         this.type_candidate_form.get('municipality').valueChanges.subscribe(value => {
-                this.postulate_id = value;
+                this.postulate_id = value.id;
             }
         );
 
@@ -224,12 +224,23 @@ export class CandidateComponent implements OnInit {
 
     submit() {
         Swal.showLoading();
+        const municipality = this.type_candidate_form.get('municipality').value.name;
+        this.form.removeControl('id');
+        this.alternateForm.removeControl('id');
+        const type_candidate = {
+            ...this.type_candidate_form.value,
+            municipality
+        }
+
+        console.log(type_candidate);
         const data = {
             alternate: this.alternateForm.value,
             ...this.form.value,
-            ...this.type_candidate_form.value,
+            ...type_candidate,
             postulate_id: this.postulate_id,
         };
+
+        console.log(data);
 
         this._candidate.add(data).subscribe(
             response => {
@@ -253,6 +264,8 @@ export class CandidateComponent implements OnInit {
 
     successSave() {
         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
+        this.type_candidate_form.reset();
+        this.alternateForm.reset();
         this.form.reset();
     }
 
@@ -264,9 +277,10 @@ export class CandidateComponent implements OnInit {
         this.district = value;
     }
 
-    changeMunicipalitie(value) {
-        this.postulate_id = value;
-    }
+    // changeMunicipalitie(value) {
+    //     console.log(value);
+    //     this.postulate_id = value.id;
+    // }
 
 
 }

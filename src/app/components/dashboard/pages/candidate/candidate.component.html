@@ -42,10 +42,9 @@
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Municipio</mat-label>
-                                    <mat-select formControlName="municipality"
-                                                (valueChange)="changeMunicipalitie($event)">
+                                    <mat-select formControlName="municipality">
                                         <mat-option *ngFor="let municipality of data?.municipalities[district]"
-                                                    [value]="municipality.name">
+                                                    [value]="municipality">
                                             {{municipality.name}}
                                         </mat-option>
                                     </mat-select>
