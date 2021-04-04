@@ -81,10 +81,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(this.gender);
-        if (this.gender) {
-            this.form.get('gender').setValue(this.gender);
-        }
+        this.setGenderValue()
     }
 
     ngOnInit(): void {
@@ -127,6 +124,8 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
             ]
         );
+        this.setGenderValue();
+        this.setEnabledGender();
         this.setRequiredFields();
         this.onFormCandidateChange.emit(this.form);
     }
@@ -158,5 +157,10 @@ export class CandidateFormComponent implements OnInit, OnChanges {
         );
     }
 
+    private setEnabledGender() {
+        if (typeof this.gender !== 'undefined') {
+            this.form.get('gender').disable();
+        }
+    }
 
 }

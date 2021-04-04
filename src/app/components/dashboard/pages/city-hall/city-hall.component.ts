@@ -5,6 +5,8 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
 import {first} from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import MessagesUtil from '../../../../util/messages.utill';
+import {CandidateService} from '../../../../services/candidate.service';
 
 @Component({
     selector: 'app-city-hall',
@@ -38,6 +40,7 @@ export class CityHallComponent implements OnInit {
 
     constructor(
         public municipalityService: MunicipalitiesService,
+        public candidateService: CandidateService,
     ) {
         this.form = new FormGroup({
                 district: new FormControl(null, Validators.required),
@@ -95,7 +98,7 @@ export class CityHallComponent implements OnInit {
         return messageErrorValidation(this.form, attrName);
     }
 
-    changeMunicipalities(value) {
+    changeDistrict(value) {
         this.district = value;
     }
 
@@ -103,6 +106,7 @@ export class CityHallComponent implements OnInit {
         if (this.form.get('postulate').invalid) {
             return;
         }
+
         // tslint:disable-next-line:max-line-length
         const positionMunicipality = (this.data.municipalities[this.district] as Array<any>).findIndex(element => element.id === this.form.get('postulate_id').value);
         this.sizeStepper = this.data.municipalities[this.district][positionMunicipality][value];
@@ -146,9 +150,15 @@ export class CityHallComponent implements OnInit {
     }
 
     submit() {
+        console.log(this.form.value.postulate);
         this.form.value.postulate = this.charges.find(element => element.id === this.form.value.postulate).chargeId;
         const dataToServer = this.cleanEmptyPairs();
         console.log(dataToServer);
+        if (dataToServer.candidates.length === 0) {
+            MessagesUtil.errorMessage('Debe llenar al menos un propietario');
+            return;
+        }
+
     }
 
     private cleanEmptyPairs() {
@@ -160,5 +170,13 @@ export class CityHallComponent implements OnInit {
             }
         }
         return copy;
+    }
+
+    changeMunicipality($event: any) {
+        this.candidateService.getCityHall($event).subscribe(
+            value => {
+                console.log(value);
+            }
+        );
     }
 }
