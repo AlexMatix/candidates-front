@@ -50,6 +50,8 @@ export class CandidateIneComponent implements OnInit {
     subscription;
     origin_candidate_id;
 
+    isEdit = false;
+
     private CURP_REGEX: '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
 
     constructor(
@@ -63,20 +65,40 @@ export class CandidateIneComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this._candidate.getById(this.origin_candidate_id).subscribe( data => {
-            this.candidateData = data;
+        this._candidate.getById(this.origin_candidate_id).subscribe(data => {
+                this.candidateData = data;
                 console.log(this.candidateData);
             }
         )
+
+
         this.subscription = this.route
             .queryParams
             .subscribe(params => {
                 this.type_postulate = +params['type'];
                 if (this.type_postulate === 1) {
                     this.createOwnerForm();
+                    this._candidate.getIne(this.origin_candidate_id).subscribe(data => {
+                        if (data) {
+                            Swal.showLoading();
+                            console.log('Hay data =>', data);
+                            this.isEdit = true;
+                            this.form.patchValue(data);
+                            Swal.hideLoading();
+                        }
+                    });
                 }
                 if (this.type_postulate === 2) {
                     this.createAlternateForm();
+                    this._candidate.getIne(this.origin_candidate_id).subscribe(data => {
+                        if (data) {
+                            Swal.showLoading();
+                            console.log('Hay data =>', data);
+                            this.isEdit = true;
+                            this.form.patchValue(data);
+                            Swal.hideLoading();
+                        }
+                    });
                 }
             });
 
@@ -247,16 +269,30 @@ export class CandidateIneComponent implements OnInit {
             ...this.form.value,
             origin_candidate_id: this.origin_candidate_id
         }
-        this._candidate.addIne(body).subscribe(
-            response => {
-                console.log(response);
-                this.successSave();
-            },
-            error => {
-                console.log(error);
-                MessagesUtil.errorMessage(ERROR_MESSAGE);
-            }
-        );
+
+        if (this.isEdit) {
+            this._candidate.updateIne(body).subscribe(
+                response => {
+                    console.log(response);
+                    this.successSave();
+                },
+                error => {
+                    console.log(error);
+                    MessagesUtil.errorMessage(ERROR_MESSAGE);
+                }
+            );
+        } else {
+            this._candidate.addIne(body).subscribe(
+                response => {
+                    console.log(response);
+                    this.successSave();
+                },
+                error => {
+                    console.log(error);
+                    MessagesUtil.errorMessage(ERROR_MESSAGE);
+                }
+            );
+        }
     }
 
     successSave() {

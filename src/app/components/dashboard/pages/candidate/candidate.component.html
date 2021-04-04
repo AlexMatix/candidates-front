@@ -1,5 +1,5 @@
 <div class="main-content animated fadeIn">
-    <div class="container-fluid">
+    <main class="container-fluid" #container>
         <div class="card">
             <div class="card-header" [ngClass]="party_color">
                 <h4 class="card-title">Nuevo candidato</h4>
@@ -29,7 +29,7 @@
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Distrito</mat-label>
-                                    <mat-select formControlName="district" (valueChange)="changeDistritct($event)">
+                                    <mat-select formControlName="district">
                                         <mat-option [value]="district" *ngFor="let district of data?.districts">
                                             {{district}}
                                         </mat-option>
@@ -56,16 +56,15 @@
                 </div>
             </form>
 
-            <app-candidate-form *ngIf="type_candidate_form.get('postulate').value"
-                                [isRequired]="true"
-                                (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
-
-            <div class="container-fluid" *ngIf="type_candidate_form.get('postulate').value">
+            <div class="container-fluid">
+                <h3 class="ml-3 font-weight-bold">Propietario</h3>
+                <hr>
+                <app-candidate-form [isRequired]="true"
+                                    (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
                 <h3 class="ml-3 font-weight-bold">Suplente</h3>
                 <hr>
 
-                <app-candidate-form *ngIf="type_candidate_form.get('postulate').value"
-                                    (onFormCandidateChange)="onFormCandidateAlternateChangeEvent($event)"
+                <app-candidate-form (onFormCandidateChange)="onFormCandidateAlternateChangeEvent($event)"
                                     [isRequired]="false"
                 ></app-candidate-form>
             </div>
@@ -73,10 +72,10 @@
                 <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right">
                     Guardar información
                 </button>
-                <button mat-raised-button type="button" (click)="cancel()" class="btn btn-danger pull-right">Cancelar
+                <button mat-raised-button type="button" (click)="cancel(container)" class="btn btn-danger pull-right">Cancelar
                 </button>
             </div>
 
         </div>
-    </div>
+    </main>
 </div>
