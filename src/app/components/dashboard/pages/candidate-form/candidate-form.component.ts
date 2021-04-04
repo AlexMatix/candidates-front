@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
 import {debounceTime, map} from 'rxjs/operators';
@@ -11,10 +11,15 @@ import {MunicipalitiesService} from '../../../../services/municipalities.service
     templateUrl: './candidate-form.component.html',
     styleUrls: ['./candidate-form.component.scss']
 })
-export class CandidateFormComponent implements OnInit {
+export class CandidateFormComponent implements OnInit, OnChanges {
+
+    form: FormGroup;
 
     @Input()
-    form: FormGroup;
+    isRequired = true;
+
+    @Input()
+    gender: string
 
     municipalities$: Observable<any>;
 
@@ -75,46 +80,65 @@ export class CandidateFormComponent implements OnInit {
 
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log(this.gender);
+        if (this.gender) {
+            this.form.get('gender').setValue(this.gender);
+        }
+    }
+
     ngOnInit(): void {
         this.form = new FormGroup({
-                name: new FormControl('', [Validators.required]),
-                father_lastname: new FormControl('', [Validators.required]),
-                mother_lastname: new FormControl('', [Validators.required]),
-                nickname: new FormControl('', [ ]),
-                birthplace: new FormControl('', [Validators.required]),
-                date_birth: new FormControl('', [Validators.required]),
-                gender: new FormControl('', [Validators.required]),
-                group_sexual_diversity: new FormControl('', [Validators.required]),
-                indigenous_group: new FormControl('', [Validators.required]),
-                disabled_group: new FormControl('', [Validators.required]),
-                roads: new FormControl('', [Validators.required]),
-                roads_name: new FormControl('', [Validators.required]),
-                outdoor_number: new FormControl('', [Validators.required]),
+                name: new FormControl('', []),
+                father_lastname: new FormControl('', []),
+                mother_lastname: new FormControl('', []),
+                nickname: new FormControl('', []),
+                birthplace: new FormControl('', []),
+                date_birth: new FormControl('', []),
+                gender: new FormControl('', []),
+                group_sexual_diversity: new FormControl('', []),
+                indigenous_group: new FormControl('', []),
+                disabled_group: new FormControl('', []),
+                roads: new FormControl('', []),
+                roads_name: new FormControl('', []),
+                outdoor_number: new FormControl('', []),
                 interior_number: new FormControl(''),
-                neighborhood: new FormControl('', [Validators.required]),
-                zipcode: new FormControl('', [Validators.required]),
-                municipality: new FormControl('', [Validators.required]),
-                entity: new FormControl('', [Validators.required]),
-                section: new FormControl('', [Validators.required]),
-                residence_time_year: new FormControl('', [Validators.required]),
-                residence_time_month: new FormControl('', [Validators.required]),
-                occupation: new FormControl('', [Validators.required]),
-                elector_key: new FormControl('', [Validators.required], [this.keyElectorValidator.bind(this)]),
-                electorKey_confirm: new FormControl('', [Validators.required]),
-                ocr: new FormControl('', [Validators.required]),
-                cic: new FormControl('', [Validators.required]),
-                emission: new FormControl('', [Validators.required]),
-                postulate: new FormControl('', [Validators.required]),
-                re_election: new FormControl('', [Validators.required]),
-                type_postulate: new FormControl(1, [Validators.required]),
-                number: new FormControl('', [Validators.required]),
-                postulate_id: new FormControl('', [Validators.required]),
+                neighborhood: new FormControl('', []),
+                zipcode: new FormControl('', []),
+                municipality: new FormControl('', []),
+                entity: new FormControl('', []),
+                section: new FormControl('', []),
+                residence_time_year: new FormControl('', []),
+                residence_time_month: new FormControl('', []),
+                occupation: new FormControl('', []),
+                elector_key: new FormControl('', [], [this.keyElectorValidator.bind(this)]),
+                electorKey_confirm: new FormControl('', []),
+                ocr: new FormControl('', []),
+                cic: new FormControl('', []),
+                emission: new FormControl('', []),
+                // postulate: new FormControl('', []),
+                re_election: new FormControl('', []),
+                type_postulate: new FormControl(this.isRequired ? 1 : 2, []), // define is if owner or alternate
+                // number: new FormControl('', []),
+                // postulate_id: new FormControl('', []),
             },
             [
                 ValidatorEquals('elector_key', 'electorKey_confirm', 'notEqualsElectorKey')
             ]
         );
+        this.setRequiredFields();
         this.onFormCandidateChange.emit(this.form);
+    }
+
+    private setRequiredFields() {
+        if (this.isRequired) {
+            for (const key in this.form.controls) {
+                if (key === 'nickname') {
+                    continue; // omit this
+                }
+                this.form.get(key).setValidators(Validators.required);
+            }
+        }
     }
 
     getMessageError(attrName: string) {
