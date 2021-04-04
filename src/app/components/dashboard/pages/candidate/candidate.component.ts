@@ -219,8 +219,8 @@ export class CandidateComponent implements OnInit {
         }
     }
 
-    onFormCandidateChangeEvent(_event) {
-        this.form = _event;
+    onFormCandidateChangeEvent(form: FormGroup) {
+        this.form = form;
     }
 
     onFormCandidateAlternateChangeEvent(_event) {
@@ -246,7 +246,13 @@ export class CandidateComponent implements OnInit {
         console.log(genderOwner);
         console.log(genderAlternate);
 
-        if (this.type_candidate_form.invalid || this.form.invalid || this.alternateForm.invalid) {
+        if (this.type_candidate_form.invalid) {
+            return;
+        }
+        if (this.alternateForm.invalid) {
+            return;
+        }
+        if (this.form.invalid) {
             return;
         }
 
@@ -257,7 +263,6 @@ export class CandidateComponent implements OnInit {
             }
         }
 
-        Swal.showLoading();
         if (this.type_candidate_form.get('postulate').value === 1) {
             this.type_candidate_form.removeControl('postulate_id');
             this.type_candidate_form.removeControl('district');
@@ -273,6 +278,7 @@ export class CandidateComponent implements OnInit {
         };
 
         console.log(data);
+        Swal.showLoading();
 
         // this._candidate.add(data).subscribe(
         //     response => {
@@ -322,6 +328,17 @@ export class CandidateComponent implements OnInit {
                 this.markFormGroupTouched(control);
             }
         });
+    }
+
+    setRequiredFields(formGroup: FormGroup) {
+        for (const key in formGroup.controls) {
+            console.log(key);
+            if (key === 'nickname') {
+                continue; // omit this
+            }
+            console.log(formGroup.get(key).value);
+            formGroup.get(key).setValidators(Validators.required);
+        }
     }
 
 

@@ -57,6 +57,7 @@
             </form>
 
             <app-candidate-form *ngIf="type_candidate_form.get('postulate').value"
+                                [isRequired]="true"
                                 (onFormCandidateChange)="onFormCandidateChangeEvent($event)"></app-candidate-form>
 
             <div class="container-fluid" *ngIf="type_candidate_form.get('postulate').value">
