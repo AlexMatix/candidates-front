@@ -60,7 +60,7 @@
                 <div class="col-6">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>Género</mat-label>
-                        <mat-select formControlName="gender" [disabled]="gender">
+                        <mat-select formControlName="gender">
                             <mat-option *ngFor="let gender of genders" [value]="gender.value">
                                 {{gender.label}}
                             </mat-option>
