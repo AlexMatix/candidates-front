@@ -28,25 +28,25 @@
                             <div class="col-4">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Municipio</mat-label>
-                                    <mat-select formControlName="municipality">
+                                    <mat-select formControlName="postulate_id">
                                         <mat-option *ngFor="let municipality of data?.municipalities[district]"
                                                     [value]="municipality.id">
                                             {{municipality.name}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error>{{getMessageError('municipality')}}</mat-error>
+                                    <mat-error>{{getMessageError('postulate_id')}}</mat-error>
                                 </mat-form-field>
                             </div>
 
                             <div class="col-4">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Cargo</mat-label>
-                                    <mat-select formControlName="charge" (valueChange)="setSizeStepper($event)">
+                                    <mat-select formControlName="postulate" (valueChange)="setSizeStepper($event)">
                                         <mat-option [value]="charge.id" *ngFor="let charge of charges">
                                             {{charge.value}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error>{{getMessageError('charge')}}</mat-error>
+                                    <mat-error>{{getMessageError('postulate')}}</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -57,7 +57,8 @@
 
                     <mat-horizontal-stepper linear="true" #stepper>
                         <mat-step *ngFor="let dummy of controlsArray; let i = index"
-                                  [stepControl]="candidatesFormArray[i]">
+                                  [stepControl]="candidatesFormArray?.controls[i]"
+                                  [completed]="candidatesFormArray.controls[i]?.valid">
                             <div class="container" formGroupName="candidates">
                                 <h5 class="ml-3 font-weight-bold">Propietario</h5>
                                 <hr>
@@ -66,20 +67,18 @@
                                 <h5 class="ml-3 font-weight-bold">Suplente</h5>
                                 <hr>
                                 <app-candidate-form
-                                        (onFormCandidateChange)="pushAlternateArray($event, i)"></app-candidate-form>
+                                        (onFormCandidateChange)="pushAlternateArray($event, i)"
+                                        [isRequired]="false"
+                                        [gender]="candidatesFormArray.value[i]?.owner?.gender"></app-candidate-form>
                             </div>
                             <div>
                                 <button mat-raised-button matStepperPrevious *ngIf="i">Anterior</button>
                                 <button mat-raised-button color="primary" matStepperNext
                                         *ngIf="i < (sizeStepper - 1)">Siguiente
                                 </button>
-                                <button mat-raised-button color="primary" (click)="submit()"
-                                        [disabled]="this.form.invalid">Enviar
+                                <button mat-raised-button color="primary" (click)="submit()">Enviar
                                 </button>
                             </div>
-                            {{this.form.value | json}}
-                            <br>
-                            {{this.controlsArray | json}}
                         </mat-step>
                     </mat-horizontal-stepper>
                 </div>

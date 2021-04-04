@@ -15,9 +15,9 @@ export class CityHallComponent implements OnInit {
     party_color: string;
     form: FormGroup;
     charges = [
-        {id: 'presidency', value: 'Presidente'},
-        {id: 'regidurias', value: 'Regidor'},
-        {id: 'sindicaturas', value: 'Sindical'},
+        {id: 'presidency', value: 'Presidente', chargeId: 5},
+        {id: 'regidurias', value: 'Regidor', chargeId: 3},
+        {id: 'sindicaturas', value: 'Sindical', chargeId: 4},
     ];
 
     candidatesFormArray = new FormArray([]);
@@ -28,15 +28,24 @@ export class CityHallComponent implements OnInit {
     private alternateFormArray: FormGroup[] = [];
     controlsArray = [];
 
+    static printErrors(form: FormGroup) {
+        // tslint:disable-next-line:forin
+        for (const key in form.controls) {
+            const abstractControl = form.get(key);
+            console.log(key, abstractControl.errors);
+        }
+    }
+
     constructor(
         public municipalityService: MunicipalitiesService,
     ) {
         this.form = new FormGroup({
                 district: new FormControl(null, Validators.required),
-                municipality: new FormControl(null, Validators.required),
-                charge: new FormControl(null, Validators.required),
+                postulate_id: new FormControl(null, Validators.required),
+                postulate: new FormControl(null, Validators.required),
                 candidates: this.candidatesFormArray,
-            }
+            },
+            [this.validatePostulate.bind(this)]
         );
         this.municipalityService.getAll().pipe(
             first(),
@@ -47,6 +56,14 @@ export class CityHallComponent implements OnInit {
             }
         );
     }
+
+    validatePostulate: (fg: FormGroup) => void = (fg: FormGroup) => {
+        if (fg.get('district') && fg.get('district').valid && fg.get('postulate_id') && fg.get('postulate_id').valid) {
+            fg.get('postulate').setErrors(null);
+        } else {
+            fg.get('postulate').setErrors({error: true});
+        }
+    };
 
     ngOnInit(): void {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -83,11 +100,11 @@ export class CityHallComponent implements OnInit {
     }
 
     setSizeStepper(value: number) {
-        // if (this.form.get('candidates').valid) {
-        //     return;
-        // }
+        if (this.form.get('postulate').invalid) {
+            return;
+        }
         // tslint:disable-next-line:max-line-length
-        const positionMunicipality = (this.data.municipalities[this.district] as Array<any>).findIndex(element => element.id === this.form.get('municipality').value);
+        const positionMunicipality = (this.data.municipalities[this.district] as Array<any>).findIndex(element => element.id === this.form.get('postulate_id').value);
         this.sizeStepper = this.data.municipalities[this.district][positionMunicipality][value];
         this.ownerFormArray = new Array(this.sizeStepper).fill(null);
         this.alternateFormArray = new Array(this.sizeStepper).fill(null);
@@ -129,6 +146,19 @@ export class CityHallComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.form.value);
+        this.form.value.postulate = this.charges.find(element => element.id === this.form.value.postulate).chargeId;
+        const dataToServer = this.cleanEmptyPairs();
+        console.log(dataToServer);
+    }
+
+    private cleanEmptyPairs() {
+        const copy = {...this.form.value};
+        for (let i = 0; i < this.candidatesFormArray.controls.length; i++) {
+            const formGroup = this.candidatesFormArray.controls[i];
+            if (formGroup.invalid) {
+                (copy.candidates as Array<any>).splice(i, 1);
+            }
+        }
+        return copy;
     }
 }
