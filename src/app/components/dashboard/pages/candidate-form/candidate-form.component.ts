@@ -163,4 +163,10 @@ export class CandidateFormComponent implements OnInit, OnChanges {
         }
     }
 
+    private setGenderValue() {
+        if (this.gender) {
+            this.form.get('gender').setValue(this.gender);
+        }
+    }
+
 }
