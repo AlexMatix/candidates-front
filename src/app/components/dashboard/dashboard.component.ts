@@ -13,17 +13,18 @@ export class DashboardComponent implements OnInit {
     form: any;
     parties$: Observable<any>;
     excelTypes = [
-        {id: 1, name: 'Diputados DRP'},
-        {id: 2, name: 'Diputados DMR'},
-        {id: 3, name: 'Diputados y Presidentes para INE'},
-        {id: 4, name: 'Sindicaturas y Regidurias para INE'},
+        {id: 1, name: 'Diputados DRP', report: 1},
+        {id: 2, name: 'Diputados DMR', report: 2},
+        {id: 3, name: 'Ayuntamiento', report: 3},
+        {id: 4, name: 'Diputados y Presidentes para INE', report: 1},
+        {id: 5, name: 'Sindicaturas y Regidurias para INE', report: 2},
     ];
 
     constructor(
         private politicalService: PoliticalService
     ) {
         this.form = new FormGroup({
-                party: new FormControl(null, Validators.required),
+                party: new FormControl(null),
                 type: new FormControl(null, Validators.required),
             }
         );
@@ -44,3 +45,4 @@ export class DashboardComponent implements OnInit {
 
     }
 }
+

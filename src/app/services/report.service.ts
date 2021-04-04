@@ -13,18 +13,23 @@ export class ReportService {
 
 
     constructor(private http: HttpClient) {
-        this.URL_PATH = URL_BASE + 'reports';
     }
 
-    getReport(data: any): Observable<any> {
-        return this.http.post(this.URL_PATH, data, {responseType: 'blob'});
+    getCandidateReport(report_id: number, politic_party_id: number = null) {
+        let politic = '';
+        if (politic_party_id !== null) {
+            politic = `&politic_party_id=${politic_party_id}`;
+        }
+
+        return this.http.get(`${this.URL_PATH}/createReport?type=${report_id}${politic}`, {responseType: 'blob'});
     }
 
-    getGraphics() {
-        return this.http.get(URL_BASE + 'graphics');
-    }
+    getCandidateINEReport(report_id: number, politic_party_id: number = null) {
+        let politic = '';
+        if (politic_party_id !== null) {
+            politic = `&politic_party_id=${politic_party_id}`;
+        }
 
-    getFederalDistrict() {
-        return this.http.get(URL_BASE + 'federalDistrict');
+        return this.http.get(`${this.URL_PATH}/createReportIne?type=${report_id}${politic}`, {responseType: 'blob'});
     }
 }
