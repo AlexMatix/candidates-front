@@ -24,11 +24,12 @@ export class CityHallComponent implements OnInit {
     data: any;
     district = '0';
     sizeStepper = 0;
-    private ownerFormArray = [];
-    private alternateFormArray = [];
+    ownerFormArray: FormGroup[] = [];
+    private alternateFormArray: FormGroup[] = [];
+    controlsArray = [];
 
     constructor(
-        public municipalityService: MunicipalitiesService
+        public municipalityService: MunicipalitiesService,
     ) {
         this.form = new FormGroup({
                 district: new FormControl(null, Validators.required),
@@ -88,27 +89,25 @@ export class CityHallComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         const positionMunicipality = (this.data.municipalities[this.district] as Array<any>).findIndex(element => element.id === this.form.get('municipality').value);
         this.sizeStepper = this.data.municipalities[this.district][positionMunicipality][value];
+        this.ownerFormArray = new Array(this.sizeStepper).fill(null);
+        this.alternateFormArray = new Array(this.sizeStepper).fill(null);
+        this.controlsArray = new Array(this.sizeStepper).fill(Math.random() * 100);
         this.createArrayCandidates();
     }
 
     private createArrayCandidates() {
-        this.ownerFormArray = [];
-        this.alternateFormArray = [];
         this.candidatesFormArray = new FormArray([]);
-        (this.form.get('candidates') as FormArray).setControl(0, this.candidatesFormArray);
-
         Swal.showLoading();
-        for (let i = 0; i < this.sizeStepper; i++) {
-            this.candidatesFormArray.push(new FormGroup({}));
-        }  // init to fix and create components
-
+        (this.form.get('candidates') as FormArray).setControl(0, this.candidatesFormArray);
         setTimeout(
             () => {
                 for (let i = 0; i < this.sizeStepper; i++) {
-                    this.candidatesFormArray.setControl(i, this.getControlCandidate(i));
+                    this.candidatesFormArray.push(this.getControlCandidate(i));
                 }
+                console.log('seteados controles');
                 Swal.close();
-            }, 100
+            },
+            500,
         );
     }
 
@@ -121,14 +120,12 @@ export class CityHallComponent implements OnInit {
         );
     }
 
-    pushOwnerArray(form: FormGroup) {
-        console.log('1');
-        this.ownerFormArray.push(form);
+    pushOwnerArray(form: FormGroup, i: number) {
+        this.ownerFormArray[i] = form;
     }
 
-    pushAlternateArray(form: FormGroup) {
-        console.log('2');
-        this.alternateFormArray.push(form);
+    pushAlternateArray(form: FormGroup, i: number) {
+        this.alternateFormArray[i] = form;
     }
 
     submit() {
