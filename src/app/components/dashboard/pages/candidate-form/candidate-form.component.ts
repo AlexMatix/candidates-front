@@ -89,6 +89,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.form = new FormGroup({
+                id: new FormControl(0),
                 name: new FormControl('', []),
                 father_lastname: new FormControl('', []),
                 mother_lastname: new FormControl('', []),
