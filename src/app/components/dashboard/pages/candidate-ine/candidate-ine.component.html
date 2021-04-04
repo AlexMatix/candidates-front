@@ -7,65 +7,73 @@
             </div>
 
 
-            <form [formGroup]="form">
+            <form [formGroup]="form" *ngIf="type_postulate === 1">
                 <div class="card-body">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Número de lista / Planilla</mat-label>
+                                    <input matInput type="text" formControlName="number_list" digitOnly maxlength="5">
+                                    <mat-error>{{getMessageError('number_list')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Número de línea</mat-label>
-                                    <input matInput type="text" formControlName="number_line">
+                                    <input matInput type="text" formControlName="number_line" digitOnly maxlength="3">
                                     <mat-error>{{getMessageError('number_line')}}</mat-error>
                                 </mat-form-field>
                             </div>
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Circunscripción</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="circumscription">-->
-<!--                                    <mat-error>{{getMessageError('circumscription')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Circunscripción</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="circumscription">-->
+                            <!--                                    <mat-error>{{getMessageError('circumscription')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Localidad</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="locality">-->
-<!--                                    <mat-error>{{getMessageError('locality')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Localidad</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="locality">-->
+                            <!--                                    <mat-error>{{getMessageError('locality')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Demarcación</mat-label>
-                                    <input matInput type="text" formControlName="demarcation">
+                                    <input matInput type="text" formControlName="demarcation" digitOnly maxlength="2">
                                     <mat-error>{{getMessageError('demarcation')}}</mat-error>
                                 </mat-form-field>
                             </div>
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Juntas Municipales</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="municipalities_council">-->
-<!--                                    <mat-error>{{getMessageError('municipalities_council')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Juntas Municipales</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="municipalities_council">-->
+                            <!--                                    <mat-error>{{getMessageError('municipalities_council')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Lema de campaña</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="campaign_slogan">-->
-<!--                                    <mat-error>{{getMessageError('campaign_slogan')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Lema de campaña</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="campaign_slogan">-->
+                            <!--                                    <mat-error>{{getMessageError('campaign_slogan')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Número de lista</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="list_number">-->
-<!--                                    <mat-error>{{getMessageError('list_number')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Número de lista</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="list_number">-->
+                            <!--                                    <mat-error>{{getMessageError('list_number')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
@@ -82,24 +90,40 @@
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>CURP</mat-label>
-                                    <input matInput type="text" formControlName="curp">
+                                    <input matInput type="text" formControlName="curp" maxlength="18"
+                                           (keypress)="onPressCURP($event)"
+                                           oninput="this.value = this.value.toUpperCase()"
+                                           appBlockCopyPaste>
                                     <mat-error>{{getMessageError('curp')}}</mat-error>
+                                    <mat-error *ngIf="form.get('curp').hasError('pattern')">
+                                        Formato: AAAA 000000 A AA AAA 00
+                                    </mat-error>
+                                    <mat-hint align="end">{{form.get('curp').value?.length}} / 18</mat-hint>
                                 </mat-form-field>
                             </div>
 
                             <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Confirmación de CURP</mat-label>
-                                    <input matInput type="text" formControlName="curp_confirmation">
+                                    <input matInput type="text" formControlName="curp_confirmation" maxlength="18"
+                                           (keypress)="onPressCURP($event)"
+                                           oninput="this.value = this.value.toUpperCase()"
+                                           appBlockCopyPaste>
                                     <mat-error>{{getMessageError('curp_confirmation')}}</mat-error>
+                                    <mat-error *ngIf="form.get('curp').hasError('curp_confirmation')">
+                                        Formato: AAAA 000000 A AA AAA 00
+                                    </mat-error>
+                                    <mat-hint align="end">{{form.get('curp_confirmation').value?.length}} / 18
+                                    </mat-hint>
                                 </mat-form-field>
                             </div>
 
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>RFC</mat-label>
-                                    <input matInput type="text" formControlName="rfc">
+                                    <input matInput type="text" formControlName="rfc" maxlength="13">
                                     <mat-error>{{getMessageError('rfc')}}</mat-error>
+                                    <mat-hint align="end">{{form.get('rfc').value?.length}} / 13</mat-hint>
                                 </mat-form-field>
                             </div>
 
@@ -115,31 +139,31 @@
                                 </mat-form-field>
                             </div>
 
-<!--                            <div class="col-2">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>LADA</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="lada">-->
-<!--                                    <mat-error>{{getMessageError('lada')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-2">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>LADA</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="lada">-->
+                            <!--                                    <mat-error>{{getMessageError('lada')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
                             <div class="col-9">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Teléfono</mat-label>
-                                    <input matInput type="tel" formControlName="phone">
+                                    <input matInput type="tel" formControlName="phone" maxlength="10">
                                     <mat-error>{{getMessageError('phone')}}</mat-error>
                                 </mat-form-field>
                             </div>
 
-<!--                            <div class="col-2">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Extensión</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="extension">-->
-<!--                                    <mat-error>{{getMessageError('extension')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-2">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Extensión</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="extension">-->
+                            <!--                                    <mat-error>{{getMessageError('extension')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-                            <div class="col-12">
+                            <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Correo electrónico</mat-label>
                                     <input matInput type="email" formControlName="email">
@@ -147,7 +171,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-6">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Confirmación correo electronico</mat-label>
                                     <input matInput type="email" formControlName="email_confirmation">
@@ -158,177 +182,306 @@
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Total de ingresos anuales</mat-label>
-                                    <input matInput type="text" formControlName="total_annual_income">
+                                    <input matInput type="text"
+                                           formControlName="total_annual_income"
+                                           inputmode="numeric"
+                                           pattern="^\d+(\.\d{1,2})?$"
+                                           placeholder="0.00"
+                                           maxlength="53"
+                                           digitOnly
+                                           decimal="true"
+                                    >
                                     <mat-error>{{getMessageError('total_annual_income')}}</mat-error>
                                 </mat-form-field>
                             </div>
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Salarios de ingresos anuales</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="salary_annual_income">-->
-<!--                                    <mat-error>{{getMessageError('salary_annual_income')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Salarios de ingresos anuales</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="salary_annual_income">-->
+                            <!--                                    <mat-error>{{getMessageError('salary_annual_income')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Rendimientos financieros</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="financial_performances">-->
-<!--                                    <mat-error>{{getMessageError('financial_performances')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Rendimientos financieros</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="financial_performances">-->
+                            <!--                                    <mat-error>{{getMessageError('financial_performances')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Utilidad anual de actividad profesional</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="annual_profit_professional_activity">-->
-<!--                                    <mat-error>{{getMessageError('annual_profit_professional_activity')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Utilidad anual de actividad profesional</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="annual_profit_professional_activity">-->
+                            <!--                                    <mat-error>{{getMessageError('annual_profit_professional_activity')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Ganancias anuales de arrendamiento inmuebles</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="annual_real_estate_lease_earnings">-->
-<!--                                    <mat-error>{{getMessageError('annual_real_estate_lease_earnings')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Ganancias anuales de arrendamiento inmuebles</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="annual_real_estate_lease_earnings">-->
+                            <!--                                    <mat-error>{{getMessageError('annual_real_estate_lease_earnings')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Honorarios de servicios profesionales</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="professional_services_fees">-->
-<!--                                    <mat-error>{{getMessageError('professional_services_fees')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Honorarios de servicios profesionales</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="professional_services_fees">-->
+                            <!--                                    <mat-error>{{getMessageError('professional_services_fees')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Otros ingresos</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="other_income">-->
-<!--                                    <mat-error>{{getMessageError('other_income')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros ingresos</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="other_income">-->
+                            <!--                                    <mat-error>{{getMessageError('other_income')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
                             <div class="col-12">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Total de egresos anuales</mat-label>
-                                    <input matInput type="text" formControlName="total_annual_expenses">
+                                    <input matInput type="text" formControlName="total_annual_expenses"
+                                           inputmode="numeric"
+                                           pattern="^\d+(\.\d{1,2})?$"
+                                           placeholder="0.00"
+                                           maxlength="53"
+                                           digitOnly
+                                           decimal="true"
+                                    >
                                     <mat-error>{{getMessageError('total_annual_expenses')}}</mat-error>
                                 </mat-form-field>
                             </div>
 
-                            <div class="col-12">
-                                <mat-form-field class="w-100" appearance="outline">
-                                    <mat-label>Gastos personales</mat-label>
-                                    <input matInput type="text" formControlName="personal_expenses">
-                                    <mat-error>{{getMessageError('personal_expenses')}}</mat-error>
-                                </mat-form-field>
-                            </div>
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Gastos personales</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="personal_expenses">-->
+                            <!--                                    <mat-error>{{getMessageError('personal_expenses')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Pagos de bienes inmuebles</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="real_estate_payments">-->
-<!--                                    <mat-error>{{getMessageError('real_estate_payments')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Pagos de bienes inmuebles</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="real_estate_payments">-->
+                            <!--                                    <mat-error>{{getMessageError('real_estate_payments')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Pago de deudas</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="debt_payments">-->
-<!--                                    <mat-error>{{getMessageError('debt_payments')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Pago de deudas</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="debt_payments">-->
+                            <!--                                    <mat-error>{{getMessageError('debt_payments')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Perdidas de actividad profesional</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="loss_personal_activity">-->
-<!--                                    <mat-error>{{getMessageError('loss_personal_activity')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Perdidas de actividad profesional</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="loss_personal_activity">-->
+                            <!--                                    <mat-error>{{getMessageError('loss_personal_activity')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Otros egresos</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="other_expenses">-->
-<!--                                    <mat-error>{{getMessageError('other_expenses')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros egresos</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="other_expenses">-->
+                            <!--                                    <mat-error>{{getMessageError('other_expenses')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Bienes inmuebles</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="property">-->
-<!--                                    <mat-error>{{getMessageError('property')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Bienes inmuebles</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="property">-->
+                            <!--                                    <mat-error>{{getMessageError('property')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Vehiculos</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="vehicles">-->
-<!--                                    <mat-error>{{getMessageError('vehicles')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Vehiculos</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="vehicles">-->
+                            <!--                                    <mat-error>{{getMessageError('vehicles')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Otros bienes muebles</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="other_movable_property">-->
-<!--                                    <mat-error>{{getMessageError('other_movable_property')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros bienes muebles</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="other_movable_property">-->
+                            <!--                                    <mat-error>{{getMessageError('other_movable_property')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Otros bienes muebles</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="other_movable_property">-->
-<!--                                    <mat-error>{{getMessageError('other_movable_property')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros bienes muebles</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="other_movable_property">-->
+                            <!--                                    <mat-error>{{getMessageError('other_movable_property')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Cuentas bancarias e inversiones en México y en el exterior</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="bank_accounts">-->
-<!--                                    <mat-error>{{getMessageError('bank_accounts')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Cuentas bancarias e inversiones en México y en el exterior</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="bank_accounts">-->
+                            <!--                                    <mat-error>{{getMessageError('bank_accounts')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Otros activos</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="other_assets">-->
-<!--                                    <mat-error>{{getMessageError('other_assets')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros activos</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="other_assets">-->
+                            <!--                                    <mat-error>{{getMessageError('other_assets')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Monto de adeudo de pago</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="payment_debt_amount">-->
-<!--                                    <mat-error>{{getMessageError('payment_debt_amount')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Monto de adeudo de pago</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="payment_debt_amount">-->
+                            <!--                                    <mat-error>{{getMessageError('payment_debt_amount')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
 
-<!--                            <div class="col-12">-->
-<!--                                <mat-form-field class="w-100" appearance="outline">-->
-<!--                                    <mat-label>Otros pasivos</mat-label>-->
-<!--                                    <input matInput type="text" formControlName="other_passives">-->
-<!--                                    <mat-error>{{getMessageError('other_passives')}}</mat-error>-->
-<!--                                </mat-form-field>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros pasivos</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="other_passives">-->
+                            <!--                                    <mat-error>{{getMessageError('other_passives')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
                         </div>
                     </div>
                 </div>
             </form>
 
+            <form [formGroup]="form" *ngIf="type_postulate === 2">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>CURP</mat-label>
+                                    <input matInput type="text" formControlName="curp" maxlength="18"
+                                           (keypress)="onPressCURP($event)"
+                                           oninput="this.value = this.value.toUpperCase()"
+                                           appBlockCopyPaste>
+                                    <mat-error>{{getMessageError('curp')}}</mat-error>
+                                    <mat-error *ngIf="form.get('curp').hasError('pattern')">
+                                        Formato: AAAA 000000 A AA AAA 00
+                                    </mat-error>
+                                    <mat-hint align="end">{{form.get('curp').value?.length}} / 18</mat-hint>
+                                </mat-form-field>
+                            </div>
 
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Confirmación de CURP</mat-label>
+                                    <input matInput type="text" formControlName="curp_confirmation" maxlength="18"
+                                           (keypress)="onPressCURP($event)"
+                                           oninput="this.value = this.value.toUpperCase()"
+                                           appBlockCopyPaste>
+                                    <mat-error>{{getMessageError('curp_confirmation')}}</mat-error>
+                                    <mat-error *ngIf="form.get('curp').hasError('curp_confirmation')">
+                                        Formato: AAAA 000000 A AA AAA 00
+                                    </mat-error>
+                                    <mat-hint align="end">{{form.get('curp_confirmation').value?.length}} / 18
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>RFC</mat-label>
+                                    <input matInput type="text" formControlName="rfc" maxlength="13">
+                                    <mat-error>{{getMessageError('rfc')}}</mat-error>
+                                    <mat-hint align="end">{{form.get('rfc').value?.length}} / 13</mat-hint>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-3">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Tipo de teléfono</mat-label>
+                                    <mat-select formControlName="phone_type">
+                                        <mat-option *ngFor="let phone of phone_type" [value]="phone.value">
+                                            {{phone.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('phone_type')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                            <div class="col-2">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>LADA</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="lada">-->
+                            <!--                                    <mat-error>{{getMessageError('lada')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+
+                            <div class="col-9">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Teléfono</mat-label>
+                                    <input matInput type="tel" formControlName="phone" maxlength="10">
+                                    <mat-error>{{getMessageError('phone')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                            <div class="col-2">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Extensión</mat-label>-->
+                            <!--                                    <input matInput type="text" formControlName="extension">-->
+                            <!--                                    <mat-error>{{getMessageError('extension')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Correo electrónico</mat-label>
+                                    <input matInput type="email" formControlName="email">
+                                    <mat-error>{{getMessageError('email')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-6">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Confirmación correo electronico</mat-label>
+                                    <input matInput type="email" formControlName="email_confirmation">
+                                    <mat-error>{{getMessageError('email_confirmation')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Otros</mat-label>-->
+                            <!--                                    <input matInput type="email" formControlName="others">-->
+                            <!--                                    <mat-error>{{getMessageError('others')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+
+                            <!--                            <div class="col-12">-->
+                            <!--                                <mat-form-field class="w-100" appearance="outline">-->
+                            <!--                                    <mat-label>Consideraciones</mat-label>-->
+                            <!--                                    <input matInput type="email" formControlName="considerations">-->
+                            <!--                                    <mat-error>{{getMessageError('considerations')}}</mat-error>-->
+                            <!--                                </mat-form-field>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </form>
 
 
             <div class="d-flex flex-row-reverse">
@@ -336,8 +489,8 @@
                         [disabled]="!form.valid">Guardar
                     información
                 </button>
-                <button mat-raised-button type="button" (cancel)="cancel()" class="btn btn-danger pull-right"
-                        [disabled]="!form.valid">Cancelar
+                <button mat-raised-button type="button" (click)="cancel()" class="btn btn-danger pull-right">
+                    Cancelar
                 </button>
             </div>
 

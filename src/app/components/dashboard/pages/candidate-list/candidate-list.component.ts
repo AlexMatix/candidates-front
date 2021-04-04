@@ -65,7 +65,6 @@ export class CandidateListComponent implements OnInit {
     ];
     dataSource: MatTableDataSource<any>;
     notData = true;
-
     party_color: string;
 
 
@@ -83,23 +82,23 @@ export class CandidateListComponent implements OnInit {
         const user = JSON.parse(localStorage.getItem('user'));
         switch (user.politic_party_id) {
             case MORENA: {
-                this.party_color = 'morena'
+                this.party_color = 'morena';
                 break;
             }
             case PT: {
-                this.party_color = 'pt'
+                this.party_color = 'pt';
                 break;
             }
             case VERDE: {
-                this.party_color = 'verde'
+                this.party_color = 'verde';
                 break;
             }
             case PSI: {
-                this.party_color = 'psi'
+                this.party_color = 'psi';
                 break;
             }
             default: {
-                this.party_color = 'morena'
+                this.party_color = 'morena';
             }
         }
     }
@@ -160,8 +159,9 @@ export class CandidateListComponent implements OnInit {
         );
     }
 
-    complete_ine(id) {
-        this.router.navigate(['/candidate-ine', id]);
+    complete_ine(candidate) {
+        console.log(candidate);
+        this.router.navigate(['/candidate-ine', candidate.id], {queryParams: {type: candidate.type_postulate}});
     }
 
 }

@@ -1,11 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
 import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {CandidateService} from '../../../../services/candidate.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-candidate-ine',
@@ -18,32 +19,7 @@ export class CandidateIneComponent implements OnInit {
     onFormCandidateChange = new EventEmitter<any>();
 
     form: FormGroup;
-    formAlternate: FormGroup;
     editForm = false;
-
-    roads = [
-        {id: 1, name: 'Ampliación'},
-        {id: 2, name: 'Andador'},
-        {id: 3, name: 'Avenida'},
-        {id: 4, name: 'Boulevard'},
-        {id: 5, name: 'Calle'},
-        {id: 6, name: 'Callejon'},
-        {id: 7, name: 'Calzada'},
-        {id: 8, name: 'Cerrada'},
-        {id: 9, name: 'Circuito'},
-        {id: 10, name: 'Circulación'},
-        {id: 11, name: 'Continuación'},
-        {id: 12, name: 'Corredor'},
-        {id: 13, name: 'Diagonal'},
-        {id: 14, name: 'Eje vial'},
-        {id: 15, name: 'Pasaje'},
-        {id: 16, name: 'Peatonal'},
-        {id: 17, name: 'Periférico'},
-        {id: 18, name: 'Privada'},
-        {id: 19, name: 'Prolongación'},
-        {id: 20, name: 'Retorno'},
-        {id: 21, name: 'Viaducto'},
-    ]
 
     phone_type = [
         {value: 1, name: 'Casa'},
@@ -69,54 +45,33 @@ export class CandidateIneComponent implements OnInit {
 
 
     party_color: string;
+    type_postulate;
+    subscription;
+    origin_candidate_id;
+
+    private CURP_REGEX: '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
 
     constructor(
-        private _candidate: CandidateService,
-        private _router: Router,
+        private location: Location,
+        private route: ActivatedRoute,
+        private router: Router,
+        private _candidate: CandidateService
     ) {
+        this.origin_candidate_id = Number(this.route.snapshot.params.id);
     }
 
     ngOnInit(): void {
-        this.form = new FormGroup({
-                number_line: new FormControl('', [Validators.required]),
-                circumscription: new FormControl(''),
-                locality: new FormControl(''),
-                demarcation: new FormControl('', [Validators.required]),
-                municipalities_council: new FormControl(''),
-                campaign_slogan: new FormControl(''),
-                list_number: new FormControl(''),
-                campaign: new FormControl('', [Validators.required]),
-                curp: new FormControl('', [Validators.required]),
-                curp_confirmation: new FormControl('', [Validators.required]),
-                rfc: new FormControl('', [Validators.required]),
-                phone_type: new FormControl('', [Validators.required]),
-                lada: new FormControl(''),
-                phone: new FormControl('', [Validators.required]),
-                extension: new FormControl(''),
-                email: new FormControl('', [Validators.required]),
-                email_confirmation: new FormControl('', [Validators.required, Validators.email]),
-                total_annual_income: new FormControl('', [Validators.required, Validators.email]),
-                salary_annual_income: new FormControl(''),
-                financial_performances: new FormControl(''),
-                annual_profit_professional_activity: new FormControl(''),
-                annual_real_estate_lease_earnings: new FormControl(''),
-                professional_services_fees: new FormControl(''),
-                other_income: new FormControl(''),
-                total_annual_expenses: new FormControl('', [Validators.required]),
-                personal_expenses: new FormControl('', [Validators.required]),
-                real_estate_payments: new FormControl(''),
-                debt_payments: new FormControl(''),
-                loss_personal_activity: new FormControl(''),
-                other_expenses: new FormControl(''),
-                property: new FormControl(''),
-                vehicles: new FormControl(''),
-                other_movable_property: new FormControl(''),
-                bank_accounts: new FormControl(''),
-                other_assets: new FormControl(''),
-                payment_debt_amount: new FormControl(''),
-                other_passives: new FormControl(''),
-            }
-        );
+        this.subscription = this.route
+            .queryParams
+            .subscribe(params => {
+                this.type_postulate = +params['type'];
+                if (this.type_postulate === 1) {
+                    this.createOwnerForm();
+                }
+                if (this.type_postulate === 2) {
+                    this.createAlternateForm();
+                }
+            });
 
         const user = JSON.parse(localStorage.getItem('user'));
         switch (user.politic_party_id) {
@@ -142,6 +97,136 @@ export class CandidateIneComponent implements OnInit {
         }
     }
 
+    createOwnerForm() {
+        this.form = new FormGroup({
+                number_line: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(1),
+                            Validators.maxLength(3)
+                        ]
+                    )
+                ),
+                number_list: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]),
+                circumscription: new FormControl(''),
+                locality: new FormControl(''),
+                demarcation: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(1),
+                            Validators.maxLength(3)
+                        ])),
+                municipalities_council: new FormControl(''),
+                campaign_slogan: new FormControl(''),
+                list_number: new FormControl(''),
+                campaign: new FormControl('', [Validators.required]),
+                curp: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(18),
+                            Validators.pattern(this.CURP_REGEX)
+                        ]
+                    )),
+                curp_confirmation: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(18),
+                            Validators.pattern(this.CURP_REGEX)
+                        ]
+                    ),
+                ),
+                rfc: new FormControl('', Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(13)
+                    ]
+                )),
+                phone_type: new FormControl('', [Validators.required]),
+                lada: new FormControl(''),
+                phone: new FormControl('', Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(7),
+                        Validators.maxLength(10),
+                    ]
+                )),
+                extension: new FormControl(''),
+                email: new FormControl('', [Validators.required, Validators.email]),
+                email_confirmation: new FormControl('', [Validators.required, Validators.email]),
+                total_annual_income: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+                salary_annual_income: new FormControl(''),
+                financial_performances: new FormControl(''),
+                annual_profit_professional_activity: new FormControl(''),
+                annual_real_estate_lease_earnings: new FormControl(''),
+                professional_services_fees: new FormControl(''),
+                other_income: new FormControl(''),
+                total_annual_expenses: new FormControl('', [Validators.required]),
+                personal_expenses: new FormControl(''),
+                real_estate_payments: new FormControl(''),
+                debt_payments: new FormControl(''),
+                loss_personal_activity: new FormControl(''),
+                other_expenses: new FormControl(''),
+                property: new FormControl(''),
+                vehicles: new FormControl(''),
+                other_movable_property: new FormControl(''),
+                bank_accounts: new FormControl(''),
+                other_assets: new FormControl(''),
+                payment_debt_amount: new FormControl(''),
+                other_passives: new FormControl(''),
+            },
+            [
+                ValidatorEquals('curp', 'curp_confirmation', 'notEqualsCurp'),
+                ValidatorEquals('email', 'email_confirmation', 'notEqualsEmail')
+            ]
+        );
+    }
+
+    createAlternateForm() {
+        this.form = new FormGroup({
+            curp: new FormControl('',
+                Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(18),
+                        Validators.pattern(this.CURP_REGEX)
+                    ]
+                )),
+            curp_confirmation: new FormControl('',
+                Validators.compose(
+                    [
+                        Validators.required,
+                        Validators.minLength(18),
+                        Validators.pattern(this.CURP_REGEX)
+                    ]
+                ),
+            ),
+            rfc: new FormControl('', Validators.compose(
+                [
+                    Validators.required,
+                    Validators.minLength(13)
+                ]
+            )),
+            phone_type: new FormControl('', [Validators.required]),
+            lada: new FormControl(''),
+            phone: new FormControl('', Validators.compose(
+                [
+                    Validators.required,
+                    Validators.minLength(7),
+                    Validators.maxLength(10),
+                ]
+            )),
+            extension: new FormControl(''),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            email_confirmation: new FormControl('', [Validators.required, Validators.email]),
+            others: new FormControl(''),
+            considerations: new FormControl(''),
+        });
+    }
+
     onFormCandidateChangeEvent(_event) {
         console.log(_event);
         this.form = _event;
@@ -150,7 +235,11 @@ export class CandidateIneComponent implements OnInit {
 
     submit() {
         Swal.showLoading();
-        this._candidate.add(this.form.value).subscribe(
+        const body = {
+            ...this.form.value,
+            origin_candidate_id: this.origin_candidate_id
+        }
+        this._candidate.addIne(body).subscribe(
             response => {
                 console.log(response);
                 this.successSave();
@@ -168,15 +257,31 @@ export class CandidateIneComponent implements OnInit {
     }
 
     cancel() {
-        this.form.reset();
-        if (this.editForm) {
-            this._router.navigate(['/candidateList']);
-        }
+        this.location.back();
     }
 
     getMessageError(attrName: string) {
         return messageErrorValidation(this.form, attrName);
     };
+
+    onPressCURP(value) {
+        const length = this.form.get('curp').value.length + 1;
+        if (length > 18) {
+            return false;
+        }
+
+        if ((length > 4 && length < 11) || length > 16) {
+            if (value.charCode >= 48 && value.charCode <= 57) {
+                return true;
+            }
+        }
+        if ((length >= 1 && length <= 4) || (length >= 11 && length <= 16)) {
+            if ((value.charCode >= 65 && value.charCode <= 90) || (value.charCode >= 97 && value.charCode <= 122)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

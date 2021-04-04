@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OauthService} from '../../services/oauth.service';
 import {messageErrorValidation} from '../../util/ValidatorsHelper';
 import MessagesUtil from '../../util/messages.utill';
-import {DISABLE_USER, ERROR_MESSAGE, FAIL_LOGIN} from '../../util/Config.utils';
+import {ADMIN, DISABLE_USER, ERROR_MESSAGE, FAIL_LOGIN} from '../../util/Config.utils';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
@@ -44,25 +44,14 @@ export class LoginComponent implements OnInit {
                 this._user.getUserByToken().subscribe(
                     data => {
                         console.log(data);
-                        // if (data.party === 0) {
-                        //     console.log('Aqui toi')
-                        //     this._themeService.setActiveTheme(MORENA_THEME);
-                        // }
-                        // if (data.party === 1) {
-                        //     this._themeService.setActiveTheme(MORENA_THEME)
-                        // }
-                        // if (data.party === 2) {
-                        //     document.documentElement.setAttribute('data-theme', 'pt');
-                        // }
-                        //
-                        // if (data.party === 3) {
-                        //     this._themeService.setActiveTheme(VERDE_TEAM)
-                        // }
-
                         console.log('USER LOGGED --> ', data);
                         this._oautn.setUserLogin(data);
                         Swal.close();
-                        this._router.navigate(['/dashboard']);
+                        if (data.type === ADMIN) {
+                            this._router.navigate(['/dashboard']);
+                        } else {
+                            this._router.navigate(['/candidate/0']);
+                        }
                     },
                     fail => {
                         MessagesUtil.errorMessage(ERROR_MESSAGE);

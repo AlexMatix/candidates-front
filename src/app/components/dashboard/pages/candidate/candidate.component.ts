@@ -9,6 +9,7 @@ import {debounceTime, first, map} from 'rxjs/operators';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
 import {Observable} from 'rxjs';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-candidate',
@@ -81,10 +82,11 @@ export class CandidateComponent implements OnInit {
     postulate_id;
 
     constructor(
+        private location: Location,
         public municipalityService: MunicipalitiesService,
         private _candidate: CandidateService,
-        private router: ActivatedRoute,
-        private _router: Router,
+        private route: ActivatedRoute,
+        private router: Router,
         private _municipalitiesService: MunicipalitiesService
     ) {
         this.municipalities$ = this._municipalitiesService.getAll();
@@ -134,10 +136,8 @@ export class CandidateComponent implements OnInit {
             }
         )
 
-        this.type_candidate_form.get('municipality').valueChanges.subscribe( value => {
-            console.log(value);
-            this.postulate_id = value;
-            console.log(this.postulate_id);
+        this.type_candidate_form.get('municipality').valueChanges.subscribe(value => {
+                this.postulate_id = value;
             }
         );
 
@@ -145,17 +145,16 @@ export class CandidateComponent implements OnInit {
             first(),
         ).subscribe(
             value => {
-                this.data = value;
                 console.log(value);
+                this.data = value;
             }
         );
 
-        this.id = Number(this.router.snapshot.params.id);
+        this.id = Number(this.route.snapshot.params.id);
         if (!isNaN(this.id) && this.id !== 0) {
             Swal.showLoading();
             this._candidate.getById(this.id).subscribe(
                 response => {
-                    console.log(response);
                     this.form.get('name').setValue(response.name);
                     this.form.get('father_lastname').setValue(response.patter_lastname);
                     this.form.get('mother_lastname').setValue(response.mother_lastname);
@@ -207,15 +206,11 @@ export class CandidateComponent implements OnInit {
     }
 
     onFormCandidateChangeEvent(_event) {
-        console.log(_event);
         this.form = _event;
-        // console.error(_event, this.form['controls']);
     }
 
     onFormCandidateAlternateChangeEvent(_event) {
-        console.log(_event);
         this.alternateForm = _event;
-        // console.error(_event, this.form['controls']);
     }
 
     keyElectorValidator(control: AbstractControl) {
@@ -228,21 +223,16 @@ export class CandidateComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.form.value);
         Swal.showLoading();
-        console.log(this.type_candidate_form.value);
         const data = {
             alternate: this.alternateForm.value,
-            // ...this.data,
             ...this.form.value,
             ...this.type_candidate_form.value,
             postulate_id: this.postulate_id,
         };
 
-        console.log(data);
         this._candidate.add(data).subscribe(
             response => {
-                console.log(response);
                 this.successSave();
             },
             error => {
@@ -253,10 +243,12 @@ export class CandidateComponent implements OnInit {
     }
 
     cancel() {
-        this.form.reset();
-        if (this.editForm) {
-            this._router.navigate(['/candidateList']);
-        }
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+        this.type_candidate_form.reset();
     }
 
     successSave() {
@@ -269,13 +261,11 @@ export class CandidateComponent implements OnInit {
     };
 
     changeDistritct(value) {
-        console.log(value);
         this.district = value;
     }
 
     changeMunicipalitie(value) {
         this.postulate_id = value;
-        console.log(value);
     }
 
 
