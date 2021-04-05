@@ -33,6 +33,13 @@
     }
 }
 
+.nueva-alianza {
+    background-color: #00A7B5 !important;
+    h4, p{
+        color: white !important;
+    }
+}
+
 li.morena > a {
     background-color: #4E232E !important;
     i, p {
@@ -58,6 +65,15 @@ li.verde > a {
 li.psi > a {
     background-color: red !important;
 }
+
+li.nueva-alianza > a {
+    background-color: #00A7B5 !important;
+    color: white !important;
+    i {
+        color: white !important;
+    }
+}
+
 
 .btn-danger {
     background-color: #56242A !important;

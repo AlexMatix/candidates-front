@@ -5,7 +5,7 @@ import {messageErrorValidation, ValidatorEquals} from '../../../../util/Validato
 import {UserService} from '../../../../services/user.service';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, MORENA, MORENA_PT, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, MORENA_PT, NUEVA_ALIANZA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {UserModel} from '../../../../models/user.model';
 
 @Component({
@@ -33,6 +33,7 @@ export class UserComponent implements OnInit {
         {id: VERDE, name: 'VERDE'},
         {id: PSI, name: 'PSI'},
         {id: MORENA_PT, name: 'MORENA/PT'},
+        {id: NUEVA_ALIANZA, name: 'NUEVA ALIANZA'}
     ];
 
     party_color: string;
@@ -69,6 +70,10 @@ export class UserComponent implements OnInit {
             }
             case PSI: {
                 this.party_color = 'psi';
+                break;
+            }
+            case NUEVA_ALIANZA: {
+                this.party_color = 'nueva-alianza'
                 break;
             }
             default: {

@@ -33,6 +33,7 @@ export const PT = 2;
 export const VERDE = 3;
 export const PSI = 4;
 export const MORENA_PT = 5;
+export const NUEVA_ALIANZA = 6;
 
 export const MORENA_COLOR = '#b3282d';
 export const PT_COLOR = '#ff173d';
