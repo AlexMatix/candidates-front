@@ -111,7 +111,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 occupation: new FormControl('', []),
                 elector_key: new FormControl('', [], [this.keyElectorValidator.bind(this)]),
                 electorKey_confirm: new FormControl('', []),
-                ocr: new FormControl('', []),
+                ocr: new FormControl('', [], [this.ocrValidator.bind(this)]),
                 cic: new FormControl('', []),
                 emission: new FormControl('', []),
                 // postulate: new FormControl('', []),
@@ -139,6 +139,15 @@ export class CandidateFormComponent implements OnInit, OnChanges {
             debounceTime(200),
             map(res => {
                 return res.result === 'true' ? null : {keyElectorExist: true};
+            })
+        );
+    }
+
+    ocrValidator(control: AbstractControl) {
+        return this._candidate.validateOCR(control.value, this.form?.get('id')?.value ?? 0).pipe(
+            debounceTime(200),
+            map(res => {
+                return res === 'true' ? null : {ocrExist: true};
             })
         );
     }

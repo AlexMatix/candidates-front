@@ -47,6 +47,14 @@ export class CandidateService {
         return this.http.get(`${URL_BASE}validate_elector_key?electorKey=${electorKey}${idParam}`);
     }
 
+    validateOCR(ocr: string, id: number) {
+        let idParam = '';
+        if (id) {
+            idParam = `&id=${id}`;
+        }
+        return this.http.get(`${URL_BASE}validate_elector_ocr?ocr=${ocr}${idParam}`);
+    }
+
     addIne(data) {
         return this.http.post(`${URL_BASE}candidateIne`, data);
     }

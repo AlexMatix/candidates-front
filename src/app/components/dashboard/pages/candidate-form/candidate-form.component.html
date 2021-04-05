@@ -268,6 +268,7 @@
                         <mat-label>OCR</mat-label>
                         <input matInput type="text" formControlName="ocr" digitOnly maxlength="13">
                         <mat-error>{{getMessageError('ocr')}}</mat-error>
+                        <mat-hint align="end">{{form.get('ocr').value?.length}} / 13</mat-hint>
                     </mat-form-field>
                 </div>
 
