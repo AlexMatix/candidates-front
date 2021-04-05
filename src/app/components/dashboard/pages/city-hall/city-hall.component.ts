@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {messageErrorValidation} from '../../../../util/ValidatorsHelper';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
@@ -79,6 +79,10 @@ export class CityHallComponent implements OnInit {
             }
             case PSI: {
                 this.party_color = 'psi'
+                break;
+            }
+            case NUEVA_ALIANZA: {
+                this.party_color = 'nueva-alianza'
                 break;
             }
             default: {

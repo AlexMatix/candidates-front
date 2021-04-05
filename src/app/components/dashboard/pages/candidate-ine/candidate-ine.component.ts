@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, MORENA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
 import {CandidateService} from '../../../../services/candidate.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {messageErrorValidation, ValidatorEquals} from '../../../../util/ValidatorsHelper';
@@ -118,6 +118,10 @@ export class CandidateIneComponent implements OnInit {
             }
             case PSI: {
                 this.party_color = 'psi'
+                break;
+            }
+            case NUEVA_ALIANZA: {
+                this.party_color = 'nueva-alianza'
                 break;
             }
             default: {

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PowerService} from '../../services/power.service';
-import {ADMIN, DISABLE_SYSTEM, MORENA, MORENA_PT, PSI, PT, SECOND, VERDE} from '../../util/Config.utils';
+import {ADMIN, DISABLE_SYSTEM, MORENA, MORENA_PT, NUEVA_ALIANZA, PSI, PT, SECOND, VERDE} from '../../util/Config.utils';
 import {UserModel} from '../../models/user.model';
 import {OauthService} from '../../services/oauth.service';
 import {Router} from '@angular/router';
@@ -70,6 +70,11 @@ export class SidebarComponent implements OnInit {
             case MORENA_PT: {
                 this.party_color = 'morena'
                 this.party_logo = '/assets/img/morena-pt-logo.jpeg'
+                break;
+            }
+            case NUEVA_ALIANZA: {
+                this.party_color = 'nueva-alianza'
+                this.party_logo = '/assets/img/nueva-alianza-logo.png'
                 break;
             }
             default: {

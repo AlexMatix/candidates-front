@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import * as _ from 'lodash'
 import MessagesUtill from '../../../../util/messages.utill';
 import {Router} from '@angular/router';
-import {ERROR_MESSAGE, MORENA, PSI, PT, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, VERDE} from '../../../../util/Config.utils';
 import MessagesUtil from '../../../../util/messages.utill';
 
 @Component({
@@ -96,6 +96,10 @@ export class CandidateListComponent implements OnInit {
             }
             case PSI: {
                 this.party_color = 'psi';
+                break;
+            }
+            case NUEVA_ALIANZA: {
+                this.party_color = 'nueva-alianza'
                 break;
             }
             default: {
