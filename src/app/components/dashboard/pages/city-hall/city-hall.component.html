@@ -73,10 +73,10 @@
                             </div>
                             <div>
                                 <button mat-raised-button matStepperPrevious *ngIf="i">Anterior</button>
-                                <button mat-raised-button color="accent" matStepperNext
+                                <button mat-raised-button color="warn" matStepperNext
                                         *ngIf="i < (sizeStepper - 1)">Siguiente
                                 </button>
-                                <button mat-raised-button class="pull-right btn-block mt-2"  color="primary" (click)="submit()">Enviar
+                                <button mat-raised-button class="pull-right btn-block mt-2 btn-danger" (click)="submit()">Enviar
                                 </button>
                             </div>
                         </mat-step>
