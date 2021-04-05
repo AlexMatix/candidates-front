@@ -4,7 +4,7 @@
 // export const CLIENT_SECRET = 't3E3Klj8YPV991ia2i7ajbU9l9lFAS9gr6q2kVtN ';
 
 export const URL_BASE = 'http://165.22.2.168:8081/api/';
-export const CLIENT_SECRET = 'dqfLc1Tl7ZHnJLpKnHvdAwPdDaUlwN1oPeLlTsXe';
+export const CLIENT_SECRET = 'uXmH4G9oLmyMsEXt5Y9IAxczYnQuuM7mz5VKoezl';
 
 export const CLIENT_ID = '2';
 export const GRANT_TYPE = 'password';

@@ -140,8 +140,11 @@ export class CandidateListComponent implements OnInit {
         MessagesUtill.deleteMessage(id, this.callbackDeleted.bind(this));
     }
 
-    edit(id: number) {
-        this.router.navigate(['/candidate', id]);
+    edit(candidate) {
+        console.log(candidate);
+        if (candidate.postulate < 3) {
+            this.router.navigate(['/candidate', candidate.id]);
+        }
     }
 
     generateFormat(id: number) {

@@ -147,7 +147,7 @@
                 <div class="col-3">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>Número exterior</mat-label>
-                        <input matInput type="text" formControlName="outdoor_number">
+                        <input matInput type="text" formControlName="outdoor_number" digitOnly>
                         <mat-error>{{getMessageError('outdoor_number')}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -211,14 +211,14 @@
                 <div class="col-6">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>¿Cuantos años lleva viviendo en este domicilio?</mat-label>
-                        <input matInput type="text" formControlName="residence_time_year" digitOnly>
+                        <input matInput type="text" formControlName="residence_time_year" digitOnly maxlength="3">
                         <mat-error>{{getMessageError('residence_time_year')}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-6">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>¿Cuantos meses lleva viviendo en este domicilio?</mat-label>
-                        <input matInput type="text" formControlName="residence_time_month" digitOnly>
+                        <input matInput type="text" formControlName="residence_time_month" digitOnly maxlength="3">
                         <mat-error>{{getMessageError('residence_time_month')}}</mat-error>
                     </mat-form-field>
                 </div>
@@ -282,7 +282,7 @@
                 <div class="col-4">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>Fecha de emisión</mat-label>
-                        <input matInput type="text" formControlName="emission" digitOnly>
+                        <input matInput type="text" formControlName="emission" digitOnly maxlength="4">
                         <mat-error>{{getMessageError('emission')}}</mat-error>
                     </mat-form-field>
                 </div>
