@@ -19,7 +19,7 @@ export class CityHallComponent implements OnInit {
     charges = [
         {id: 'presidency', value: 'Presidente', chargeId: 5},
         {id: 'regidurias', value: 'Regidor', chargeId: 3},
-        {id: 'sindicaturas', value: 'Sindical', chargeId: 4},
+        {id: 'sindicaturas', value: 'Síndico', chargeId: 4},
     ];
 
     candidatesFormArray = new FormArray([]);
