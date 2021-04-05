@@ -266,7 +266,7 @@
                 <div class="col-4">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>OCR</mat-label>
-                        <input matInput type="text" formControlName="ocr" digitOnly>
+                        <input matInput type="text" formControlName="ocr" digitOnly maxlength="13">
                         <mat-error>{{getMessageError('ocr')}}</mat-error>
                     </mat-form-field>
                 </div>

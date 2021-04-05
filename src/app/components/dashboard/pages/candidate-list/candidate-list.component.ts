@@ -7,7 +7,8 @@ import Swal from 'sweetalert2';
 import * as _ from 'lodash'
 import MessagesUtill from '../../../../util/messages.utill';
 import {Router} from '@angular/router';
-import {MORENA, PSI, PT, VERDE} from '../../../../util/Config.utils';
+import {ERROR_MESSAGE, MORENA, PSI, PT, VERDE} from '../../../../util/Config.utils';
+import MessagesUtil from '../../../../util/messages.utill';
 
 @Component({
     selector: 'app-candidate-list',
@@ -122,7 +123,6 @@ export class CandidateListComponent implements OnInit {
     callbackSetDataSource(item, error: boolean = false, close: boolean = true) {
         if (!error) {
             this.notData = false;
-            console.log(this.notData);
             if (!_.isEmpty(item)) {
                 this.dataSource.data = item;
             } else {
@@ -143,7 +143,15 @@ export class CandidateListComponent implements OnInit {
     edit(candidate) {
         console.log(candidate);
         if (candidate.postulate < 3) {
-            this.router.navigate(['/candidate', candidate.id]);
+            if (candidate.type_postulate === 2) {
+                this.router.navigate(['/candidate', candidate.candidate_id]);
+            }
+            if (candidate.type_postulate === 1) {
+                this.router.navigate(['/candidate', candidate.id]);
+            }
+        } else {
+            MessagesUtil.errorMessage(ERROR_MESSAGE);
+            // this.router.navigate(['/cityHall']);
         }
     }
 

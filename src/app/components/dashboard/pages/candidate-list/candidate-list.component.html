@@ -77,14 +77,14 @@
                                 <mat-icon>edit</mat-icon>
                             </button>
 
+                            <button type="button" (click)="complete_ine(element)" mat-mini-fab class="bg-permission mr-1"
+                                    matTooltip="Completar datos INE">
+                                <mat-icon>description</mat-icon>
+                            </button>
+
                             <button type="button" (click)="delete(element.id)" mat-mini-fab class="bg-danger mr-1"
                                     matTooltip="Elimnar">
                                 <mat-icon>close</mat-icon>
-                            </button>
-
-                            <button type="button" (click)="complete_ine(element)" mat-mini-fab class="bg-danger mr-1"
-                                    matTooltip="Completar datos INE">
-                                <mat-icon>description</mat-icon>
                             </button>
                         </td>
                     </ng-container>

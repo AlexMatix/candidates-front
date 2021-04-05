@@ -288,7 +288,7 @@ export class CandidateComponent implements OnInit {
     }
 
     successSave() {
-        if(this.editForm) {
+        if (this.editForm) {
             this.location.back();
         }
         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
