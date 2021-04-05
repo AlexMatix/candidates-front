@@ -121,7 +121,7 @@ export class CityHallComponent implements OnInit {
     submit() {
         Swal.showLoading();
         const dataToServer = this.parseDataToServer();
-        console.log(dataToServer);
+        console.log('Data To Server', dataToServer);
         if (dataToServer.candidates.length === 0) {
             MessagesUtil.errorMessage('Debe llenar al menos un propietario');
             return;
@@ -129,6 +129,8 @@ export class CityHallComponent implements OnInit {
 
         this.candidateService.add(dataToServer).subscribe(
             () => {
+                this.changeMunicipality(this.form.get('postulate_id').value);
+                this.setCandidates();
                 MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
             },
             error => {
@@ -231,6 +233,7 @@ export class CityHallComponent implements OnInit {
                 (copy.candidates as Array<any>).splice(i, 1);
             }
         }
+        console.log(copy);
         return copy;
     }
 
