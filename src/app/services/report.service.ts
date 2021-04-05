@@ -13,6 +13,7 @@ export class ReportService {
 
 
     constructor(private http: HttpClient) {
+        this.URL_PATH = URL_BASE;
     }
 
     getCandidateReport(report_id: number, politic_party_id: number = null) {
@@ -21,7 +22,7 @@ export class ReportService {
             politic = `&politic_party_id=${politic_party_id}`;
         }
 
-        return this.http.get(`${this.URL_PATH}/createReport?type=${report_id}${politic}`, {responseType: 'blob'});
+        return this.http.get(`${this.URL_PATH}createReport?type=${report_id}${politic}`, {responseType: 'blob'});
     }
 
     getCandidateINEReport(report_id: number, politic_party_id: number = null) {
@@ -30,6 +31,6 @@ export class ReportService {
             politic = `&politic_party_id=${politic_party_id}`;
         }
 
-        return this.http.get(`${this.URL_PATH}/createReportIne?type=${report_id}${politic}`, {responseType: 'blob'});
+        return this.http.get(`${this.URL_PATH}createReportIne?type=${report_id}${politic}`, {responseType: 'blob'});
     }
 }
