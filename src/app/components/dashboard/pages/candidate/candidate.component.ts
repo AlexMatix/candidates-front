@@ -19,6 +19,8 @@ import {interval as observableInterval} from 'rxjs';
     styleUrls: ['./candidate.component.scss']
 })
 export class CandidateComponent implements OnInit {
+    reset = true;
+    title = 'Nuevo'
     type_candidate_form: FormGroup;
     form: FormGroup;
     alternateForm: FormGroup;
@@ -157,10 +159,10 @@ export class CandidateComponent implements OnInit {
         this.id = Number(this.route.snapshot.params.id);
         if (!isNaN(this.id) && this.id !== 0) {
             Swal.showLoading();
+            this.title = 'Editar'
             this._candidate.getById(this.id).subscribe(
                 response => {
                     this.editForm = true;
-                    console.log(response);
                     this.type_candidate_form.get('postulate').setValue(response.postulate);
                     if (response.postulate === 2) {
                         this.type_candidate_form.get('district').setValue(response.postulate_data.district);
@@ -202,6 +204,13 @@ export class CandidateComponent implements OnInit {
         this.markFormGroupTouched(this.form);
         this.markFormGroupTouched(this.alternateForm);
 
+        if (genderOwner !== '' && genderAlternate !== '') {
+            if (genderOwner !== genderAlternate) {
+                this.alternateForm.controls['gender'].setErrors({'equalGender': true});
+                return;
+            }
+        }
+
         if (this.type_candidate_form.invalid) {
             return;
         }
@@ -210,13 +219,6 @@ export class CandidateComponent implements OnInit {
         }
         if (this.form.invalid) {
             return;
-        }
-
-        if (genderOwner !== '' && genderAlternate !== '') {
-            if (genderOwner !== genderAlternate) {
-                this.alternateForm.controls['gender'].setErrors({'equalGender': true});
-                return;
-            }
         }
 
         if (this.type_candidate_form.get('postulate').value === 1) {
@@ -276,9 +278,19 @@ export class CandidateComponent implements OnInit {
             this.location.back();
         }
         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
-        this.type_candidate_form.reset();
-        this.alternateForm.reset();
-        this.form.reset();
+        this.type_candidate_form.reset({});
+        this.alternateForm.reset({});
+        this.form.reset({});
+        this.reset = false;
+        setTimeout(() => {
+            this.reset = true;
+        }, 5)
+        // this.form.markAsPristine();
+        // this.form.markAsUntouched();
+        // this.alternateForm.markAsPristine();
+        // this.alternateForm.markAsUntouched();
+        // this.type_candidate_form.markAsPristine();
+        // this.type_candidate_form.markAsUntouched();
     }
 
     getMessageError(attrName: string) {

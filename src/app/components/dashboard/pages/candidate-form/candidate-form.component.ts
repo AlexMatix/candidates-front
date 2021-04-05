@@ -111,7 +111,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 occupation: new FormControl('', []),
                 elector_key: new FormControl('', [], [this.keyElectorValidator.bind(this)]),
                 electorKey_confirm: new FormControl('', []),
-                ocr: new FormControl('', [], [this.ocrValidator.bind(this)]),
+                ocr: new FormControl('', [], []),
                 cic: new FormControl('', []),
                 emission: new FormControl('', []),
                 // postulate: new FormControl('', []),

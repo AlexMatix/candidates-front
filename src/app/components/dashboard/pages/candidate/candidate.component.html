@@ -1,9 +1,9 @@
 <div class="main-content animated fadeIn">
-    <main class="container-fluid" #container>
+    <main class="container-fluid" #container *ngIf="reset">
         <div class="card">
             <div class="card-header" [ngClass]="party_color">
-                <h4 class="card-title">Nuevo candidato</h4>
-                <p class="card-category">Completa la información para crear un nuevo candidato</p>
+                <h4 class="card-title">{{title}} candidato</h4>
+                <p class="card-category">Completa la información del candidato</p>
             </div>
 
             <form [formGroup]="type_candidate_form">
