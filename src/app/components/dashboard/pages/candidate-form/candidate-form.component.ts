@@ -161,6 +161,9 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 if (key === 'interior_number') {
                     continue; // omit this
                 }
+                if (key === 'cic') {
+                    continue; // omit this
+                }
                 this.form.get(key).setValidators(Validators.required);
             }
         }
