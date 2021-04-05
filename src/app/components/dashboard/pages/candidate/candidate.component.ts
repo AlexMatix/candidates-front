@@ -169,19 +169,6 @@ export class CandidateComponent implements OnInit {
                     }
                     this.setCandidateData(this.form, response);
                     this.setCandidateData(this.alternateForm, response.alternate);
-                    // this.form.get('father_lastname').setValue(response.patter_lastname);
-                    // this.form.get('mother_lastname').setValue(response.mother_lastname);
-                    // this.form.get('nickname').setValue(response.nickname);
-                    // this.form.get('birthplace').setValue(response.birthplace);
-                    // this.form.get('date_birth').setValue(response.date_birth);
-                    // this.form.get('address').setValue(response.address);
-                    // this.form.get('residence_time').setValue(response.residence_time);
-                    // this.form.get('occupation').setValue(response.occupation);
-                    // this.form.get('elector_key').setValue(response.elector_key);
-                    // this.form.get('electorKey_confirm').setValue(response.elector_key);
-                    // this.form.get('postulate').setValue(response.postulate);
-                    // this.form.get('type_postulate').setValue(response.type_postulate);
-                    // this.editData = response;
                     Swal.close();
                 },
                 error => {
@@ -215,9 +202,6 @@ export class CandidateComponent implements OnInit {
         this.markFormGroupTouched(this.form);
         this.markFormGroupTouched(this.alternateForm);
 
-        console.log(genderOwner);
-        console.log(genderAlternate);
-
         if (this.type_candidate_form.invalid) {
             return;
         }
@@ -229,9 +213,9 @@ export class CandidateComponent implements OnInit {
         }
 
         if (genderOwner !== '' && genderAlternate !== '') {
-            console.log('Generos vacios');
             if (genderOwner !== genderAlternate) {
-                this.alternateForm.controls['gender'].setErrors({'equalGender': true})
+                this.alternateForm.controls['gender'].setErrors({'equalGender': true});
+                return;
             }
         }
 
