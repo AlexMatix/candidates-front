@@ -327,7 +327,7 @@ export class CandidateIneComponent implements OnInit {
                 return true;
             }
         }
-        if ((length >= 1 && length <= 4) || (length >= 11 && length <= 16)) {
+        if ((length >= 1 && length <= 4) || (length >= 11 && length <= 16) || (length > 16)) {
             if ((value.charCode >= 65 && value.charCode <= 90) || (value.charCode >= 97 && value.charCode <= 122)) {
                 return true;
             }
@@ -346,7 +346,7 @@ export class CandidateIneComponent implements OnInit {
                 return true;
             }
         }
-        if ((length >= 1 && length <= 4) || (length >= 11 && length <= 16)) {
+        if ((length >= 1 && length <= 4) || (length >= 11 && length <= 16) || (length > 16)) {
             if ((value.charCode >= 65 && value.charCode <= 90) || (value.charCode >= 97 && value.charCode <= 122)) {
                 return true;
             }
