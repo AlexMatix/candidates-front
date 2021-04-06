@@ -47,13 +47,13 @@ export class CityHallComponent implements OnInit {
         }
     };
 
-// static printErrors(form: FormGroup) {
-    //     // tslint:disable-next-line:forin
-    //     for (const key in form.controls) {
-    //         const abstractControl = form.get(key);
-    //         console.log(key, abstractControl.errors);
-    //     }
-    // }
+    static printErrors(form: FormGroup) {
+        // tslint:disable-next-line:forin
+        for (const key in form.controls) {
+            const abstractControl = form.get(key);
+            console.log(key, abstractControl.errors);
+        }
+    }
 
     ngOnInit(): void {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -119,26 +119,27 @@ export class CityHallComponent implements OnInit {
         Swal.showLoading();
         const dataToServer = this.parseDataToServer();
         console.log('Data To Server', dataToServer);
+        // CityHallComponent.printErrors(this.candidatesFormArray.controls[0].get('owner') as FormGroup);
         if (dataToServer.candidates.length === 0) {
             MessagesUtil.errorMessage('Debe llenar al menos un propietario');
             return;
         }
 
-        this.candidateService.add(dataToServer).subscribe(
-            () => {
-                this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
-                    value => {
-                        console.log('data server', value);
-                        this.allCandidates = value;
-                        this.setCandidates();
-                    }
-                );
-                MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
-            },
-            error => {
-                MessagesUtil.errorMessage(ERROR_MESSAGE);
-            }
-        );
+        // this.candidateService.add(dataToServer).subscribe(
+        //     () => {
+        //         this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
+        //             value => {
+        //                 console.log('data server', value);
+        //                 this.allCandidates = value;
+        //                 this.setCandidates();
+        //             }
+        //         );
+        //         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
+        //     },
+        //     error => {
+        //         MessagesUtil.errorMessage(ERROR_MESSAGE);
+        //     }
+        // );
 
     }
 
@@ -242,12 +243,12 @@ export class CityHallComponent implements OnInit {
     private parseDataToServer() {
         const copy = {...this.form.value};
         copy.postulate = this.getPostulateChargeId();
-        for (let i = 0; i < this.candidatesFormArray.controls.length; i++) {
-            const formGroup = this.candidatesFormArray.controls[i];
-            if (formGroup.get('owner').invalid) {
-                (copy.candidates as Array<any>).splice(i, 1);
-            }
-        }
+        // for (let i = 0; i < this.candidatesFormArray.controls.length; i++) {
+        //     const formGroup = this.candidatesFormArray.controls[i];
+        //     if (formGroup.get('owner').invalid) {
+        //         (copy.candidates as Array<any>).splice(i, 1);
+        //     }
+        // }
         return copy;
     }
 

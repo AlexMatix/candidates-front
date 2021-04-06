@@ -159,6 +159,9 @@ export class CandidateFormComponent implements OnInit, OnChanges {
     private setRequiredFields() {
         if (this.isRequired) {
             for (const key in this.form.controls) {
+                if (key === 'user_id') {
+                    continue; // omit this
+                }
                 if (key === 'nickname') {
                     continue; // omit this
                 }
