@@ -147,6 +147,7 @@ export class CityHallComponent implements OnInit {
             value => {
                 console.log('data server', value);
                 this.allCandidates = value;
+                this.form.get('postulate').setValue(null);
             }
         );
     }
