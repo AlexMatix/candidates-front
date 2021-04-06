@@ -49,6 +49,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
         {id: 23, name: 'Carretera'},
         {id: 24, name: 'Plaza'},
         {id: 25, name: 'Camino'},
+        {id: 26, name: 'Sección'}
     ]
 
     @Output()
