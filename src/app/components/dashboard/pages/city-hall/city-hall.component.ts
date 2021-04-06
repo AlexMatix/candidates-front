@@ -36,23 +36,8 @@ export class CityHallComponent implements OnInit {
         public candidateService: CandidateService,
     ) {
         this.initializeForm();
-        this.municipalityService.getAll().pipe(
-            first(),
-        ).subscribe(
-            value => {
-                this.data = value;
-                console.log(value);
-            }
-        );
+        this.getMunicipalitiesFromServer();
     }
-
-    // static printErrors(form: FormGroup) {
-    //     // tslint:disable-next-line:forin
-    //     for (const key in form.controls) {
-    //         const abstractControl = form.get(key);
-    //         console.log(key, abstractControl.errors);
-    //     }
-    // }
 
     validatePostulate: (fg: FormGroup) => void = (fg: FormGroup) => {
         if (fg.get('district') && fg.get('district').valid && fg.get('postulate_id') && fg.get('postulate_id').valid) {
@@ -61,6 +46,14 @@ export class CityHallComponent implements OnInit {
             fg.get('postulate').setErrors({error: true});
         }
     };
+
+// static printErrors(form: FormGroup) {
+    //     // tslint:disable-next-line:forin
+    //     for (const key in form.controls) {
+    //         const abstractControl = form.get(key);
+    //         console.log(key, abstractControl.errors);
+    //     }
+    // }
 
     ngOnInit(): void {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -133,8 +126,13 @@ export class CityHallComponent implements OnInit {
 
         this.candidateService.add(dataToServer).subscribe(
             () => {
-                this.changeMunicipality(this.form.get('postulate_id').value);
-                this.setCandidates();
+                this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
+                    value => {
+                        console.log('data server', value);
+                        this.allCandidates = value;
+                        this.setCandidates();
+                    }
+                );
                 MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
             },
             error => {
@@ -147,7 +145,7 @@ export class CityHallComponent implements OnInit {
     changeMunicipality($event: any) {
         this.candidateService.getCityHall($event).pipe(take(1)).subscribe(
             value => {
-                console.log(value);
+                console.log('data server', value);
                 this.allCandidates = value;
             }
         );
@@ -189,6 +187,17 @@ export class CityHallComponent implements OnInit {
         formGroup.get('electorKey_confirm').setValue(candidate['elector_key']);
         // tslint:disable-next-line:radix
         formGroup.get('roads').setValue(parseInt(candidate['roads'] ?? 0));
+    }
+
+    private getMunicipalitiesFromServer() {
+        this.municipalityService.getAll().pipe(
+            first(),
+        ).subscribe(
+            value => {
+                this.data = value;
+                console.log(value);
+            }
+        );
     }
 
     private initializeForm() {
@@ -237,7 +246,6 @@ export class CityHallComponent implements OnInit {
                 (copy.candidates as Array<any>).splice(i, 1);
             }
         }
-        console.log(copy);
         return copy;
     }
 
@@ -247,7 +255,7 @@ export class CityHallComponent implements OnInit {
 
     private setCandidates() {
         const candidates = this.allCandidates.filter(pair => pair.owner.postulate === this.getPostulateChargeId());
-        console.log(candidates);
+        console.log('fill controls', candidates);
         if (!candidates.length) {
             return;
         }
