@@ -73,7 +73,6 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
     constructor(
         private _candidate: CandidateService,
         private router: Router,
-        private ref: ChangeDetectorRef
     ) {
 
     }
@@ -154,6 +153,7 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.setObservables();
+        this.paginator.firstPage();
     }
 
     private setObservables(): void {
@@ -161,6 +161,8 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
 
         merge(this.valueSubject$.pipe(
             debounceTime(500),
+            tap(() => this.paginator.firstPage()
+            ),
         ), this.paginator$)
             .pipe(
                 skip(1),
