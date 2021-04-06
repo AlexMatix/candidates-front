@@ -390,7 +390,7 @@
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Confirmación de CURP</mat-label>
                                     <input matInput type="text" formControlName="curp_confirmation" maxlength="18"
-                                           (keypress)="onPressCURP($event)"
+                                           (keypress)="onPressCURPConfirmation($event)"
                                            oninput="this.value = this.value.toUpperCase()"
                                            appBlockCopyPaste>
                                     <mat-error>{{getMessageError('curp_confirmation')}}</mat-error>
