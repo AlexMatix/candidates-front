@@ -27,6 +27,7 @@ export function messageErrorValidation(form: FormGroup, attrName: string) {
         control.hasError('minlength') ? `Minimo de Caracteres: ${control.errors.minlength.requiredLength}` :
             control.hasError('maxlength') ? `Máximo de Caracteres: ${control.errors.maxlength.requiredLength}` :
                 control.hasError('email') ? 'Debe de ingresar un correo valido' :
+                control.hasError('min') ? `El mínimo es ${control.errors.min.min}` :
                     control.hasError('notEqualsPassword') ? 'La contraseña no coincide' :
                         control.hasError('notEqualsCurp') ? 'No coincide con el CURP' :
                             control.hasError('notEqualsElectorKey') ? 'No coincide con la clave de elector' :

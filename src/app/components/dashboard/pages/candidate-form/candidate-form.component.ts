@@ -170,6 +170,10 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 if (key === 'residence_time_month') {
                     continue; // omit this
                 }
+                if (key === 'residence_time_year') {
+                    this.form.get('residence_time_year').setValidators([Validators.required, Validators.min(5)]);
+                    continue; // omit this
+                }
                 this.form.get(key).setValidators(Validators.required);
             }
         }
