@@ -67,6 +67,7 @@
                 <hr>
 
                 <app-candidate-form (onFormCandidateChange)="onFormCandidateAlternateChangeEvent($event)"
+                                    [gender]="form.value?.gender"
                                     [isRequired]="false"
                 ></app-candidate-form>
             </div>

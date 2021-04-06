@@ -45,6 +45,9 @@ export class CandidateFormComponent implements OnInit, OnChanges {
         {id: 19, name: 'Prolongación'},
         {id: 20, name: 'Retorno'},
         {id: 21, name: 'Viaducto'},
+        {id: 22, name: 'Localidad'},
+        {id: 23, name: 'Carretera'},
+        {id: 24, name: 'Plaza'},
     ]
 
     @Output()
@@ -106,7 +109,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 municipality: new FormControl('', []),
                 entity: new FormControl('', []),
                 section: new FormControl('', []),
-                residence_time_year: new FormControl('', []),
+                residence_time_year: new FormControl('', [Validators.min(5)]),
                 residence_time_month: new FormControl('', []),
                 occupation: new FormControl('', []),
                 elector_key: new FormControl('', [], [this.keyElectorValidator.bind(this)]),
@@ -162,6 +165,9 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                     continue; // omit this
                 }
                 if (key === 'cic') {
+                    continue; // omit this
+                }
+                if (key === 'residence_time_month') {
                     continue; // omit this
                 }
                 this.form.get(key).setValidators(Validators.required);
