@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {URL_BASE} from '../util/Config.utils';
-import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -32,5 +31,9 @@ export class ReportService {
         }
 
         return this.http.get(`${this.URL_PATH}createReportIne?type=${report_id}${politic}`, {responseType: 'blob'});
+    }
+
+    getReportByUser(report_id: number, user_id: number) {
+        return this.http.get(`${this.URL_PATH}createReportByUser?type=${report_id}&user_id=${user_id}`, {responseType: 'blob'});
     }
 }

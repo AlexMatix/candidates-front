@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {CandidateService} from '../../../../services/candidate.service';
@@ -10,6 +10,10 @@ import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, VERDE} from '../../../../
 import {GenericPaginatorDataSource} from '../../../../services/PaginatorDatasource/generic-paginator-data-source.service';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {debounceTime, skip, tap} from 'rxjs/operators';
+import {ReportService} from '../../../../services/report.service';
+import {UserModel} from '../../../../models/user.model';
+import {saveAs} from 'file-saver';
+
 
 @Component({
     selector: 'app-candidate-list',
@@ -69,10 +73,21 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
     dataSource: GenericPaginatorDataSource<any>;
     party_color: string;
     private valueSubject$ = new BehaviorSubject('');
+    excelTypes = [
+        {id: 1, name: 'Diputados DRP', report: 1, filename: 'DiputadosDRP'},
+        {id: 2, name: 'Diputados DMR', report: 2, filename: 'DiputadosDMR'},
+        {id: 3, name: 'Ayuntamiento', report: 3, filename: 'Ayuntamiento'},
+        {id: 4, name: 'Diputados y Presidentes para INE', report: 1, filename: 'DiputadosPresidentesINE'},
+        {id: 5, name: 'Sindicaturas y Regidurias para INE', report: 2, filename: 'SindicaturasRegiduriasINE'},
+    ];
+    excel = 0;
+
+    user: UserModel;
 
     constructor(
         private _candidate: CandidateService,
         private router: Router,
+        private _reports: ReportService,
     ) {
 
     }
@@ -80,7 +95,7 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.dataSource = new GenericPaginatorDataSource(this._candidate);
         this.setDataSource();
-
+        this.user = JSON.parse(localStorage.getItem('user')) as UserModel;
         const user = JSON.parse(localStorage.getItem('user'));
         switch (user.politic_party_id) {
             case MORENA: {
@@ -180,4 +195,18 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         );
     }
 
+    generateExcel() {
+        Swal.showLoading();
+        if (!this.excel) {
+            MessagesUtil.errorMessage('Seleccione un tipo de reporte');
+        } else {
+            this._reports.getReportByUser(this.excel, this.user.id).subscribe(
+                value => {
+                    saveAs(value);
+                    MessagesUtil.infoMessage('Reporte Descargado con éxito');
+                },
+                error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+            );
+        }
+    }
 }
