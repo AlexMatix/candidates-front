@@ -117,6 +117,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
                 ocr: new FormControl('', [], []),
                 cic: new FormControl('', []),
                 emission: new FormControl('', []),
+                user_id: new FormControl('', []),
                 // postulate: new FormControl('', []),
                 re_election: new FormControl('', []),
                 type_postulate: new FormControl(this.isRequired ? 1 : 2, []), // define is if owner or alternate

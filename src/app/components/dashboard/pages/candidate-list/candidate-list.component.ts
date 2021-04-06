@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, VERDE} from '../../../../util/Config.utils';
 import {GenericPaginatorDataSource} from '../../../../services/PaginatorDatasource/generic-paginator-data-source.service';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
-import {debounceTime, tap} from 'rxjs/operators';
+import {debounceTime, skip, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-candidate-list',
@@ -160,9 +160,10 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         this.paginator$ = this.paginator.page;
 
         merge(this.valueSubject$.pipe(
-            debounceTime(300),
+            debounceTime(500),
         ), this.paginator$)
             .pipe(
+                skip(1),
                 tap(() => {
                     console.log('Refresh');
                     this.setDataSource();

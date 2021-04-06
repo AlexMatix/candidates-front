@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {URL_BASE} from '../util/Config.utils';
+import {RepositoryInterface} from './repositoryInterface';
+import {PaginatorModel} from '../models/paginator.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CandidateService {
+export class CandidateService implements RepositoryInterface {
 
     private URL_PATH: string;
 
@@ -19,8 +21,11 @@ export class CandidateService {
         return this.http.post(this.URL_PATH, data);
     }
 
-    getAll(): Observable<any> {
-        return this.http.get(this.URL_PATH).pipe(map((data: any) => data.data));
+    getAll(paginator: PaginatorModel): Observable<any> {
+        const params = new HttpParams()
+            .set('page', `${paginator.current_page}`)
+            .set('value', `${paginator.value}`);
+        return this.http.get(this.URL_PATH, {params}).pipe(map((data: any) => data.data));
     }
 
     getCityHall(id: number): Observable<any> {
