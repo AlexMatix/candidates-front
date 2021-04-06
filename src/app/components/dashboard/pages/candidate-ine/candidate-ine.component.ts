@@ -219,44 +219,48 @@ export class CandidateIneComponent implements OnInit {
 
     createAlternateForm() {
         this.form = new FormGroup({
-            curp: new FormControl('',
-                Validators.compose(
+                curp: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(18),
+                            Validators.pattern(this.CURP_REGEX)
+                        ]
+                    )),
+                curp_confirmation: new FormControl('',
+                    Validators.compose(
+                        [
+                            Validators.required,
+                            Validators.minLength(18),
+                            Validators.pattern(this.CURP_REGEX)
+                        ]
+                    ),
+                ),
+                rfc: new FormControl('', Validators.compose(
                     [
                         Validators.required,
-                        Validators.minLength(18),
-                        Validators.pattern(this.CURP_REGEX)
+                        Validators.minLength(13)
                     ]
                 )),
-            curp_confirmation: new FormControl('',
-                Validators.compose(
+                phone_type: new FormControl('', [Validators.required]),
+                lada: new FormControl(''),
+                phone: new FormControl('', Validators.compose(
                     [
                         Validators.required,
-                        Validators.minLength(18),
-                        Validators.pattern(this.CURP_REGEX)
+                        Validators.minLength(7),
+                        Validators.maxLength(10),
                     ]
-                ),
-            ),
-            rfc: new FormControl('', Validators.compose(
-                [
-                    Validators.required,
-                    Validators.minLength(13)
-                ]
-            )),
-            phone_type: new FormControl('', [Validators.required]),
-            lada: new FormControl(''),
-            phone: new FormControl('', Validators.compose(
-                [
-                    Validators.required,
-                    Validators.minLength(7),
-                    Validators.maxLength(10),
-                ]
-            )),
-            extension: new FormControl(''),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            email_confirmation: new FormControl('', [Validators.required, Validators.email]),
-            others: new FormControl(''),
-            considerations: new FormControl(''),
-        });
+                )),
+                extension: new FormControl(''),
+                email: new FormControl('', [Validators.required, Validators.email]),
+                email_confirmation: new FormControl('', [Validators.required, Validators.email]),
+                others: new FormControl(''),
+                considerations: new FormControl(''),
+            },
+            [
+                ValidatorEquals('curp', 'curp_confirmation', 'notEqualsCurp'),
+                ValidatorEquals('email', 'email_confirmation', 'notEqualsEmail')
+            ]);
     }
 
     onFormCandidateChangeEvent(_event) {
