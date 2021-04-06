@@ -179,6 +179,7 @@ export class CityHallComponent implements OnInit {
             'cic',
             'emission',
             're_election',
+            'user_id',
             'type_postulate'];
 
         for (const key of keys) {

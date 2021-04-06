@@ -1,21 +1,22 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {CandidateService} from '../../../../services/candidate.service';
 import Swal from 'sweetalert2';
-import * as _ from 'lodash'
 import MessagesUtill from '../../../../util/messages.utill';
+import MessagesUtil from '../../../../util/messages.utill';
 import {Router} from '@angular/router';
 import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, VERDE} from '../../../../util/Config.utils';
-import MessagesUtil from '../../../../util/messages.utill';
+import {GenericPaginatorDataSource} from '../../../../services/PaginatorDatasource/generic-paginator-data-source.service';
+import {BehaviorSubject, merge, Observable} from 'rxjs';
+import {debounceTime, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-candidate-list',
     templateUrl: './candidate-list.component.html',
     styleUrls: ['./candidate-list.component.scss']
 })
-export class CandidateListComponent implements OnInit {
+export class CandidateListComponent implements OnInit, AfterViewInit {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -26,6 +27,7 @@ export class CandidateListComponent implements OnInit {
     @Output() editItemEmitter: EventEmitter<any>;
     @Input() newPolitical: boolean;
 
+    paginator$: Observable<any>;
     // tslint:disable-next-line:max-line-length
     displayedColumns: string[] = [
         'id',
@@ -64,20 +66,20 @@ export class CandidateListComponent implements OnInit {
         // 'ine_check',
         'actions'
     ];
-    dataSource: MatTableDataSource<any>;
-    notData = true;
+    dataSource: GenericPaginatorDataSource<any>;
     party_color: string;
-
+    private valueSubject$ = new BehaviorSubject('');
 
     constructor(
         private _candidate: CandidateService,
-        private router: Router
+        private router: Router,
+        private ref: ChangeDetectorRef
     ) {
 
     }
 
     ngOnInit() {
-        this.dataSource = new MatTableDataSource();
+        this.dataSource = new GenericPaginatorDataSource(this._candidate);
         this.setDataSource();
 
         const user = JSON.parse(localStorage.getItem('user'));
@@ -108,36 +110,14 @@ export class CandidateListComponent implements OnInit {
         }
     }
 
-    setDataSource(close = true) {
-        if (close) {
-            Swal.showLoading();
-        }
-        this._candidate.getAll().subscribe(
-            response => {
-                console.log(response);
-                this.callbackSetDataSource(response, false, close);
-            },
-            error => {
-                this.callbackSetDataSource(error, true, close);
-                console.log(error);
+    setDataSource() {
+        this.dataSource.loadData(
+            {
+                current_page: this.paginator?.pageIndex ?? 1,
+                value: this.valueSubject$.getValue(),
             }
         );
-    }
 
-    callbackSetDataSource(item, error: boolean = false, close: boolean = true) {
-        if (!error) {
-            this.notData = false;
-            if (!_.isEmpty(item)) {
-                this.dataSource.data = item;
-            } else {
-                this.notData = true;
-            }
-        } else {
-            this.notData = true;
-        }
-        if (close) {
-            Swal.close();
-        }
     }
 
     delete(id: number) {
@@ -163,20 +143,38 @@ export class CandidateListComponent implements OnInit {
         Swal.showLoading();
     }
 
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    private callbackDeleted(id: number) {
-        this._candidate.delete(id).subscribe(
-            response => this.setDataSource(true),
-            error => console.log(error)
-        );
+    setFilterValue(filterValue: string) {
+        this.valueSubject$.next(filterValue);
     }
 
     complete_ine(candidate) {
         console.log(candidate);
         this.router.navigate(['/candidate-ine', candidate.id], {queryParams: {type: candidate.type_postulate}});
+    }
+
+    ngAfterViewInit(): void {
+        this.setObservables();
+    }
+
+    private setObservables(): void {
+        this.paginator$ = this.paginator.page;
+
+        merge(this.valueSubject$.pipe(
+            debounceTime(300),
+        ), this.paginator$)
+            .pipe(
+                tap(() => {
+                    console.log('Refresh');
+                    this.setDataSource();
+                }),
+            ).subscribe();
+    }
+
+    private callbackDeleted(id: number) {
+        this._candidate.delete(id).subscribe(
+            response => this.setDataSource(),
+            error => console.log(error)
+        );
     }
 
 }
