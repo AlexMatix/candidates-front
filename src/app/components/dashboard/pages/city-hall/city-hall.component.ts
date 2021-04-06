@@ -119,26 +119,28 @@ export class CityHallComponent implements OnInit {
         Swal.showLoading();
         const dataToServer = this.parseDataToServer();
         console.log('Data To Server', dataToServer);
+        // CityHallComponent.printErrors(this.candidatesFormArray.controls[0].get('owner') as FormGroup);
+        console.log(this.form.get('candida'));
         if (dataToServer.candidates.length === 0) {
             MessagesUtil.errorMessage('Debe llenar al menos un propietario');
             return;
         }
 
-        // this.candidateService.add(dataToServer).subscribe(
-        //     () => {
-        //         this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
-        //             value => {
-        //                 console.log('data server', value);
-        //                 this.allCandidates = value;
-        //                 this.setCandidates();
-        //             }
-        //         );
-        //         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
-        //     },
-        //     error => {
-        //         MessagesUtil.errorMessage(ERROR_MESSAGE);
-        //     }
-        // );
+        this.candidateService.add(dataToServer).subscribe(
+            () => {
+                this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
+                    value => {
+                        console.log('data server', value);
+                        this.allCandidates = value;
+                        this.setCandidates();
+                    }
+                );
+                MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
+            },
+            error => {
+                MessagesUtil.errorMessage(ERROR_MESSAGE);
+            }
+        );
 
     }
 
