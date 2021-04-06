@@ -4,7 +4,7 @@
 // export const CLIENT_SECRET = 't3E3Klj8YPV991ia2i7ajbU9l9lFAS9gr6q2kVtN ';
 
 export const URL_BASE = 'http://165.22.2.168:8081/api/';
-export const CLIENT_SECRET = 'uXmH4G9oLmyMsEXt5Y9IAxczYnQuuM7mz5VKoezl';
+export const CLIENT_SECRET = 'zdt6Qk5fRC056RlFQLL4DomUALv9GlobO5n7TkRH';
 
 export const CLIENT_ID = '2';
 export const GRANT_TYPE = 'password';
@@ -40,4 +40,4 @@ export const PT_COLOR = '#ff173d';
 export const VERDE_COLOR = '#7bfa05';
 export const PSI_COLOR = '#ff173d';
 
-    export const CURP_REGEX = '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
+export const CURP_REGEX = '/^([A-Z][AEIOUX][A-Z]{2}\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\\d])(\\d)$/';
