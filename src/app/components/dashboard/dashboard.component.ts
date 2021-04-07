@@ -125,6 +125,7 @@ export class DashboardComponent implements OnInit {
     }
 
     setUsersFilter(idPolitical: any) {
+        this.form.get('user').setValidators(null);
         this.users = this.allUsers.filter(user => user.politic_party_id === idPolitical);
     }
 }
