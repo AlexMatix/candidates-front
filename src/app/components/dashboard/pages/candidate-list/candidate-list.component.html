@@ -14,7 +14,7 @@
                             <mat-label>Tipo de Excel</mat-label>
                             <mat-select [(ngModel)]="excel">
                                 <mat-option *ngFor="let type of excelTypes"
-                                            [value]="type.report">
+                                            [value]="type">
                                     {{type.name}}
                                 </mat-option>
                             </mat-select>

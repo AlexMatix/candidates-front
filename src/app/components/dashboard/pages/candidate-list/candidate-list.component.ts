@@ -80,7 +80,7 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         {id: 4, name: 'Diputados y Presidentes para INE', report: 1, filename: 'DiputadosPresidentesINE'},
         {id: 5, name: 'Sindicaturas y Regidurias para INE', report: 2, filename: 'SindicaturasRegiduriasINE'},
     ];
-    excel = 0;
+    excel: any = {};
 
     user: UserModel;
 
@@ -200,9 +200,9 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         if (!this.excel) {
             MessagesUtil.errorMessage('Seleccione un tipo de reporte');
         } else {
-            this._reports.getReportByUser(this.excel, this.user.id).subscribe(
+            this._reports.getReportByUser(this.excel.report, this.user.id).subscribe(
                 value => {
-                    saveAs(value);
+                    saveAs(value, this.excel.filename);
                     MessagesUtil.infoMessage('Reporte Descargado con éxito');
                 },
                 error => MessagesUtil.errorMessage(ERROR_MESSAGE),
