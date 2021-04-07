@@ -200,13 +200,25 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         if (!this.excel) {
             MessagesUtil.errorMessage('Seleccione un tipo de reporte');
         } else {
-            this._reports.getReportByUser(this.excel.report, this.user.id).subscribe(
-                value => {
-                    saveAs(value, this.excel.filename);
-                    MessagesUtil.infoMessage('Reporte Descargado con éxito');
-                },
-                error => MessagesUtil.errorMessage(ERROR_MESSAGE),
-            );
+            if (this.excel <= 3) {
+                this._reports.getReportByUser(this.excel.report, this.user.id).subscribe(
+                    value => {
+                        saveAs(value, this.excel.filename);
+                        MessagesUtil.infoMessage('Reporte Descargado con éxito');
+                    },
+                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+                );
+            } else {
+                this._reports.getCandidateINEByUser(this.excel.report, this.user.id).subscribe(
+                    value => {
+                        saveAs(value, this.excel.filename);
+                        MessagesUtil.infoMessage('Reporte Descargado con éxito');
+                    },
+                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+                );
+            }
+
+
         }
     }
 }
