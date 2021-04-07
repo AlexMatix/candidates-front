@@ -72,7 +72,6 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
     ];
     dataSource: GenericPaginatorDataSource<any>;
     party_color: string;
-    private valueSubject$ = new BehaviorSubject('');
     excelTypes = [
         {id: 1, name: 'Diputados DRP', report: 1, filename: 'DiputadosDRP'},
         {id: 2, name: 'Diputados DMR', report: 2, filename: 'DiputadosDMR'},
@@ -81,8 +80,8 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         {id: 5, name: 'Sindicaturas y Regidurias para INE', report: 2, filename: 'SindicaturasRegiduriasINE'},
     ];
     excel: any = {};
-
     user: UserModel;
+    private valueSubject$ = new BehaviorSubject('');
 
     constructor(
         private _candidate: CandidateService,
@@ -171,6 +170,31 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         this.paginator.firstPage();
     }
 
+    generateExcel() {
+        Swal.showLoading();
+        if (!this.excel) {
+            MessagesUtil.errorMessage('Seleccione un tipo de reporte');
+        } else {
+            if (this.excel <= 3) {
+                this._reports.getReportByUser(this.excel.report, this.user.id).subscribe(
+                    value => {
+                        this.download(value);
+                    },
+                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+                );
+            } else {
+                this._reports.getCandidateINEByUser(this.excel.report, this.user.id).subscribe(
+                    value => {
+                        this.download(value);
+                    },
+                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+                );
+            }
+
+
+        }
+    }
+
     private setObservables(): void {
         this.paginator$ = this.paginator.page;
 
@@ -191,34 +215,12 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
     private callbackDeleted(id: number) {
         this._candidate.delete(id).subscribe(
             response => this.setDataSource(),
-            error => console.log(error)
+            error => console.log(error),
         );
     }
 
-    generateExcel() {
-        Swal.showLoading();
-        if (!this.excel) {
-            MessagesUtil.errorMessage('Seleccione un tipo de reporte');
-        } else {
-            if (this.excel <= 3) {
-                this._reports.getReportByUser(this.excel.report, this.user.id).subscribe(
-                    value => {
-                        saveAs(value, this.excel.filename);
-                        MessagesUtil.infoMessage('Reporte Descargado con éxito');
-                    },
-                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
-                );
-            } else {
-                this._reports.getCandidateINEByUser(this.excel.report, this.user.id).subscribe(
-                    value => {
-                        saveAs(value, this.excel.filename);
-                        MessagesUtil.infoMessage('Reporte Descargado con éxito');
-                    },
-                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
-                );
-            }
-
-
-        }
+    private download(file: Blob) {
+        saveAs(file, this.excel.filename);
+        MessagesUtil.infoMessage('Reporte Descargado con éxito');
     }
 }
