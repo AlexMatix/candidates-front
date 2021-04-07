@@ -3,7 +3,7 @@ import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, SAVE_MESSAGE, VERDE} from
 import {messageErrorValidation} from '../../../../util/ValidatorsHelper';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MunicipalitiesService} from '../../../../services/municipalities.service';
-import {first, take} from 'rxjs/operators';
+import {first, map, take} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
 import {CandidateService} from '../../../../services/candidate.service';
@@ -47,13 +47,13 @@ export class CityHallComponent implements OnInit {
         }
     };
 
-    static printErrors(form: FormGroup) {
-        // tslint:disable-next-line:forin
-        for (const key in form.controls) {
-            const abstractControl = form.get(key);
-            console.log(key, abstractControl.errors);
-        }
-    }
+    // static printErrors(form: FormGroup) {
+    //     // tslint:disable-next-line:forin
+    //     for (const key in form.controls) {
+    //         const abstractControl = form.get(key);
+    //         console.log(key, abstractControl.errors);
+    //     }
+    // }
 
     ngOnInit(): void {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -125,28 +125,27 @@ export class CityHallComponent implements OnInit {
             return;
         }
 
-        // this.candidateService.add(dataToServer).subscribe(
-        //     () => {
-        //         this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
-        //             value => {
-        //                 console.log('data server', value);
-        //                 this.allCandidates = value;
-        //                 this.setCandidates();
-        //             }
-        //         );
-        //         MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
-        //     },
-        //     error => {
-        //         MessagesUtil.errorMessage(ERROR_MESSAGE);
-        //     }
-        // );
+        this.candidateService.add(dataToServer).subscribe(
+            () => {
+                this.candidateService.getCityHall(this.form.get('postulate_id').value).pipe(take(1)).subscribe(
+                    value => {
+                        console.log('data server', value);
+                        this.allCandidates = value;
+                        this.setCandidates();
+                    }
+                );
+                MessagesUtil.successMessage('Éxito', SAVE_MESSAGE);
+            },
+            error => {
+                MessagesUtil.errorMessage(ERROR_MESSAGE);
+            }
+        );
 
     }
 
     changeMunicipality($event: any) {
         this.candidateService.getCityHall($event).pipe(take(1)).subscribe(
             value => {
-                console.log('data server', value);
                 this.allCandidates = value;
                 this.form.get('postulate').setValue(null);
             }
@@ -195,6 +194,13 @@ export class CityHallComponent implements OnInit {
     private getMunicipalitiesFromServer() {
         this.municipalityService.getAll().pipe(
             first(),
+            map(
+                (value: any) => {
+                    const excludeArray = [10, 11, 16, 17, 19, 20];
+                    value.districts = value.districts.filter(element => !excludeArray.includes(element));
+                    return value;
+                }
+            ),
         ).subscribe(
             value => {
                 this.data = value;
