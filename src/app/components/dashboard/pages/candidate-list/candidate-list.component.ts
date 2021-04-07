@@ -172,10 +172,10 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
 
     generateExcel() {
         Swal.showLoading();
-        if (!this.excel) {
+        if (!this.excel.id) {
             MessagesUtil.errorMessage('Seleccione un tipo de reporte');
         } else {
-            if (this.excel <= 3) {
+            if (this.excel.id <= 3) {
                 this._reports.getReportByUser(this.excel.report, this.user.id).subscribe(
                     value => {
                         this.download(value);
