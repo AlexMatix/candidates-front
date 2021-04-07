@@ -117,7 +117,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
                 <ng-container *ngIf="(dataSource.paginatorSubject | async) as pag">
-                    <mat-paginator [pageSizeOptions]="[50]"
+                    <mat-paginator [pageSizeOptions]="[100]"
                                    [length]="pag.total"
                                    [pageIndex]="pag.current_page"
                                    showFirstLastButtons></mat-paginator>
