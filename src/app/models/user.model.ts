@@ -1,4 +1,5 @@
 export interface UserModel {
+    politic_party_id: number;
     id: number;
     name: string;
     email: string;

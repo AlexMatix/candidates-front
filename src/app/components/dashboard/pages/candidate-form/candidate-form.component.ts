@@ -24,6 +24,7 @@ export class CandidateFormComponent implements OnInit, OnChanges {
     municipalities$: Observable<any>;
 
     roads = [
+        {id: -1, name: 'Por definir'},
         {id: 1, name: 'Ampliación'},
         {id: 2, name: 'Andador'},
         {id: 3, name: 'Avenida'},
