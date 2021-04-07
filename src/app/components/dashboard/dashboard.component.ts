@@ -9,6 +9,8 @@ import MessagesUtil from '../../util/messages.utill';
 import {debuglog} from 'util';
 import Swal from 'sweetalert2';
 import {ERROR_MESSAGE} from '../../util/Config.utils';
+import {UserModel} from '../../models/user.model';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -25,14 +27,18 @@ export class DashboardComponent implements OnInit {
         {id: 4, name: 'Diputados y Presidentes para INE', report: 1, filename: 'DiputadosPresidentesINE'},
         {id: 5, name: 'Sindicaturas y Regidurias para INE', report: 2, filename: 'SindicaturasRegiduriasINE'},
     ];
+    allUsers: UserModel[];
+    users: UserModel[];
 
     constructor(
         private politicalService: PoliticalService,
-        private report: ReportService
+        private report: ReportService,
+        private userService: UserService,
     ) {
         this.form = new FormGroup({
                 party: new FormControl(null),
                 type: new FormControl(null, Validators.required),
+                user: new FormControl(null),
             }
         );
 
@@ -40,7 +46,11 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.userService.getAll().subscribe(
+            value => {
+                this.allUsers = value;
+            }
+        );
     }
 
     getMessageError(attrName: string) {
@@ -48,30 +58,54 @@ export class DashboardComponent implements OnInit {
     }
 
     submit() {
-
+        Swal.showLoading();
         let politic = null;
         if (typeof this.form.get('party').value !== 'undefined') {
             politic = this.form.get('party').value;
         }
 
+        const reportId = this.form.get('type').value.report;
+        const userId = this.form.get('user').value;
         if (this.form.get('type').value.id <= 3) {
-            this.report.getCandidateReport(this.form.get('type').value.report, politic).subscribe(
-                reponse => {
-                    this.success(reponse);
-                },
-                error => {
-                    this.error(error);
-                }
-            );
+
+            if (this.form.get('user').value) {
+                this.report.getReportByUser(reportId, userId).subscribe(
+                    value => {
+                        this.success(value);
+                    },
+                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+                );
+            } else {
+                this.report.getCandidateReport(reportId, politic).subscribe(
+                    reponse => {
+                        this.success(reponse);
+                    },
+                    error => {
+                        this.error(error);
+                    }
+                );
+            }
+
         } else {
-            this.report.getCandidateINEReport(this.form.get('type').value.report, politic).subscribe(
-                reponse => {
-                    this.success(reponse);
-                },
-                error => {
-                    this.error(error);
-                }
-            );
+
+            if (this.form.get('user').value) {
+                this.report.getCandidateINEByUser(reportId, userId).subscribe(
+                    value => {
+                        this.success(value);
+                    },
+                    error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+                );
+            } else {
+                this.report.getCandidateINEReport(reportId, politic).subscribe(
+                    reponse => {
+                        this.success(reponse);
+                    },
+                    error => {
+                        this.error(error);
+                    }
+                );
+            }
+
         }
     }
 
@@ -88,6 +122,10 @@ export class DashboardComponent implements OnInit {
 
     fileDownload(file: any, name: string) {
         saveAs(file, name);
+    }
+
+    setUsersFilter(idPolitical: any) {
+        this.users = this.allUsers.filter(user => user.politic_party_id === idPolitical);
     }
 }
 

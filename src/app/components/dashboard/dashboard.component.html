@@ -11,20 +11,7 @@
                     <div class="container">
                         <div class="row">
 
-
-                            <div class="col-6">
-                                <mat-form-field class="w-100" appearance="outline">
-                                    <mat-label>Partidos Politicos</mat-label>
-                                    <mat-select formControlName="party">
-                                        <mat-option [value]="party.id" *ngFor="let party of (parties$ | async)">
-                                            {{party.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error>{{getMessageError('party')}}</mat-error>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="col-6">
+                            <div class="col-4">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Tipo de Excel</mat-label>
                                     <mat-select formControlName="type">
@@ -37,6 +24,33 @@
                                 </mat-form-field>
                             </div>
 
+                            <div class="col-4">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Partidos Politicos</mat-label>
+                                    <mat-select formControlName="party" (valueChange)="setUsersFilter($event)">
+                                        <mat-option [value]="party.id" *ngFor="let party of (parties$ | async)">
+                                            {{party.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>{{getMessageError('party')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-4">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Usuario</mat-label>
+                                    <mat-select formControlName="user">
+                                        <mat-option [value]="null">
+                                            Sin usuario
+                                        </mat-option>
+                                        <mat-option *ngFor="let user of users"
+                                                    [value]="user.id">
+                                            {{user.name}} [{{user.email}}]
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-hint>Opcional</mat-hint>
+                                </mat-form-field>
+                            </div>
                             <!--                        <hr>-->
 
                         </div>
