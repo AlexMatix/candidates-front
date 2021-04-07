@@ -30,6 +30,7 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
 
     @Output() editItemEmitter: EventEmitter<any>;
     @Input() newPolitical: boolean;
+    showLoading = false;
 
     paginator$: Observable<any>;
     // tslint:disable-next-line:max-line-length
@@ -200,7 +201,10 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
 
         merge(this.valueSubject$.pipe(
             debounceTime(500),
-            tap(() => this.paginator.firstPage()
+            tap(() => {
+                    this.showLoading = false;
+                    this.paginator.firstPage();
+                }
             ),
         ), this.paginator$)
             .pipe(
@@ -209,7 +213,18 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
                     console.log('Refresh');
                     this.setDataSource();
                 }),
-            ).subscribe();
+            ).subscribe(value => {
+            if (this.showLoading) {
+                Swal.showLoading();
+            }
+        });
+
+        this.dataSource.paginatorSubject.subscribe(
+            () => {
+                Swal.close();
+                this.showLoading = true;
+            }
+        );
     }
 
     private callbackDeleted(id: number) {
