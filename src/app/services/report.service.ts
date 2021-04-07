@@ -36,4 +36,8 @@ export class ReportService {
     getReportByUser(report_id: number, user_id: number) {
         return this.http.get(`${this.URL_PATH}createReportByUser?type=${report_id}&user_id=${user_id}`, {responseType: 'blob'});
     }
+
+    getCandidateINEByUser(report_id: number, user_id: number) {
+        return this.http.get(`${this.URL_PATH}createReportIneByUser?type=${report_id}&user_id=${user_id}`, {responseType: 'blob'});
+    }
 }
