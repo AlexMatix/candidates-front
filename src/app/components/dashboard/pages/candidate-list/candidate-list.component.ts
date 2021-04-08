@@ -6,7 +6,16 @@ import Swal from 'sweetalert2';
 import MessagesUtill from '../../../../util/messages.utill';
 import MessagesUtil from '../../../../util/messages.utill';
 import {Router} from '@angular/router';
-import {ERROR_MESSAGE, MORENA, NUEVA_ALIANZA, PSI, PT, VERDE} from '../../../../util/Config.utils';
+import {
+    COMPROMISO_POR_PUEBLA,
+    ERROR_MESSAGE,
+    MORENA,
+    NUEVA_ALIANZA,
+    PSI,
+    PT,
+    REDES_SOCIALES_PROGRESISTAS,
+    VERDE
+} from '../../../../util/Config.utils';
 import {GenericPaginatorDataSource} from '../../../../services/PaginatorDatasource/generic-paginator-data-source.service';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {debounceTime, skip, tap} from 'rxjs/operators';
@@ -116,6 +125,15 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
             }
             case NUEVA_ALIANZA: {
                 this.party_color = 'nueva-alianza'
+                break;
+            }
+            case COMPROMISO_POR_PUEBLA: {
+                this.party_color = 'compromiso'
+                break;
+            }
+
+            case REDES_SOCIALES_PROGRESISTAS: {
+                this.party_color = 'redes-sociales'
                 break;
             }
             default: {

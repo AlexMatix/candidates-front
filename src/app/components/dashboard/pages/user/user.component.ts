@@ -5,7 +5,18 @@ import {messageErrorValidation, ValidatorEquals} from '../../../../util/Validato
 import {UserService} from '../../../../services/user.service';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
-import {ERROR_MESSAGE, MORENA, MORENA_PT, NUEVA_ALIANZA, PSI, PT, SAVE_MESSAGE, VERDE} from '../../../../util/Config.utils';
+import {
+    COMPROMISO_POR_PUEBLA,
+    ERROR_MESSAGE,
+    MORENA,
+    MORENA_PT,
+    NUEVA_ALIANZA,
+    PSI,
+    PT,
+    REDES_SOCIALES_PROGRESISTAS,
+    SAVE_MESSAGE,
+    VERDE
+} from '../../../../util/Config.utils';
 import {UserModel} from '../../../../models/user.model';
 
 @Component({
@@ -33,7 +44,9 @@ export class UserComponent implements OnInit {
         {id: VERDE, name: 'VERDE'},
         {id: PSI, name: 'PSI'},
         {id: MORENA_PT, name: 'MORENA/PT'},
-        {id: NUEVA_ALIANZA, name: 'NUEVA ALIANZA'}
+        {id: NUEVA_ALIANZA, name: 'NUEVA ALIANZA'},
+        {id: COMPROMISO_POR_PUEBLA, name: 'COMPROMISO POR PUEBLA'},
+        {id: REDES_SOCIALES_PROGRESISTAS, name: 'REDES SOCIALES PROGRESISTAS'}
     ];
 
     party_color: string;
@@ -74,6 +87,16 @@ export class UserComponent implements OnInit {
             }
             case NUEVA_ALIANZA: {
                 this.party_color = 'nueva-alianza'
+                break;
+            }
+
+            case COMPROMISO_POR_PUEBLA: {
+                this.party_color = 'compromiso'
+                break;
+            }
+
+            case REDES_SOCIALES_PROGRESISTAS: {
+                this.party_color = 'redes-sociales'
                 break;
             }
             default: {
