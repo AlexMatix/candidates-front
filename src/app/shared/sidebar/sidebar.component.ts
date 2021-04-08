@@ -95,7 +95,7 @@ export class SidebarComponent implements OnInit {
                 break;
             }
             case REDES_SOCIALES_PROGRESISTAS: {
-                this.party_color = 'redes'
+                this.party_color = 'redes-sociales'
                 this.party_logo = '/assets/img/redes-sociales-logo.png'
                 break;
             }
