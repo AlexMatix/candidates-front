@@ -48,7 +48,7 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         'father_lastname',
         'mother_lastname',
         'name',
-        'nickname',
+        // 'nickname',
         // 'roads',
         // 'roads_name',
         // 'outdoor_number',
@@ -78,6 +78,8 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
         // 'postulate_id',
         // 'candidate_id',
         // 'ine_check',
+        'status',
+        'status_ine',
         'actions'
     ];
     dataSource: GenericPaginatorDataSource<any>;
@@ -212,6 +214,21 @@ export class CandidateListComponent implements OnInit, AfterViewInit {
 
 
         }
+    }
+
+    isPending(object: any) {
+        if (!object) {
+            return true;
+        }
+        let isPending = false;
+        for (const key of Object.keys(object)) {
+            const value = object[key];
+            if (value?.toString().toUpperCase() === 'PENDIENTE' || value === -1) {
+                isPending = true;
+                break;
+            }
+        }
+        return isPending;
     }
 
     private setObservables(): void {
