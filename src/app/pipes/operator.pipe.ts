@@ -16,6 +16,8 @@ export class OperatorPipe implements PipeTransform {
             case VERDE : type = 'VERDE'; break;
             case PSI : type = 'PSI'; break;
             case MORENA_PT : type = 'MORENA/PT'; break;
+            case 7 : type = 'Compromiso por Puebla'; break;
+            case 8 : type = 'Redes Sociales Progresistas'; break;
             default : type = 'Not Defined';
         }
 
