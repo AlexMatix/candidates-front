@@ -12,7 +12,6 @@
                         <h5 class="ml-3 font-weight-bold">Datos de elector</h5>
                         <div class="row">
 
-
                             <div class="col-4">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Distrito</mat-label>
@@ -28,7 +27,8 @@
                             <div class="col-4">
                                 <mat-form-field class="w-100" appearance="outline">
                                     <mat-label>Municipio</mat-label>
-                                    <mat-select formControlName="postulate_id" (valueChange)="changeMunicipality($event)">
+                                    <mat-select formControlName="postulate_id"
+                                                (valueChange)="changeMunicipality($event)">
                                         <mat-option *ngFor="let municipality of data?.municipalities[district]"
                                                     [value]="municipality.id">
                                             {{municipality.name}}
@@ -50,9 +50,22 @@
                                 </mat-form-field>
                             </div>
                         </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col">-->
+<!--                                <button mat-raised-button class="pull-right btn-block mt-2 btn-danger"-->
+<!--                                        (click)="formatCityHallINE()" matTooltip="Generar Formato PDF para INE">-->
+<!--                                    Generar Formato-->
+<!--                                </button>-->
+<!--                            </div>-->
 
+<!--                            <div class="col">-->
+<!--                                <button mat-raised-button class="pull-right btn-block mt-2 btn-danger"-->
+<!--                                        (click)="formatCityHallINE()" matTooltip="Generar Reporte por Municipio SNR">-->
+<!--                                    Generar Reporte SNR-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <!--                        <hr>-->
-
                     </div>
 
                     <mat-horizontal-stepper linear="true" #stepper>
@@ -76,7 +89,8 @@
                                 <button mat-raised-button color="warn" matStepperNext
                                         *ngIf="i < (sizeStepper - 1)">Siguiente
                                 </button>
-                                <button mat-raised-button class="pull-right btn-block mt-2 btn-danger" (click)="submit()">Enviar
+                                <button mat-raised-button class="pull-right btn-block mt-2 btn-danger"
+                                        (click)="submit()">Enviar
                                 </button>
                             </div>
                         </mat-step>

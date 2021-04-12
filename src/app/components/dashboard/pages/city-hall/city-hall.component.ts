@@ -17,6 +17,10 @@ import {first, map, take} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import MessagesUtil from '../../../../util/messages.utill';
 import {CandidateService} from '../../../../services/candidate.service';
+import {ReportService} from '../../../../services/report.service';
+import {UserModel} from '../../../../models/user.model';
+import {saveAs} from 'file-saver';
+
 
 @Component({
     selector: 'app-city-hall',
@@ -40,13 +44,17 @@ export class CityHallComponent implements OnInit {
     controlsArray = [];
     allCandidates: any[] = [];
     private alternateFormArray: FormGroup[] = [];
+    private political_id: number;
 
     constructor(
         public municipalityService: MunicipalitiesService,
         public candidateService: CandidateService,
+        public reportService: ReportService,
     ) {
         this.initializeForm();
         this.getMunicipalitiesFromServer();
+
+        this.political_id = (JSON.parse(localStorage.getItem('user')) as UserModel).politic_party_id;
     }
 
     validatePostulate: (fg: FormGroup) => void = (fg: FormGroup) => {
@@ -169,6 +177,24 @@ export class CityHallComponent implements OnInit {
                 this.form.get('postulate').setValue(null);
             }
         );
+    }
+
+    formatCityHallINE() {
+        if (this.reportDisabled()) {
+            MessagesUtil.infoMessage('Necesita seleccionar el municipio');
+            return;
+        }
+        this.reportService.getCityHallFormat(this.form.get('postulate_id').value, this.political_id).subscribe(
+            value => {
+                MessagesUtil.infoMessage('El archivo se está generando, en seguida comenzará la descarga');
+                saveAs(value);
+            },
+            error => MessagesUtil.errorMessage(ERROR_MESSAGE),
+        );
+    }
+
+    reportDisabled() {
+        return this.form.get('district').invalid && this.form.get('postulate_id').invalid;
     }
 
     protected setCandidateData(formGroup: FormGroup, candidate: any) {
