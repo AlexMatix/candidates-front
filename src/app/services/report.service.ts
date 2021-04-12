@@ -7,9 +7,8 @@ import {URL_BASE} from '../util/Config.utils';
 })
 export class ReportService {
 
-    private URL_PATH: string;
     data: any;
-
+    private URL_PATH: string;
 
     constructor(private http: HttpClient) {
         this.URL_PATH = URL_BASE;
@@ -39,5 +38,18 @@ export class ReportService {
 
     getCandidateINEByUser(report_id: number, user_id: number) {
         return this.http.get(`${this.URL_PATH}createReportIneByUser?type=${report_id}&user_id=${user_id}`, {responseType: 'blob'});
+    }
+
+    getCityHallFormat(postulateId: number, politicPartyId: number) {
+        // tslint:disable-next-line:max-line-length
+        return this.http.get(`${this.URL_PATH}reportCityHall?postulate_id=${postulateId}&politic_party_id=${politicPartyId}`, {responseType: 'blob'});
+    }
+
+    getReportCityHall(postulateId: number, politicPartyId: number) {
+        // tslint:disable-next-line:max-line-length
+        return this.http.post(`${this.URL_PATH}ayuntamientoMunicipalityPoliticParty`, {
+            district: [{id: postulateId}],
+            politic_party_id: politicPartyId,
+        }, {responseType: 'blob'});
     }
 }
